@@ -51,10 +51,12 @@ class Home extends StatelessWidget {
                 provider.downloadListCategory();
               }
             },
-
-            child: ListView(
-              children: List<Widget>.from(provider.categoryRecipeCardList),
-            ),
+            child:SingleChildScrollView(
+              child: Column(children: provider.categoryRecipeCardList),
+            )
+//            child: ListView(
+//              children: provider.categoryRecipeCardList,
+//            ),
           ),
         ));
   }

@@ -22,7 +22,11 @@ class CategoryRecipeListProvider with ChangeNotifier {
     _startIndex = Constants.startIndex;
 
     _currentCategory = category;
+    var startingTime = new DateTime.now();
     await downloadListCategory();
+    var endingTime = new DateTime.now();
+    print("difference");
+    print(endingTime.difference(startingTime).inSeconds);
   }
 
   void downloadListCategory() async {
@@ -38,6 +42,8 @@ class CategoryRecipeListProvider with ChangeNotifier {
     }
   }
 }
+
+
 
 class SearchRecipeListProvider with ChangeNotifier {
   bool _isLoading = false;
