@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/recipe_list_provider.dart';
-import 'package:flutter_app/widgets/RecipesPage.dart';
-import 'package:flutter_app/widgets/waitingPage.dart';
+import 'package:flutter_app/widgets/recipes_page.dart';
+import 'package:flutter_app/widgets/waiting_page.dart';
 import 'package:provider/provider.dart';
 
 class DataSearch extends SearchDelegate<String>{

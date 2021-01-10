@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/recipe_list_provider.dart';
+import 'package:flutter_app/widgets/add_recipe_page.dart';
 
 import 'package:provider/provider.dart';
-import 'classes/DataSearch.dart';
-import 'widgets/waitingPage.dart';
+import 'classes/data_search.dart';
+import 'widgets/waiting_page.dart';
 
 void main() async {
   return runApp(
@@ -31,6 +32,16 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text("Testing App"),
           centerTitle: true,
+
+          leading: IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AddRecipePage()),
+                );
+              }),
+
           actions: [
             IconButton(
                 icon: Icon(Icons.search),
@@ -41,23 +52,21 @@ class Home extends StatelessWidget {
                 })
           ],
         ),
+
         body: Consumer<CategoryRecipeListProvider>(
           builder: (context, provider, child) =>
               NotificationListener<ScrollNotification>(
-            // ignore: missing_return
-            onNotification: (ScrollNotification scrollInfo) {
-              if (scrollInfo.metrics.pixels ==
-                  scrollInfo.metrics.maxScrollExtent) {
-                provider.downloadListCategory();
-              }
-            },
-            child:SingleChildScrollView(
-              child: Column(children: provider.categoryRecipeCardList),
-            )
-//            child: ListView(
-//              children: provider.categoryRecipeCardList,
-//            ),
-          ),
+                  // ignore: missing_return
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo.metrics.pixels ==
+                        scrollInfo.metrics.maxScrollExtent) {
+                      provider.downloadListCategory();
+                    }
+                  },
+                  child: SingleChildScrollView(
+                    child: Column(children: provider.categoryRecipeCardList),
+                  )
+              ),
         ));
   }
 }

@@ -3,11 +3,14 @@ import 'dart:typed_data';
 import 'dart:convert';
 import 'package:convert/convert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/RecipeCard.dart';
+import 'package:flutter_app/widgets/recipe_card.dart';
 import 'package:http/http.dart' as http;
 
 // fucntion sends http request with given category receives data and build list of
 // RecipeCards out of data
+String ip = "10.100.102.6";
+int port = 60000;
+
 Future<List<Widget>> getRecipesCardsListByCategory(String category,
     int startIndex, int endIndex) async {
   // list of RecipeCard objects
@@ -16,7 +19,7 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
   print("sending request");
 
   //sending request and getting the response
-  http.Response response = await http.get(Uri.http("192.168.11.105:5356",
+  http.Response response = await http.get(Uri.http("$ip:$port",
       "/category/$category/from:$startIndex-to:$endIndex"));
 
   print("got response");
@@ -52,7 +55,7 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
   print("sending request");
 
   //sending request and getting the response
-  http.Response response = await http.get(Uri.http("192.168.11.105:5356",
+  http.Response response = await http.get(Uri.http("$ip:$port",
       "/search/$searchValue/from:$startIndex-to:$endIndex"));
 
   print("got response");
@@ -82,5 +85,5 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
 
 
 void addView(int recipeId){
-  http.get(Uri.http("192.168.11.105:5356", "/addView/id:$recipeId"));
+  http.get(Uri.http("$ip:$port", "/addView/id:$recipeId"));
 }
