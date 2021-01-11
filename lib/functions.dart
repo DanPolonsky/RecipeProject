@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 // fucntion sends http request with given category receives data and build list of
 // RecipeCards out of data
-String ip = "10.100.102.6";
-int port = 60000;
+String ip = "192.168.11.105";
+int port = 5356;
 
 Future<List<Widget>> getRecipesCardsListByCategory(String category,
     int startIndex, int endIndex) async {
@@ -86,4 +86,17 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
 
 void addView(int recipeId){
   http.get(Uri.http("$ip:$port", "/addView/id:$recipeId"));
+}
+
+
+void sendNewRecipePost() {
+  http.post(
+    Uri.http("$ip:$port", "recipePost"),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      "data": "some data"
+    }),
+  );
 }

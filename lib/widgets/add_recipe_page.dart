@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../functions.dart';
 
 class AddRecipePage extends StatefulWidget {
   @override
@@ -182,17 +184,25 @@ class _AddRecipePageState extends State<AddRecipePage> {
                 ),
 
                 ElevatedButton(
-                    onPressed: () {
-                      if(_formKey.currentState.validate()){
+                    onPressed: () async{
+                      if(_formKey.currentState.validate() && _image != null){
                         print("got input");
-                        print(_recipeNameController.text);
-                        _ingredientControllers.forEach((controller) {
-                          print(controller.text);
-                        });
+                        print("got image");
+                        Uint8List imageBytes = await _image.readAsBytes();
 
-                        _stepControllers.forEach((controller) {
-                          print(controller.text);
-                        });
+                        sendNewRecipePost();
+
+
+
+//                        print(_recipeNameController.text);
+//
+//                        _ingredientControllers.forEach((controller) {
+//                          print(controller.text);
+//                        });
+//
+//                        _stepControllers.forEach((controller) {
+//                          print(controller.text);
+//                        });
 
                       }
                     },
