@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/classes/recipe_list_provider.dart';
+import 'file:///D:/flutter%20project/flutter_app/lib/providers/recipe_list_provider.dart';
 import 'package:flutter_app/widgets/recipes_page.dart';
 import 'package:flutter_app/widgets/waiting_page.dart';
 import 'package:provider/provider.dart';
 
+
+// class that handles search
 class DataSearch extends SearchDelegate<String>{
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -17,6 +19,7 @@ class DataSearch extends SearchDelegate<String>{
     ];
   }
 
+  // builds button on the left of search bar
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
@@ -27,6 +30,7 @@ class DataSearch extends SearchDelegate<String>{
     );
   }
 
+  // return results based on searching
   @override
   Widget buildResults(BuildContext context){
     var recipeListProvider =
@@ -36,6 +40,7 @@ class DataSearch extends SearchDelegate<String>{
       await recipeListProvider.initializeNewSearch("search value");
       return recipeListProvider.searchRecipeCardList;
     }
+
 
     return FutureBuilder<List<Widget>>(
       future: getList(),

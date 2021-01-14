@@ -1,4 +1,4 @@
-
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:convert/convert.dart';
@@ -11,6 +11,8 @@ import 'package:http/http.dart' as http;
 String ip = "192.168.11.105";
 int port = 5356;
 
+
+//Todo: make dict to RecipeCard function
 Future<List<Widget>> getRecipesCardsListByCategory(String category,
     int startIndex, int endIndex) async {
   // list of RecipeCard objects
@@ -39,6 +41,7 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
         recipeMapInfo["author"],
         recipeMapInfo["ingredients"],
         recipeMapInfo["steps"],
+        recipeMapInfo["cookTime"],
         MemoryImage(byteslist)));
   });
 
@@ -75,6 +78,7 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
         recipeMapInfo["author"],
         recipeMapInfo["ingredients"],
         recipeMapInfo["steps"],
+        recipeMapInfo["cookTime"],
         MemoryImage(byteslist)));
   });
 
@@ -89,14 +93,24 @@ void addView(int recipeId){
 }
 
 
-void sendNewRecipePost() {
+void sendNewRecipePost(String recipeName, String ingredients, String steps, Uint8List image, double difficulty, String cookTime, String imageType) {
   http.post(
     Uri.http("$ip:$port", "recipePost"),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
+
+    //Todo: add id per user, to verify user.
     body: jsonEncode(<String, dynamic>{
-      "data": "some data"
+      "recipeName": recipeName,
+      "ingredients": ingredients,
+      "steps": steps,
+      "data": image,
+      "difficulty": difficulty,
+      "cookTime": cookTime,
+      "imageType": imageType
     }),
   );
 }
+
+

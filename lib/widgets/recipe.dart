@@ -13,11 +13,12 @@ class Recipe extends StatelessWidget {
   double _rating;
   double _difficulty;
   String _author;
+  String _cookTime;
   MemoryImage _img;
 
 
   Recipe(int id, String recipeName, int views, double rating,
-      double difficulty, String author, String ingredients, String steps, MemoryImage img) {
+      double difficulty, String author, String ingredients, String steps, String cookTime,MemoryImage img) {
     this._id = id;
 
     this._recipeName = recipeName;
@@ -28,6 +29,7 @@ class Recipe extends StatelessWidget {
 
     this._ingredients = ingredients;
     this._steps = steps;
+    this._cookTime = cookTime;
     this._img = img;
 
   }

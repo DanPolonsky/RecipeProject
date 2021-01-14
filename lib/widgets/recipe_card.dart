@@ -15,11 +15,12 @@ class RecipeCard extends StatelessWidget {
   double _rating;
   double _difficulty;
   String _author;
+  String _cookTime;
   MemoryImage _img;
 
 
   RecipeCard(int id, String recipeName, int views, double rating,
-      double difficulty, String author, String ingredients, String steps, MemoryImage img) {
+      double difficulty, String author, String ingredients, String steps, String cookTime,MemoryImage img) {
     this._id = id;
 
     this._recipeName = recipeName;
@@ -30,6 +31,7 @@ class RecipeCard extends StatelessWidget {
 
     this._ingredients = ingredients;
     this._steps = steps;
+    this._cookTime = cookTime;
     this._img = img;
 
   }
@@ -42,7 +44,7 @@ class RecipeCard extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) => Recipe(_id, _recipeName, _views,
-                      _rating, _difficulty, _author, _ingredients, _steps, _img
+                      _rating, _difficulty, _author, _ingredients, _steps, _cookTime,_img
                   )
               )
           );

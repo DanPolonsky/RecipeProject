@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/classes/recipe_list_provider.dart';
+import 'file:///D:/flutter%20project/flutter_app/lib/providers/recipe_list_provider.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable

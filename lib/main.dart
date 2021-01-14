@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/classes/recipe_list_provider.dart';
+import 'package:flutter_app/providers/add_recipe_page_provider.dart';
+import 'package:flutter_app/providers/recipe_list_provider.dart';
 import 'package:flutter_app/widgets/add_recipe_page.dart';
-
 import 'package:provider/provider.dart';
 import 'classes/data_search.dart';
 import 'widgets/waiting_page.dart';
 
 void main() async {
-  return runApp(
+    return runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => CategoryRecipeListProvider()),
-      ChangeNotifierProvider(create: (context) => SearchRecipeListProvider())
+      ChangeNotifierProvider(create: (context) => SearchRecipeListProvider()),
+      ChangeNotifierProvider(create: (context) => AddRecipePageProvider())
     ], child: MyApp()),
   );
 }
