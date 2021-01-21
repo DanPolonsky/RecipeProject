@@ -13,14 +13,21 @@ class RecipeCard extends StatelessWidget {
   String _steps;
   int _views;
   double _rating;
-  double _difficulty;
+  String _difficulty;
   String _author;
   String _cookTime;
+  int _ratings;
+  String _totalTime;
+  int _servings;
+  String _description;
   MemoryImage _img;
 
 
+
+
+
   RecipeCard(int id, String recipeName, int views, double rating,
-      double difficulty, String author, String ingredients, String steps, String cookTime,MemoryImage img) {
+      String difficulty, String author, String ingredients, String steps, String cookTime, int ratings, String totalTime, int servings, String description, MemoryImage img) {
     this._id = id;
 
     this._recipeName = recipeName;
@@ -32,8 +39,11 @@ class RecipeCard extends StatelessWidget {
     this._ingredients = ingredients;
     this._steps = steps;
     this._cookTime = cookTime;
+    this._ratings = ratings;
     this._img = img;
-
+    this._totalTime = totalTime;
+    this._servings = servings;
+    this._description = description;
   }
 
   @override
@@ -43,8 +53,8 @@ class RecipeCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Recipe(_id, _recipeName, _views,
-                      _rating, _difficulty, _author, _ingredients, _steps, _cookTime,_img
+                  builder: (context) => Recipe(_id, _recipeName, _views, _rating,
+                      _difficulty, _author, _ingredients, _steps, _cookTime, _ratings, _totalTime, _servings, _description, _img
                   )
               )
           );
@@ -113,7 +123,7 @@ class RecipeCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.all(4),
                             child: Text(
-                              "$_difficulty/5 difficulty",
+                              "$_difficulty",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,

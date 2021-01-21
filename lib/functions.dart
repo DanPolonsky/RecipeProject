@@ -42,6 +42,10 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
         recipeMapInfo["ingredients"],
         recipeMapInfo["steps"],
         recipeMapInfo["cookTime"],
+        recipeMapInfo["ratings"],
+        recipeMapInfo["totalTime"],
+        recipeMapInfo["servings"],
+        recipeMapInfo["description"],
         MemoryImage(byteslist)));
   });
 
@@ -79,8 +83,16 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
         recipeMapInfo["ingredients"],
         recipeMapInfo["steps"],
         recipeMapInfo["cookTime"],
+        recipeMapInfo["ratings"],
+        recipeMapInfo["totalTime"],
+        recipeMapInfo["servings"],
+        recipeMapInfo["description"],
         MemoryImage(byteslist)));
   });
+
+
+
+
 
   print("added recipes");
   return recipeCardList;
@@ -93,7 +105,7 @@ void addView(int recipeId){
 }
 
 
-void sendNewRecipePost(String recipeName, String ingredients, String steps, Uint8List image, double difficulty, String cookTime, String imageType) {
+void sendNewRecipePost(String recipeName, String ingredients, String steps, Uint8List image, String difficulty, String cookTime, String imageType) {
   http.post(
     Uri.http("$ip:$port", "recipePost"),
     headers: <String, String>{

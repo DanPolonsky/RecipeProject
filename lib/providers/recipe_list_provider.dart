@@ -17,7 +17,10 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
   List<Widget> get categoryRecipeCardList => _recipeCardList;
 
-  void initializeNewCategory(String category) async {
+  ScrollController _scrollController = ScrollController();
+  ScrollController get scrollController => _scrollController;
+
+  void initializeNewCategory(String category, bool categoryChange) async {
     print("in initialize");
     _recipeCardList = [];
     _amount = Constants.loadingAmount;
@@ -25,11 +28,17 @@ class CategoryRecipeListProvider with ChangeNotifier {
     _startIndex = Constants.startIndex;
 
     _currentCategory = category;
+
     var startingTime = new DateTime.now();
     await downloadListCategory();
     var endingTime = new DateTime.now();
     print("difference");
     print(endingTime.difference(startingTime).inSeconds);
+
+    if(categoryChange) {
+      _scrollController.jumpTo(0);
+    }
+
   }
 
   void downloadListCategory() async {
@@ -45,6 +54,7 @@ class CategoryRecipeListProvider with ChangeNotifier {
     }
   }
 }
+
 
 
 

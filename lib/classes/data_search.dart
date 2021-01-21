@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'file:///D:/flutter%20project/flutter_app/lib/providers/recipe_list_provider.dart';
+import 'package:flutter_app/providers/recipe_list_provider.dart';
+
 import 'package:flutter_app/widgets/recipes_page.dart';
 import 'package:flutter_app/widgets/waiting_page.dart';
 import 'package:provider/provider.dart';

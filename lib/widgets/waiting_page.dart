@@ -19,7 +19,7 @@ class _WaitingPageState extends State<WaitingPage> {
   void getRecipeJson() async{
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
-    await recipeListProvider.initializeNewCategory("popular");
+    await recipeListProvider.initializeNewCategory("popular", false);
     Navigator.pushReplacement(
       context, CupertinoPageRoute(
       builder: (context) => Home(),

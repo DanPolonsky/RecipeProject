@@ -108,15 +108,20 @@ class AddRecipePageProvider extends ChangeNotifier{
        String ingredients = "";
        String steps = "";
 
-       double difficulty = 5.0;
+       String difficulty = "easy";
        String cookTime = "4 hours";
 
+
+       int index = 1;
        _ingredientControllers.forEach((controller) {
-         ingredients += controller.text + "\n";
+         ingredients += index.toString() + ". " + controller.text + "\n";
+         index++;
        });
 
+       index = 1;
        _stepControllers.forEach((controller) {
-         steps += controller.text + "\n";
+         steps += index.toString() + ". " + controller.text + "\n";
+         index++;
        });
 
        sendNewRecipePost(reciepName, ingredients, steps,

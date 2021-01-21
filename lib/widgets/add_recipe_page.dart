@@ -81,6 +81,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                     ElevatedButton(
                         onPressed: () async {
                           provider.sendRecipePost();
+                          Navigator.pop(context);
                         },
                         child: Text("Submit Recipe")),
 
