@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/my_flutter_app_icons.dart';
+import 'package:flutter_app/functions.dart';
+
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+
+
 
 // ignore: must_be_immutable
 class Recipe extends StatelessWidget {
@@ -24,6 +28,9 @@ class Recipe extends StatelessWidget {
   MemoryImage _img;
 
   Color _difficultyColor;
+
+  double _newRating;
+  bool _rated = false;
 
   Recipe(
       int id, String recipeName, int views, double rating,
@@ -66,9 +73,10 @@ class Recipe extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
-
+              if(_rated) {
+                rate(_id, _newRating);
+              }
               Navigator.of(context).pop();
-
             }
            ),
         ),
@@ -78,6 +86,7 @@ class Recipe extends StatelessWidget {
             children: [
               Image(
                 image: _img,
+                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.4,
               ),
               Container(
@@ -123,7 +132,9 @@ class Recipe extends StatelessWidget {
                           ),
                           onRatingUpdate: (rating) {
                             print(rating);
-                          },
+                            _newRating = rating;
+                            _rated = true;
+                            },
                         ),
                       ),
                     ],
@@ -150,6 +161,15 @@ class Recipe extends StatelessWidget {
                     child: Column(
                       children: [
                         Icon(Icons.access_alarm_outlined),
+                        Text("$_cookTime")
+                      ],
+                    ),
+
+                  ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Icon(Icons.add),
                         Text("$_totalTime")
                       ],
                     ),
@@ -158,12 +178,13 @@ class Recipe extends StatelessWidget {
                   Container(
                     child: Column(
                       children: [
-                        Icon(CustomIcons.food),
-                        Text("$_totalTime")
+                        Icon(Icons.add),
+                        Text("$_servings")
                       ],
                     ),
 
                   )
+
 
                 ],
 
@@ -200,7 +221,15 @@ class Recipe extends StatelessWidget {
                   child: Text(
                     _steps,
                     style: TextStyle(fontSize: 24),
-                  )),
+                  )
+              ),
+              Container(
+                  margin: EdgeInsets.fromLTRB(6, 12, 6, 0),
+                  child: Text(
+                    "Author: $_author",
+                    style: TextStyle(fontSize: 24),
+                  )
+              )
             ],
           ),
         ));

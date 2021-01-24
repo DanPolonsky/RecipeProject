@@ -1,20 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_app/providers/add_recipe_page_provider.dart';
+
 import 'package:flutter_app/providers/recipe_list_provider.dart';
 import 'package:flutter_app/widgets/add_recipe_page.dart';
 import 'package:provider/provider.dart';
 import 'classes/data_search.dart';
 import 'widgets/waiting_page.dart';
 
+import 'package:rsa_encrypt/rsa_encrypt.dart';
+import 'package:pointycastle/api.dart' as crypto;
+
 void main() async {
-  return runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => CategoryRecipeListProvider()),
-      ChangeNotifierProvider(create: (context) => SearchRecipeListProvider()),
-      ChangeNotifierProvider(create: (context) => AddRecipePageProvider())
-    ], child: MyApp()),
-  );
+
+
+
+  Future<crypto.AsymmetricKeyPair<crypto.PublicKey, crypto.PrivateKey>> getKeyPair()
+  {
+    var helper = RsaKeyHelper();
+    return helper.computeRSAKeyPair(helper.getSecureRandom());
+  }
+  var keys = getKeyPair();
+  encodePrivate
+
+
+
+  // return runApp(
+  //   MultiProvider(providers: [
+  //     ChangeNotifierProvider(create: (context) => CategoryRecipeListProvider()),
+  //     ChangeNotifierProvider(create: (context) => SearchRecipeListProvider()),
+  //     ChangeNotifierProvider(create: (context) => AddRecipePageProvider())
+  //   ], child: MyApp()),
+  // );
 }
 
 class MyApp extends StatelessWidget {

@@ -37,6 +37,8 @@ dependencies:
   provider: ^4.3.2
   image_picker: ^0.6.7+21
   flutter_rating_bar: ^3.2.0+1
+  rsa_encrypt: ^1.0.5
+  pointycastle: ^2.0.1
 
 
 
@@ -52,10 +54,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  fonts:
-    - family:  MyFlutterApp
-      fonts:
-        - asset: fonts/CustomIcons.ttf
+
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

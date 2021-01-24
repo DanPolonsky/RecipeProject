@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'dart:typed_data';
 import 'dart:convert';
 import 'package:convert/convert.dart';
@@ -8,8 +8,8 @@ import 'package:http/http.dart' as http;
 
 // fucntion sends http request with given category receives data and build list of
 // RecipeCards out of data
-String ip = "192.168.11.105";
-int port = 5356;
+String ip = "10.100.102.2";
+int port = 60000;
 
 
 //Todo: make dict to RecipeCard function
@@ -102,6 +102,10 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
 
 void addView(int recipeId){
   http.get(Uri.http("$ip:$port", "/addView/id:$recipeId"));
+}
+
+void rate(int recipeId, double rating){
+  http.get(Uri.http("$ip:$port", "/rating/id:$recipeId,rating:$rating"));
 }
 
 
