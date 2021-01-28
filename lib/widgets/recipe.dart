@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/custom_icons_icons.dart';
 import 'package:flutter_app/functions.dart';
 
 
@@ -169,7 +170,7 @@ class Recipe extends StatelessWidget {
                   Container(
                     child: Column(
                       children: [
-                        Icon(Icons.add),
+                        Icon(CustomIcons.food),
                         Text("$_totalTime")
                       ],
                     ),
@@ -178,7 +179,7 @@ class Recipe extends StatelessWidget {
                   Container(
                     child: Column(
                       children: [
-                        Icon(Icons.add),
+                        Icon(CustomIcons.food_1),
                         Text("$_servings")
                       ],
                     ),

@@ -74,9 +74,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    func();
-    //return MaterialApp(title: 'Text-To-Speech Demo', home: WaitingPage());
-    return MaterialApp(title: "test",home:Text("dfgh"));
+    //func();
+    return MaterialApp(title: 'Text-To-Speech Demo', home: WaitingPage());
+    //return MaterialApp(title: "test",home:Text("dfgh"));
   }
 }
 
