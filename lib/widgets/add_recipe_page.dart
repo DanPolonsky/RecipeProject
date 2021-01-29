@@ -15,7 +15,6 @@ class _AddRecipePageState extends State<AddRecipePage> {
     super.initState();
     var provider = Provider.of<AddRecipePageProvider>(context, listen: false);
     provider.initializeLists();
-
   }
 
   @override
@@ -31,66 +30,75 @@ class _AddRecipePageState extends State<AddRecipePage> {
             key: provider.formKey,
             child: Container(
               margin: EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Recipe Name",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30)),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                      child: TextFormField(
-                        controller: provider.recipeNameController,
-                        autofocus: true,
-                        decoration: InputDecoration(
-                            labelText: "Recipe name",
-                            hintText: 'Enter Recipe Name...'),
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please enter recipe name.';
-                          }
-                          return null;
-                        },
+              child: Container(
+                margin: EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Recipe Name",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30)),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        child: TextFormField(
+                          controller: provider.recipeNameController,
+                          autofocus: true,
+                          decoration: InputDecoration(
+                              labelText: "Recipe name",
+                              hintText: 'Enter Recipe Name...'),
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter recipe name.';
+                            }
+                            return null;
+                          },
+                        ),
                       ),
-                    ),
-                    Text("Ingredients",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30)),
-                    Column(children: provider.ingredientTextFormFields),
-                    Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                      child: ElevatedButton(
+                      Text("Ingredients",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30
+                          )
+                      ),
+                      Column(children: provider.ingredientTextFormFields),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                        child: ElevatedButton(
+                          onPressed: () {
+                              provider.addIngredientTextFormField(true);
+                          },
+                          child: Text("Add ingredient"),
+                        ),
+                      ),
+                      Text("steps",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 30)),
+                      Column(children: provider.stepTextFormFields),
+                      ElevatedButton(
                         onPressed: () {
-                            provider.addIngredientTextFromField(true);
+                            provider.addStepTextFormField(true);
                         },
-                        child: Text("Add ingredient"),
+                        child: Text("Add step"),
                       ),
-                    ),
-                    Text("steps",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 30)),
-                    Column(children: provider.stepTextFormFields),
-                    ElevatedButton(
-                      onPressed: () {
-                          provider.addStepTextFromField(true);
-                      },
-                      child: Text("Add step"),
-                    ),
 
-                    ElevatedButton(
-                        onPressed: () async {
-                          provider.sendRecipePost();
-                          Navigator.pop(context);
-                        },
-                        child: Text("Submit Recipe")),
+                      ElevatedButton(
+                          onPressed: () async {
+                            provider.sendRecipePost();
+                            if(provider.closeAddRecipePage){
+                              Navigator.pop(context);
+                            }
 
-                    FloatingActionButton(
-                      onPressed: provider.getImage,
-                      tooltip: 'Pick Image',
-                      child: Icon(Icons.add_a_photo),
-                    )
-                  ],
+                          },
+                          child: Text("Submit Recipe")
+                      ),
+
+                      FloatingActionButton(
+                        onPressed: provider.getImage,
+                        tooltip: 'Pick Image',
+                        child: Icon(Icons.add_a_photo),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

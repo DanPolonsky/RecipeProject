@@ -6,8 +6,12 @@ import 'dart:io';
 import '../functions.dart';
 
 class AddRecipePageProvider extends ChangeNotifier{
-   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-   GlobalKey<FormState> get formKey => _formKey;
+
+  // form key for submitting all data
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get formKey => _formKey;
+
+  // defining textControllers for TextFormFields
 
   TextEditingController _recipeNameController = TextEditingController();
   TextEditingController get recipeNameController => _recipeNameController;
@@ -29,6 +33,9 @@ class AddRecipePageProvider extends ChangeNotifier{
 
   final _picker = ImagePicker();
 
+  bool _closeAddRecipePage = false;
+  bool get closeAddRecipePage => _closeAddRecipePage;
+
 
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
@@ -42,7 +49,7 @@ class AddRecipePageProvider extends ChangeNotifier{
 
   }
 
-  void addIngredientTextFromField(bool notify){
+  void addIngredientTextFormField(bool notify){
     final recipeIngredientController = TextEditingController();
     _ingredientControllers.add(recipeIngredientController);
 
@@ -70,7 +77,7 @@ class AddRecipePageProvider extends ChangeNotifier{
   }
 
 
-  void addStepTextFromField(bool notify){
+  void addStepTextFormField(bool notify){
     final stepIngredientController = TextEditingController();
     _stepControllers.add(stepIngredientController);
     _stepTextFormFields.add(Container(
@@ -104,7 +111,7 @@ class AddRecipePageProvider extends ChangeNotifier{
        print("sending recipe");
 
 
-       String reciepName = _recipeNameController.text;
+       String recipeName = _recipeNameController.text;
        String ingredients = "";
        String steps = "";
 
@@ -124,14 +131,17 @@ class AddRecipePageProvider extends ChangeNotifier{
          index++;
        });
 
-       sendNewRecipePost(reciepName, ingredients, steps,
+       sendNewRecipePost(recipeName, ingredients, steps,
            _image.readAsBytesSync(), difficulty, cookTime, _imageType);
+
+      _closeAddRecipePage = true;
      }
+
    }
 
    void initializeLists(){
-    addIngredientTextFromField(false);
-    addStepTextFromField(false);
+    addIngredientTextFormField(false);
+    addStepTextFormField(false);
    }
 
 

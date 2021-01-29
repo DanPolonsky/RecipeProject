@@ -40,7 +40,7 @@ dependencies:
   encrypt: ^4.1.0
   pointycastle: ^2.0.1
   path_provider: ^1.6.27
-
+  shared_preferences: ^0.5.12+4
 
 
 dev_dependencies:
@@ -54,10 +54,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+   - family:  CustomIcons
      fonts:
-      - family:  CustomIcons
-        fonts:
-         - asset: fonts/CustomIcons.ttf
+      - asset: fonts/CustomIcons.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

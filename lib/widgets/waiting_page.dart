@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/recipe_list_provider.dart';
 
-
+import '../constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 
 //TODO: make waiting pages stateless
@@ -23,15 +24,21 @@ class _WaitingPageState extends State<WaitingPage> {
     Navigator.pushReplacement(
       context, CupertinoPageRoute(
       builder: (context) => Home(),
-    ),);
+      ),
+    );
   }
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // check whether the user is logged in or not and store the value in Constants.loggedIn
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      Constants.loggedIn = prefs.getBool("LoggedIn");
+
       getRecipeJson();
     });
+
   }
 
   @override
@@ -46,6 +53,8 @@ class _WaitingPageState extends State<WaitingPage> {
     );
   }
 }
+
+
 
 
 class SearchWaitingPage extends StatefulWidget {
