@@ -145,10 +145,12 @@ class Recipe extends StatelessWidget {
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                      margin: EdgeInsets.all(3),
+
                       padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                      margin: EdgeInsets.only(bottom: 7),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(15)),
                           color: _difficultyColor,
@@ -159,7 +161,9 @@ class Recipe extends StatelessWidget {
                       )
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width*0.25,
                     child: Column(
+
                       children: [
                         Icon(Icons.access_alarm_outlined),
                         Text("$_cookTime")
@@ -168,18 +172,21 @@ class Recipe extends StatelessWidget {
 
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width*0.25,
                     child: Column(
                       children: [
-                        Icon(CustomIcons.food),
+                        Icon(CustomIcons.food_1,size: 27),
                         Text("$_totalTime")
                       ],
                     ),
 
                   ),
                   Container(
+                    width: MediaQuery.of(context).size.width*0.25,
                     child: Column(
+
                       children: [
-                        Icon(CustomIcons.food_1),
+                        Icon(CustomIcons.food),
                         Text("$_servings")
                       ],
                     ),

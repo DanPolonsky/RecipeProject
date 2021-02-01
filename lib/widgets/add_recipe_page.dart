@@ -14,7 +14,11 @@ class _AddRecipePageState extends State<AddRecipePage> {
   void initState(){
     super.initState();
     var provider = Provider.of<AddRecipePageProvider>(context, listen: false);
-    provider.initializeLists();
+    if(!provider.initializedPage){
+      provider.initializeLists();
+      provider.initialized();
+    }
+
   }
 
   @override
@@ -43,7 +47,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                         margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
                         child: TextFormField(
                           controller: provider.recipeNameController,
-                          autofocus: true,
+
                           decoration: InputDecoration(
                               labelText: "Recipe name",
                               hintText: 'Enter Recipe Name...'),
@@ -83,6 +87,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
 
                       ElevatedButton(
                           onPressed: () async {
+                            print("pressed submit");
                             provider.sendRecipePost();
                             if(provider.closeAddRecipePage){
                               Navigator.pop(context);

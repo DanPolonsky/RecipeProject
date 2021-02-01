@@ -41,6 +41,7 @@ dependencies:
   pointycastle: ^2.0.1
   path_provider: ^1.6.27
   shared_preferences: ^0.5.12+4
+  crypto: ^2.1.5
 
 
 dev_dependencies:

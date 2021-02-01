@@ -37,6 +37,14 @@ class AddRecipePageProvider extends ChangeNotifier{
   bool get closeAddRecipePage => _closeAddRecipePage;
 
 
+  // Todo: delete this later
+  bool _initializedPage = false;
+  bool get initializedPage => _initializedPage;
+  void initialized(){
+    _initializedPage = true;
+  }
+
+
   Future getImage() async {
     final pickedFile = await _picker.getImage(source: ImageSource.gallery);
     // final bytes = await pickedFile.readAsBytes();
@@ -50,13 +58,13 @@ class AddRecipePageProvider extends ChangeNotifier{
   }
 
   void addIngredientTextFormField(bool notify){
-    final recipeIngredientController = TextEditingController();
-    _ingredientControllers.add(recipeIngredientController);
+    final ingredientController = TextEditingController();
+    _ingredientControllers.add(ingredientController);
 
     _ingredientTextFormFields.add(Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
-        controller: recipeIngredientController,
+        controller: ingredientController,
         autofocus: true,
         decoration: InputDecoration(
             labelText: "ingredient:",
@@ -78,13 +86,14 @@ class AddRecipePageProvider extends ChangeNotifier{
 
 
   void addStepTextFormField(bool notify){
-    final stepIngredientController = TextEditingController();
-    _stepControllers.add(stepIngredientController);
+    final stepController = TextEditingController();
+
+    _stepControllers.add(stepController);
     _stepTextFormFields.add(Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
 
-        controller: stepIngredientController,
+        controller: stepController,
         autofocus: true,
         decoration: InputDecoration(
             labelText: "step of making:",
@@ -116,7 +125,11 @@ class AddRecipePageProvider extends ChangeNotifier{
        String steps = "";
 
        String difficulty = "easy";
-       String cookTime = "4 hours";
+       String cookTime = "30 minutes";
+       String totalTime="4 hours";
+       String servings = "10";
+       String description = "this is a recipe description";
+       String categories = "meat,";
 
 
        int index = 1;
@@ -132,7 +145,7 @@ class AddRecipePageProvider extends ChangeNotifier{
        });
 
        sendNewRecipePost(recipeName, ingredients, steps,
-           _image.readAsBytesSync(), difficulty, cookTime, _imageType);
+           _image.readAsBytesSync(), difficulty, cookTime, totalTime, servings, description, categories,_imageType);
 
       _closeAddRecipePage = true;
      }

@@ -34,7 +34,14 @@ class _WaitingPageState extends State<WaitingPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // check whether the user is logged in or not and store the value in Constants.loggedIn
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      Constants.loggedIn = prefs.getBool("LoggedIn");
+      RunTimeVariables.prefs = prefs;
+
+      if(prefs.getBool("LoggedIn") == null || prefs.getBool("LoggedIn") == false){
+        RunTimeVariables.loggedIn = false;
+      }
+      else{
+        RunTimeVariables.loggedIn = true;
+      }
 
       getRecipeJson();
     });

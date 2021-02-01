@@ -7,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/recipe_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
+import 'constants.dart';
 
 
-/*
-  A collection of network functions to interact with the server.
- */
+/// A collection of network functions to interact with the server.
 
 
-const String IP = "10.100.102.2";
-const int PORT = 60000;
+// Ip and port of server
+const String IP = "192.168.11.105";
+const int PORT = 5356;
 
 
-// turning each recipeInfo dict into RecipeCard widget
+/// Function takes json dictionary [recipesInfoDictList] and turns it to widget list.
 List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
   List<Widget> recipeCardList = [];
 
@@ -45,15 +45,13 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
 }
 
 
-// fucntion sends http request with given category receives data and build list of
-// RecipeCards out of data
+/// Function sends http request with given [category] [startIndex] and [endIndex] and builds list of
+/// widgets out of response.
 Future<List<Widget>> getRecipesCardsListByCategory(String category,
     int startIndex, int endIndex) async {
-  // list of RecipeCard objects
-
   print("sending request");
 
-  //sending request and getting the response
+  /// sending request and getting and saving response in response
   http.Response response = await http.get(Uri.http("$IP:$PORT",
       "/category/$category/from:$startIndex-to:$endIndex"));
 
@@ -106,7 +104,16 @@ void rate(int recipeId, double rating){
 }
 
 
-void sendNewRecipePost(String recipeName, String ingredients, String steps, Uint8List image, String difficulty, String cookTime, String imageType) {
+void sendNewRecipePost(String recipeName, String ingredients, String steps,
+             Uint8List image, String difficulty, String cookTime, String totalTime,
+              String servings, String description, String categories, String imageType) async{
+
+
+  String codeId = RunTimeVariables.prefs.getString("codeId");
+  print(codeId);
+  Encrypter encrypter = await getEncrypter();
+  String encryptedCodeId = encrypter.encrypt(codeId).base64;
+
   http.post(
     Uri.http("$IP:$PORT", "recipePost"),
     headers: <String, String>{
@@ -115,35 +122,35 @@ void sendNewRecipePost(String recipeName, String ingredients, String steps, Uint
 
     //Todo: add id per user, to verify user.
     body: jsonEncode(<String, dynamic>{
+      "codeId": encryptedCodeId,
       "recipeName": recipeName,
       "ingredients": ingredients,
       "steps": steps,
       "data": image,
       "difficulty": difficulty,
       "cookTime": cookTime,
+      "totalTime": totalTime,
+      "servings": servings,
+      "description": description,
+      "categories":categories,
+
       "imageType": imageType
     }),
   );
 }
 
 
+
+
+
+
 Future<String> sendLoginPostRequest(String userName, String password) async{
 
-  http.Response publicKeyResponse = await http.get(Uri.http("$IP:$PORT","/login"));
-
-  String modulus = publicKeyResponse.body.split(",")[0];
-  String exponent = publicKeyResponse.body.split(",")[1];
-
-
-  RSAPublicKey publicKey = RSAPublicKey(BigInt.parse(modulus), BigInt.parse(exponent));
-
-  Encrypter encrypter = Encrypter(RSA(publicKey: publicKey));
-  final encrypted = encrypter.encrypt(password);
-
-
+  Encrypter encrypter = await getEncrypter();
+  String encrypted = encrypter.encrypt(password).base64;
 
   http.Response loginResponse = await http.post(
-      Uri.http("$IP:$PORT","/verify"),
+      Uri.http("$IP:$PORT","/login"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -151,7 +158,7 @@ Future<String> sendLoginPostRequest(String userName, String password) async{
       //Todo: add id per user, to verify user.
       body: jsonEncode(<String, dynamic>{
         "userName": userName,
-        "password":encrypted.base64
+        "password":encrypted
       }));
 
       print(loginResponse.statusCode);
@@ -160,3 +167,16 @@ Future<String> sendLoginPostRequest(String userName, String password) async{
       return loginResponse.body;
 }
 
+
+Future<Encrypter> getEncrypter() async {
+  http.Response publicKeyResponse = await http.get(Uri.http("$IP:$PORT","/encrypt"));
+
+  String modulus = publicKeyResponse.body.split(",")[0];
+  String exponent = publicKeyResponse.body.split(",")[1];
+
+  RSAPublicKey publicKey = RSAPublicKey(BigInt.parse(modulus), BigInt.parse(exponent));
+
+  Encrypter encrypter = Encrypter(RSA(publicKey: publicKey));
+
+  return encrypter;
+}

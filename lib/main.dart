@@ -24,7 +24,11 @@ void main() async{
       ChangeNotifierProvider(create: (context) => LoginPageProvider()),
     ], child: MyApp()),
   );
+
+
 }
+
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of the application.
@@ -45,13 +49,13 @@ class Home extends StatelessWidget {
         appBar: AppBar(
           title: Text("Testing App"),
           centerTitle: true,
-          leading: Constants.loggedIn
+          leading: RunTimeVariables.loggedIn
               ? IconButton(
                   icon: Icon(Icons.add),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AddRecipePage()),
+                      MaterialPageRoute(builder: (context) => new AddRecipePage()),
                     );
                   })
               : Container(
