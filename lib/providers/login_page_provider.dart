@@ -8,6 +8,8 @@ import '../constants.dart';
 import '../functions.dart';
 import 'package:crypto/crypto.dart';
 
+import 'login_functions.dart';
+
 
 
 class LoginPageProvider extends ChangeNotifier{
@@ -64,18 +66,10 @@ class LoginPageProvider extends ChangeNotifier{
 
       if(loginResponseValue == "logged in"){
         _closeLoginPage = true;
-        SharedPreferences prefs = RunTimeVariables.prefs;
-        prefs.setBool('LoggedIn', true);
-
-        var bytes = utf8.encode(userName+password);
-        Digest digest = sha256.convert(bytes);
-        String codeId = digest.toString();
-        print(codeId);
-        prefs.setString("codeId", codeId);
-
-        RunTimeVariables.loggedIn = true;
+        saveLoginParameters(userName, password);
         notifyListeners();
       }
+
 
       else{
         _errorMsg = loginResponseValue;
@@ -86,5 +80,8 @@ class LoginPageProvider extends ChangeNotifier{
 
 
   }
+
+
+
 
 }

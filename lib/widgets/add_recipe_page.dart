@@ -5,109 +5,167 @@ import 'package:flutter_app/providers/add_recipe_page_provider.dart';
 import 'package:provider/provider.dart';
 
 class AddRecipePage extends StatefulWidget {
-  @override
-  _AddRecipePageState createState() => _AddRecipePageState();
+    @override
+    _AddRecipePageState createState() => _AddRecipePageState();
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
 
-  void initState(){
-    super.initState();
-    var provider = Provider.of<AddRecipePageProvider>(context, listen: false);
-    if(!provider.initializedPage){
-      provider.initializeLists();
-      provider.initialized();
+
+    @override
+    Widget build(BuildContext context) {
+        return Consumer<AddRecipePageProvider>(
+            builder: (BuildContext context, provider, Widget child) =>
+                Scaffold(
+                    appBar: AppBar(
+                        title: Text("add recipe page"),
+                        centerTitle: true,
+                    ),
+                    body: Form(
+                        key: provider.formKey,
+                        child: Container(
+                            margin: EdgeInsets.all(10),
+
+                            child: SingleChildScrollView(
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text("Recipe Name",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold, fontSize: 30)),
+                                        Container(
+                                            margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                                            child: TextFormField(
+                                                controller: provider.recipeNameController,
+
+                                                decoration: InputDecoration(
+                                                    hintText: 'Enter Recipe Name...'),
+                                                validator: (value) {
+                                                    if (value.isEmpty) {
+                                                        return 'Please enter recipe name.';
+                                                    }
+                                                    return null;
+                                                },
+                                            ),
+                                        ),
+                                        Text("Ingredients",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold, fontSize: 30
+                                            )
+                                        ),
+                                        Column(children: provider.ingredientTextFormFields),
+
+                                        Container(
+                                            margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                                            child: ElevatedButton(
+                                                onPressed: () {
+                                                    provider.addIngredientTextFormField(true);
+                                                },
+                                                child: Text("Add ingredient"),
+                                            ),
+                                        ),
+
+                                        Text("steps",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold, fontSize: 30)
+                                        ),
+                                        Column(children: provider.stepTextFormFields),
+
+                                        ElevatedButton(
+                                            onPressed: () {
+                                                provider.addStepTextFormField(true);
+                                            },
+                                            child: Text("Add step"),
+                                        ),
+
+
+                                        RowOfDifficulties(),
+
+                                        ElevatedButton(
+                                            onPressed: () async {
+                                                print("pressed submit");
+                                                provider.sendRecipePost();
+                                                if (provider.closeAddRecipePage) {
+                                                    Navigator.pop(context);
+                                                }
+                                            },
+                                            child: Text("Submit Recipe")
+                                        ),
+
+                                        FloatingActionButton(
+                                            onPressed: provider.getImage,
+                                            tooltip: 'Pick Image',
+                                            child: Icon(Icons.add_a_photo),
+                                        )
+                                    ],
+                                ),
+                            ),
+                        ),)
+                )
+            ,
+        );
     }
+}
 
-  }
 
-  @override
-  Widget build(BuildContext context) {
-
-    return Consumer<AddRecipePageProvider>(
-      builder: (BuildContext context, provider, Widget child) => Scaffold(
-          appBar: AppBar(
-            title: Text("add recipe page"),
-            centerTitle: true,
-          ),
-          body: Form(
-            key: provider.formKey,
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Container(
-                margin: EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+class RowOfDifficulties extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return Consumer<AddRecipePageProvider>(
+            builder: (BuildContext context, provider, Widget child) =>
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Text("Recipe Name",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30)),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: TextFormField(
-                          controller: provider.recipeNameController,
-
-                          decoration: InputDecoration(
-                              labelText: "Recipe name",
-                              hintText: 'Enter Recipe Name...'),
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'Please enter recipe name.';
-                            }
-                            return null;
-                          },
+                        FlatButton(
+                            onPressed: () {
+                                provider.pressedDifficulty = "easy";
+                            },
+                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: provider
+                                    .pressedDifficulty == "easy" ? Colors.black12 : null)
+                            ),
+                            color: Colors.green[600],
+                            child: Text(
+                                "easy",
+                                style: TextStyle(fontSize: 20),
+                            )
                         ),
-                      ),
-                      Text("Ingredients",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30
-                          )
-                      ),
-                      Column(children: provider.ingredientTextFormFields),
-                      Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-                        child: ElevatedButton(
-                          onPressed: () {
-                              provider.addIngredientTextFormField(true);
-                          },
-                          child: Text("Add ingredient"),
+                        FlatButton(
+                            onPressed: () {
+                                provider.pressedDifficulty = "medium";
+                            },
+                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: provider
+                                    .pressedDifficulty == "medium" ? Colors.black12 : null)
+                            ),
+                            color: Colors.green[600],
+                            child: Text(
+                                "easy",
+                                style: TextStyle(fontSize: 20),
+                            )
                         ),
-                      ),
-                      Text("steps",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 30)),
-                      Column(children: provider.stepTextFormFields),
-                      ElevatedButton(
-                        onPressed: () {
-                            provider.addStepTextFormField(true);
-                        },
-                        child: Text("Add step"),
-                      ),
-
-                      ElevatedButton(
-                          onPressed: () async {
-                            print("pressed submit");
-                            provider.sendRecipePost();
-                            if(provider.closeAddRecipePage){
-                              Navigator.pop(context);
-                            }
-
-                          },
-                          child: Text("Submit Recipe")
-                      ),
-
-                      FloatingActionButton(
-                        onPressed: provider.getImage,
-                        tooltip: 'Pick Image',
-                        child: Icon(Icons.add_a_photo),
-                      )
+                        FlatButton(
+                            onPressed: () {
+                                provider.pressedDifficulty = "hard";
+                            },
+                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                                side: BorderSide(color: provider
+                                    .pressedDifficulty == "hard" ? Colors.black12 : null)
+                            ),
+                            color: Colors.green[600],
+                            child: Text(
+                                "easy",
+                                style: TextStyle(fontSize: 20),
+                            )
+                        )
                     ],
-                  ),
                 ),
-              ),
-            ),
-          )),
-    );
-  }
+        );
+    }
 }

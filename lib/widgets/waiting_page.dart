@@ -10,17 +10,17 @@ import '../main.dart';
 
 //TODO: make waiting pages stateless
 
-class WaitingPage extends StatefulWidget {
+class InitialWaitingPage extends StatefulWidget {
   @override
-  _WaitingPageState createState() => _WaitingPageState();
+  _InitialWaitingPageState createState() => _InitialWaitingPageState();
 }
 
-class _WaitingPageState extends State<WaitingPage> {
+class _InitialWaitingPageState extends State<InitialWaitingPage> {
 
   void getRecipeJson() async{
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
-    await recipeListProvider.initializeNewCategory("popular", false);
+    await recipeListProvider.initializeNewCategory("popular");
     Navigator.pushReplacement(
       context, CupertinoPageRoute(
       builder: (context) => Home(),
@@ -34,6 +34,7 @@ class _WaitingPageState extends State<WaitingPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // check whether the user is logged in or not and store the value in Constants.loggedIn
       SharedPreferences prefs = await SharedPreferences.getInstance();
+
       RunTimeVariables.prefs = prefs;
 
       if(prefs.getBool("LoggedIn") == null || prefs.getBool("LoggedIn") == false){
@@ -64,12 +65,17 @@ class _WaitingPageState extends State<WaitingPage> {
 
 
 
-class SearchWaitingPage extends StatefulWidget {
+
+
+
+
+
+class RecipesWaitingPage extends StatefulWidget {
   @override
-  _SearchWaitingPageState createState() => _SearchWaitingPageState();
+  _RecipesWaitingPageState createState() => _RecipesWaitingPageState();
 }
 
-class _SearchWaitingPageState extends State<SearchWaitingPage> {
+class _RecipesWaitingPageState extends State<RecipesWaitingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -18,7 +18,7 @@ const String IP = "192.168.11.105";
 const int PORT = 5356;
 
 
-/// Function takes json dictionary [recipesInfoDictList] and turns it to widget list.
+/// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.
 List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
   List<Widget> recipeCardList = [];
 
@@ -45,13 +45,13 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
 }
 
 
-/// Function sends http request with given [category] [startIndex] and [endIndex] and builds list of
-/// widgets out of response.
+/// Function sends http request with given [category] [startIndex] and [endIndex] and returns list of
+/// widgets out of json response using the recipeInfoDictListToWidgetList function.
 Future<List<Widget>> getRecipesCardsListByCategory(String category,
     int startIndex, int endIndex) async {
   print("sending request");
 
-  /// sending request and getting and saving response in response
+  // sending request and getting and saving response in response
   http.Response response = await http.get(Uri.http("$IP:$PORT",
       "/category/$category/from:$startIndex-to:$endIndex"));
 
@@ -60,8 +60,6 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
   // turning the json string response into list of PictureInfo classes
   var recipesInfoDictList = jsonDecode(response.body)['response'] as List;
 
-
-
   List<Widget> recipeCardList = recipeInfoDictListToWidgetList(recipesInfoDictList);
 
 
@@ -69,7 +67,8 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
   return recipeCardList;
 }
 
-
+/// Function sends http request with given [searchValue] [startIndex] and [endIndex] and returns list of
+/// widgets out of json response using the recipeInfoDictListToWidgetList function.
 Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
     int startIndex, int endIndex) async {
   // list of RecipeCard objects
@@ -94,7 +93,7 @@ Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
 }
 
 
-
+///Function send http request to server to add view to a recipe by [id]
 void addView(int recipeId){
   http.get(Uri.http("$IP:$PORT", "/addView/id:$recipeId"));
 }
@@ -110,7 +109,7 @@ void sendNewRecipePost(String recipeName, String ingredients, String steps,
 
 
   String codeId = RunTimeVariables.prefs.getString("codeId");
-  print(codeId);
+
   Encrypter encrypter = await getEncrypter();
   String encryptedCodeId = encrypter.encrypt(codeId).base64;
 
@@ -159,7 +158,8 @@ Future<String> sendLoginPostRequest(String userName, String password) async{
       body: jsonEncode(<String, dynamic>{
         "userName": userName,
         "password":encrypted
-      }));
+      })
+  );
 
       print(loginResponse.statusCode);
       print(loginResponse.body);
@@ -168,6 +168,36 @@ Future<String> sendLoginPostRequest(String userName, String password) async{
 }
 
 
+
+Future<String> sendSignUpPostRequest(String userName, String password) async{
+  Encrypter encrypter = await getEncrypter();
+  String encrypted = encrypter.encrypt(password).base64;
+
+  http.Response signUpResponse = await http.post(
+          Uri.http("$IP:$PORT","/signUp"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+
+          //Todo: add id per user, to verify user.
+          body: jsonEncode(<String, dynamic>{
+            "userName": userName,
+            "password":encrypted
+          })
+  );
+
+  print(signUpResponse.statusCode);
+  print(signUpResponse.body);
+
+  return signUpResponse.body;
+}
+
+
+
+
+
+
+/// Function builds a rsa encrypter with a public key received from server
 Future<Encrypter> getEncrypter() async {
   http.Response publicKeyResponse = await http.get(Uri.http("$IP:$PORT","/encrypt"));
 

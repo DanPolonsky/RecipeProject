@@ -2,14 +2,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/login_page_provider.dart';
+import 'package:flutter_app/widgets/signup_page.dart';
 import 'package:provider/provider.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
+class LoginPage extends StatelessWidget{
 
-class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<LoginPageProvider>(
@@ -76,6 +73,19 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       provider.waitingCircle,
+
+                      ElevatedButton(
+                              onPressed: () async {
+                                Navigator.pushReplacement(
+                                  context, CupertinoPageRoute(
+                                    builder: (context) => SignUpPage(),
+                                  ),
+                                );
+                              },
+                              child: Text("Sign Up")
+                      ),
+
+
                       ElevatedButton(
                           onPressed: () async {
                             await provider.sendLoginRequest();

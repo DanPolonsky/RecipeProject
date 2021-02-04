@@ -11,8 +11,7 @@ class AddRecipePageProvider extends ChangeNotifier{
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> get formKey => _formKey;
 
-  // defining textControllers for TextFormFields
-
+  // defining textControllers and textFields
   TextEditingController _recipeNameController = TextEditingController();
   TextEditingController get recipeNameController => _recipeNameController;
 
@@ -20,6 +19,7 @@ class AddRecipePageProvider extends ChangeNotifier{
   List<TextEditingController> get ingredientControllers => _ingredientControllers;
   List<Widget> _ingredientTextFormFields = [];
   List<Widget> get ingredientTextFormFields => _ingredientTextFormFields;
+
 
   List<TextEditingController> _stepControllers = [];
   List<TextEditingController> get stepControllers => _stepControllers;
@@ -30,18 +30,28 @@ class AddRecipePageProvider extends ChangeNotifier{
   File get image => _image;
 
   String _imageType;
-
   final _picker = ImagePicker();
 
   bool _closeAddRecipePage = false;
   bool get closeAddRecipePage => _closeAddRecipePage;
 
 
-  // Todo: delete this later
-  bool _initializedPage = false;
-  bool get initializedPage => _initializedPage;
-  void initialized(){
-    _initializedPage = true;
+  String _pressedDifficulty;
+  String get pressedDifficulty => _pressedDifficulty;
+  set pressedDifficulty(String difficulty) {
+    _pressedDifficulty = difficulty;
+    notifyListeners();
+  }
+
+
+  /// Function resets page when user leaves page or submits recipe
+  void resetParameters(){
+    _recipeNameController.text = "";
+    _ingredientControllers = [];
+    _ingredientTextFormFields = [];
+    _stepControllers = [];
+    _stepTextFormFields = [];
+    _image = null;
   }
 
 
@@ -67,7 +77,6 @@ class AddRecipePageProvider extends ChangeNotifier{
         controller: ingredientController,
         autofocus: true,
         decoration: InputDecoration(
-            labelText: "ingredient:",
             hintText: 'Enter ingredient...'
         ),
 
@@ -96,7 +105,6 @@ class AddRecipePageProvider extends ChangeNotifier{
         controller: stepController,
         autofocus: true,
         decoration: InputDecoration(
-            labelText: "step of making:",
             hintText: 'Enter step of making...'
         ),
 

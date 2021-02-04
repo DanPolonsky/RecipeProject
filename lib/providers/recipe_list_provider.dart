@@ -4,94 +4,99 @@ import '../constants.dart';
 import '../functions.dart';
 
 
-
 class CategoryRecipeListProvider with ChangeNotifier {
-  bool _isLoading = false;
+    bool _isLoading = false;
 
-  List<Widget> _recipeCardList = [];
-  int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.endIndex; // change later
-  int _startIndex = Constants.startIndex;
+    bool get isLoading => _isLoading;
 
-  String _currentCategory;
+    List<Widget> _recipeCardList = [];
+    int _amount = Constants.loadingAmount;
+    int _endIndex = Constants.endIndex; // change later
+    int _startIndex = Constants.startIndex;
 
-  List<Widget> get categoryRecipeCardList => _recipeCardList;
+    String _currentCategory;
 
-  ScrollController _scrollController = ScrollController();
-  ScrollController get scrollController => _scrollController;
+    List<Widget> get categoryRecipeCardList => _recipeCardList;
 
-  void initializeNewCategory(String category, bool categoryChange) async {
-    print("in initialize");
-    _recipeCardList = [];
-    _amount = Constants.loadingAmount;
-    _endIndex = Constants.endIndex; // change later
-    _startIndex = Constants.startIndex;
+    ScrollController _scrollController = ScrollController();
 
-    _currentCategory = category;
+    ScrollController get scrollController => _scrollController;
 
-    var startingTime = new DateTime.now();
-    await downloadListCategory();
-    var endingTime = new DateTime.now();
-    print("difference");
-    print(endingTime.difference(startingTime).inSeconds);
 
-    if(categoryChange) {
-      _scrollController.jumpTo(0);
+    /// Function initializes the recipeCardsList to a new category
+    void initializeNewCategory(String category) async {
+        // resetting all parameters for new category
+        _recipeCardList = [];
+        _amount = Constants.loadingAmount;
+        _endIndex = Constants.endIndex; // change later
+        _startIndex = Constants.startIndex;
+
+        _currentCategory = category;
+
+        await downloadListCategory(true);
     }
 
-  }
+    /// Function downloads an amount of recipeCards from the server using the function getRecipesCardsListByCategory
+    void downloadListCategory(bool waitingScreen) async {
+        if (!_isLoading) {
+            _isLoading = true;
+            if (waitingScreen) {
+                print("waiting screen");
+                notifyListeners();
 
-  void downloadListCategory() async {
-    if(!_isLoading) {
-      _isLoading = true;
-      List<Widget> list = await getRecipesCardsListByCategory(
-          _currentCategory, _startIndex, _endIndex);
-      _recipeCardList.addAll(list);
-      notifyListeners();
-      _isLoading = false;
-      _startIndex = _endIndex;
-      _endIndex += _amount;
+            }
+
+            List<Widget> list = await getRecipesCardsListByCategory(
+                _currentCategory, _startIndex, _endIndex);
+
+            _recipeCardList.addAll(list);
+            _isLoading = false;
+
+            if(list.length != 0){
+                notifyListeners();
+                _startIndex = _endIndex;
+                _endIndex += _amount;
+            }
+        }
     }
-  }
 }
 
 
-
-
 class SearchRecipeListProvider with ChangeNotifier {
-  bool _isLoading = false;
+    bool _isLoading = false;
 
-  List<Widget> _recipeCardList = [];
-  int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.endIndex; // change later
-  int _startIndex = Constants.startIndex;
+    List<Widget> _recipeCardList = [];
+    int _amount = Constants.loadingAmount;
+    int _endIndex = Constants.endIndex; // change later
+    int _startIndex = Constants.startIndex;
 
-  String _currentSearch;
+    String _currentSearchValue;
+    String get currentSearchValue => _currentSearchValue;
 
-  List<Widget> get searchRecipeCardList => _recipeCardList;
+    List<Widget> get searchRecipeCardList => _recipeCardList;
 
-  void initializeNewSearch(String searchValue) async {
-    _recipeCardList = [];
-    _amount = Constants.loadingAmount;
-    _endIndex = Constants.endIndex; // change later
-    _startIndex = Constants.startIndex;
+    void initializeNewSearch(String searchValue) async {
+        _recipeCardList = [];
+        _amount = Constants.loadingAmount;
+        _endIndex = Constants.endIndex; // change later
+        _startIndex = Constants.startIndex;
+        _currentSearchValue = searchValue;
 
-    _currentSearch = searchValue;
-    await downloadListSearch();
-  }
-
-  void downloadListSearch() async {
-    if (!_isLoading) {
-      _isLoading = true;
-      List<Widget> list = await getRecipesCardsListBySearch(
-          _currentSearch, _startIndex, _endIndex);
-      _recipeCardList.addAll(list);
-      notifyListeners();
-      _isLoading = false;
-      _startIndex = _endIndex;
-      _endIndex += _amount;
+        await downloadListSearch(searchValue);
     }
-  }
+
+    void downloadListSearch(String searchValue) async {
+        if (!_isLoading) {
+            _isLoading = true;
+            List<Widget> list = await getRecipesCardsListBySearch(
+                searchValue , _startIndex, _endIndex);
+            _recipeCardList.addAll(list);
+            notifyListeners();
+            _isLoading = false;
+            _startIndex = _endIndex;
+            _endIndex += _amount;
+        }
+    }
 }
 
 

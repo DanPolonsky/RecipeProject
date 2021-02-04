@@ -34,29 +34,28 @@ class DataSearch extends SearchDelegate<String>{
   // return results based on searching
   @override
   Widget buildResults(BuildContext context){
-    var recipeListProvider =
-        Provider.of<SearchRecipeListProvider>(context, listen: false);
 
-    Future<List<Widget>> getList() async {
-      await recipeListProvider.initializeNewSearch("search value");
-      return recipeListProvider.searchRecipeCardList;
-    }
+        var recipeListProvider = Provider.of<SearchRecipeListProvider>(context, listen: false);
 
-
-    return FutureBuilder<List<Widget>>(
-      future: getList(),
-
-      builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
-        //TODO: add error else if
-        if(snapshot.hasData){
-          return SearchRecipesPage();
+        Future<List<Widget>> getList() async {
+          await recipeListProvider.initializeNewSearch(query);
+          return recipeListProvider.searchRecipeCardList;
         }
 
-        else{
-          return SearchWaitingPage();
-        }
-      },
-    );
+        return FutureBuilder<List<Widget>>(
+          future: getList(),
+
+          builder: (BuildContext context, AsyncSnapshot<List<Widget>> snapshot) {
+            //TODO: add error else if
+            if(snapshot.hasData){
+              return SearchRecipesPage();
+            }
+
+            else{
+              return RecipesWaitingPage();
+            }
+          },
+        );
 
   }
 

@@ -35,7 +35,8 @@ class Recipe extends StatelessWidget {
 
   Recipe(
       int id, String recipeName, int views, double rating,
-      String difficulty, String author, String ingredients, String steps, String cookTime, int ratings, String totalTime, int servings, String description, MemoryImage img) {
+      String difficulty, String author, String ingredients, String steps, String cookTime,
+      int ratings, String totalTime, int servings, String description, MemoryImage img) {
     this._id = id;
 
     this._recipeName = recipeName;
@@ -166,7 +167,7 @@ class Recipe extends StatelessWidget {
 
                       children: [
                         Icon(Icons.access_alarm_outlined),
-                        Text("$_cookTime")
+                        Text("$_totalTime")
                       ],
                     ),
 
@@ -176,7 +177,7 @@ class Recipe extends StatelessWidget {
                     child: Column(
                       children: [
                         Icon(CustomIcons.food_1,size: 27),
-                        Text("$_totalTime")
+                        Text("$_cookTime")
                       ],
                     ),
 
@@ -192,8 +193,6 @@ class Recipe extends StatelessWidget {
                     ),
 
                   )
-
-
                 ],
 
               ),
@@ -204,6 +203,7 @@ class Recipe extends StatelessWidget {
                     style: TextStyle(fontSize: 24),
                   )
               ),
+
               Container(
                 margin: EdgeInsets.fromLTRB(4, 10, 0, 4),
                 child: Text(
