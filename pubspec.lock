@@ -118,6 +118,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_picker:
+    dependency: "direct main"
+    description:
+      name: flutter_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.5"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -144,6 +151,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_voice_processor:
+    dependency: transitive
+    description:
+      name: flutter_voice_processor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -296,6 +310,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  porcupine:
+    dependency: "direct main"
+    description:
+      name: porcupine
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.9.6"
   process:
     dependency: transitive
     description:
@@ -450,4 +471,4 @@ packages:
     version: "4.5.1"
 sdks:
   dart: ">=2.10.0 <2.11.0"
-  flutter: ">=1.16.0 <2.0.0"
+  flutter: ">=1.20.0 <2.0.0"

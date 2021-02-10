@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../constants.dart';
+import '../global_variables.dart';
 import '../functions.dart';
 import 'package:crypto/crypto.dart';
 

@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/recipe_list_provider.dart';
+import 'package:flutter_app/providers/category_provider.dart';
+import 'package:flutter_app/providers/recipe_page_provider.dart';
 
-import '../constants.dart';
+import '../global_variables.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../main.dart';
 
-//TODO: make waiting pages stateless
+
 
 class InitialWaitingPage extends StatefulWidget {
   @override
@@ -18,8 +19,7 @@ class InitialWaitingPage extends StatefulWidget {
 class _InitialWaitingPageState extends State<InitialWaitingPage> {
 
   void getRecipeJson() async{
-    var recipeListProvider =
-        Provider.of<CategoryRecipeListProvider>(context, listen: false);
+    var recipeListProvider = Provider.of<CategoryRecipeListProvider>(context, listen: false);
     await recipeListProvider.initializeNewCategory("popular");
     Navigator.pushReplacement(
       context, CupertinoPageRoute(
@@ -27,6 +27,9 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
       ),
     );
   }
+
+
+
 
   @override
   void initState() {
@@ -44,6 +47,14 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
         RunTimeVariables.loggedIn = true;
       }
 
+
+      var recipeProvider = Provider.of<RecipePageProvider>(context, listen: false);
+
+      // initializes speech detection and keyWord detection for recipePage
+      recipeProvider.initializeKeyWordDetector();
+      recipeProvider.initializeSpeechDetection();
+
+      //downloading home page list of recipes
       getRecipeJson();
     });
 

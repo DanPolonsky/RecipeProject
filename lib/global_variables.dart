@@ -1,3 +1,4 @@
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Constants{
@@ -10,4 +11,5 @@ class Constants{
 class RunTimeVariables{
   static bool loggedIn;
   static SharedPreferences prefs;
+
 }

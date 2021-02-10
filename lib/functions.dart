@@ -7,15 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/recipe_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
-import 'constants.dart';
+import 'classes/recipeInfo.dart';
+import 'global_variables.dart';
 
 
 /// A collection of network functions to interact with the server.
 
 
 // Ip and port of server
-const String IP = "192.168.11.105";
-const int PORT = 5356;
+const String IP = "10.100.102.2";
+const int PORT = 60000;
 
 
 /// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.
@@ -24,7 +25,8 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
 
   recipesInfoDictList.forEach((recipeMapInfo) {
     Uint8List byteslist = hex.decode(recipeMapInfo["data"]);
-    recipeCardList.add(RecipeCard(
+
+    RecipeInfo recipeInfo = RecipeInfo(
         recipeMapInfo["id"],
         recipeMapInfo["recipeName"],
         recipeMapInfo["views"],
@@ -38,7 +40,8 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
         recipeMapInfo["totalTime"],
         recipeMapInfo["servings"],
         recipeMapInfo["description"],
-        MemoryImage(byteslist)));
+        MemoryImage(byteslist));
+    recipeCardList.add(RecipeCard(recipeInfo));
   });
 
   return recipeCardList;

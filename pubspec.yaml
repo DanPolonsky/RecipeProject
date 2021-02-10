@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^0.5.12+4
   crypto: ^2.1.5
   speech_to_text: ^3.1.0
+  porcupine: ^1.9.5
+  flutter_picker: ^1.1.5
 
 
 dev_dependencies:

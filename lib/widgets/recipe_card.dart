@@ -1,49 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/classes/recipeInfo.dart';
 import '../functions.dart';
 import 'recipe.dart';
 
 // ignore: must_be_immutable
 class RecipeCard extends StatelessWidget {
-  int _id;
+  RecipeInfo _recipeInfo;
 
-  //int _date;
-  String _ingredients;
-  String _recipeName;
-  String _steps;
-  int _views;
-  double _rating;
-  String _difficulty;
-  String _author;
-  String _cookTime;
-  int _ratings;
-  String _totalTime;
-  int _servings;
-  String _description;
-  MemoryImage _img;
-
-
-
-
-
-  RecipeCard(int id, String recipeName, int views, double rating,
-      String difficulty, String author, String ingredients, String steps, String cookTime, int ratings, String totalTime, int servings, String description, MemoryImage img) {
-    this._id = id;
-
-    this._recipeName = recipeName;
-    this._views = views;
-    this._rating = rating;
-    this._difficulty = difficulty;
-    this._author = author;
-
-    this._ingredients = ingredients;
-    this._steps = steps;
-    this._cookTime = cookTime;
-    this._ratings = ratings;
-    this._img = img;
-    this._totalTime = totalTime;
-    this._servings = servings;
-    this._description = description;
+  RecipeCard(RecipeInfo recipeInfo){
+    _recipeInfo = recipeInfo;
   }
 
   @override
@@ -53,12 +19,10 @@ class RecipeCard extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => Recipe(_id, _recipeName, _views, _rating,
-                      _difficulty, _author, _ingredients, _steps, _cookTime, _ratings, _totalTime, _servings, _description, _img
-                  )
+                  builder: (context) => Recipe(_recipeInfo)
               )
           );
-          addView(_id);
+          addView(_recipeInfo.id);
           
         },
         child: Container(
@@ -67,7 +31,7 @@ class RecipeCard extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(image: _img, fit: BoxFit.cover)),
+                image: DecorationImage(image: _recipeInfo.img, fit: BoxFit.cover)),
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Row(
@@ -80,7 +44,7 @@ class RecipeCard extends StatelessWidget {
                             margin: EdgeInsets.all(10),
                             width: constraints.maxWidth * 0.5,
                             child: Text(
-                              "$_recipeName",
+                              "${_recipeInfo.recipeName}",
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
@@ -97,7 +61,7 @@ class RecipeCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.all(4),
                             child: Text(
-                              "$_views views",
+                              "${_recipeInfo.views} views",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
@@ -110,7 +74,7 @@ class RecipeCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.all(4),
                             child: Text(
-                              "$_rating/5 rating",
+                              "${_recipeInfo.rating}/5 rating",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
@@ -123,7 +87,7 @@ class RecipeCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.all(4),
                             child: Text(
-                              "$_difficulty",
+                              "${_recipeInfo.difficulty}",
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
