@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_app/providers/category_provider.dart';
 import 'package:flutter_app/providers/recipe_page_provider.dart';
 
@@ -47,12 +48,10 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
         RunTimeVariables.loggedIn = true;
       }
 
-
       var recipeProvider = Provider.of<RecipePageProvider>(context, listen: false);
 
       // initializes speech detection and keyWord detection for recipePage
-      recipeProvider.initializeKeyWordDetector();
-      recipeProvider.initializeSpeechDetection();
+      recipeProvider.initializeAllListeningFunctions();
 
       //downloading home page list of recipes
       getRecipeJson();
@@ -62,14 +61,11 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body:Center(
-          child: SpinKitWave(
-            color: Colors.green,
-            size: 50.0,
-          ),
-        )
-    );
+    return
+        Center(
+          child: CircularProgressIndicator(),
+        );
+
   }
 }
 
@@ -91,7 +87,7 @@ class _RecipesWaitingPageState extends State<RecipesWaitingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body:Center(
-          child: Text("Waiting!"),
+          child: CircularProgressIndicator(),
         )
     );
   }

@@ -142,13 +142,13 @@ class AddRecipePageProvider extends ChangeNotifier{
 
        int index = 1;
        _ingredientControllers.forEach((controller) {
-         ingredients += index.toString() + ". " + controller.text + "\n";
+         ingredients += index.toString() + ". " + controller.text.replaceAll("\n", "") + "\n";
          index++;
        });
 
        index = 1;
        _stepControllers.forEach((controller) {
-         steps += index.toString() + ". " + controller.text + "\n";
+         steps += index.toString() + ". " + controller.text.replaceAll("\n", "") + "\n";
          index++;
        });
 

@@ -45,6 +45,7 @@ dependencies:
   speech_to_text: ^3.1.0
   porcupine: ^1.9.5
   flutter_picker: ^1.1.5
+  flutter_tts: ^2.1.0
 
 
 dev_dependencies:
