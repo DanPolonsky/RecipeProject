@@ -10,8 +10,6 @@ class AddRecipePage extends StatefulWidget {
 }
 
 class _AddRecipePageState extends State<AddRecipePage> {
-
-
     @override
     Widget build(BuildContext context) {
         return Consumer<AddRecipePageProvider>(
@@ -113,58 +111,67 @@ class RowOfDifficulties extends StatelessWidget {
     Widget build(BuildContext context) {
         return Consumer<AddRecipePageProvider>(
             builder: (BuildContext context, provider, Widget child) =>
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                        FlatButton(
-                            onPressed: () {
-                                provider.pressedDifficulty = "easy";
-                            },
-                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: provider
-                                    .pressedDifficulty == "easy" ? Colors.black12 : null)
+                Container(
+                    margin: EdgeInsets.fromLTRB(0, 7, 0, 7),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                            FlatButton(
+                                onPressed: () {
+                                    provider.pressedDifficulty = "easy";
+                                },
+                                padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: provider
+                                        .pressedDifficulty == "easy" ? Colors.black12 : Colors
+                                        .white, width: 3)
+                                ),
+                                color: Colors.green[600],
+                                child: Text(
+                                    "easy",
+                                    style: TextStyle(fontSize: 20),
+                                )
                             ),
-                            color: Colors.green[600],
-                            child: Text(
-                                "easy",
-                                style: TextStyle(fontSize: 20),
-                            )
-                        ),
-                        FlatButton(
-                            onPressed: () {
-                                provider.pressedDifficulty = "medium";
-                            },
-                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: provider
-                                    .pressedDifficulty == "medium" ? Colors.black12 : null)
+                            FlatButton(
+                                onPressed: () {
+                                    provider.pressedDifficulty = "medium";
+                                },
+                                padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: provider
+                                        .pressedDifficulty == "medium" ? Colors.black12 : Colors
+                                        .white
+                                        , width: 3
+                                    )
+                                ),
+                                color: Colors.yellowAccent,
+                                child: Text(
+                                    "medium",
+                                    style: TextStyle(fontSize: 20),
+                                )
                             ),
-                            color: Colors.green[600],
-                            child: Text(
-                                "easy",
-                                style: TextStyle(fontSize: 20),
+                            FlatButton(
+                                onPressed: () {
+                                    provider.pressedDifficulty = "hard";
+                                },
+                                padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(color: provider
+                                        .pressedDifficulty == "hard" ? Colors.black12 : Colors
+                                        .white
+                                        , width: 3)
+                                ),
+                                color: Colors.red,
+                                child: Text(
+                                    "hard",
+                                    style: TextStyle(fontSize: 20),
+                                )
                             )
-                        ),
-                        FlatButton(
-                            onPressed: () {
-                                provider.pressedDifficulty = "hard";
-                            },
-                            padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: provider
-                                    .pressedDifficulty == "hard" ? Colors.black12 : null)
-                            ),
-                            color: Colors.green[600],
-                            child: Text(
-                                "easy",
-                                style: TextStyle(fontSize: 20),
-                            )
-                        )
-                    ],
+                        ],
+                    ),
                 ),
         );
     }

@@ -52,6 +52,7 @@ class AddRecipePageProvider extends ChangeNotifier{
     _stepControllers = [];
     _stepTextFormFields = [];
     _image = null;
+    initializeLists();
   }
 
 
@@ -132,7 +133,7 @@ class AddRecipePageProvider extends ChangeNotifier{
        String ingredients = "";
        String steps = "";
 
-       String difficulty = "easy";
+       String difficulty = _pressedDifficulty;
        String cookTime = "30 minutes";
        String totalTime="4 hours";
        String servings = "10";
@@ -142,7 +143,7 @@ class AddRecipePageProvider extends ChangeNotifier{
 
        int index = 1;
        _ingredientControllers.forEach((controller) {
-         ingredients += index.toString() + ". " + controller.text.replaceAll("\n", "") + "\n";
+         ingredients += controller.text.replaceAll("\n", "") + "\n";
          index++;
        });
 

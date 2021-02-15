@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,7 @@ import 'package:flutter_app/classes/recipeInfo.dart';
 
 import 'package:flutter_app/custom_icons_icons.dart';
 import 'package:flutter_app/functions.dart';
+import 'package:flutter_app/global_variables.dart';
 import 'package:flutter_app/providers/recipe_page_provider.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -18,6 +21,8 @@ class Recipe extends StatelessWidget {
 
     double _newRating;
     bool _rated = false;
+
+    //bool _saved;
 
 
     void initializer(BuildContext context) async {
@@ -39,6 +44,12 @@ class Recipe extends StatelessWidget {
 
     Recipe(RecipeInfo recipeInfo) {
         _recipeInfo = recipeInfo;
+
+
+//        _saved = jsonDecode(RunTimeVariables.prefs
+//            .getString("SavedRecipes"))["savedRecipes"]
+//            .contains(_recipeInfo.id);
+
 
         if (_recipeInfo.difficulty == "easy") {
             _difficultyColor = Colors.green[600];
@@ -71,8 +82,8 @@ class Recipe extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment
                                 .start,
                             children: [
-                                Image(
-                                    image: _recipeInfo.img,
+                                Container(
+                                    alignment: Alignment.topRight,
                                     width: MediaQuery
                                         .of(context)
                                         .size
@@ -81,6 +92,19 @@ class Recipe extends StatelessWidget {
                                         .of(context)
                                         .size
                                         .height * 0.4,
+                                    child: IconButton(
+                                        icon: Icon(Icons.star),
+                                        //_saved ? Icons.star : Icons
+                                        //                                            .star_border, color: Colors.yellow
+                                        onPressed: () {
+                                            //if(!_saved){
+                                                provider.saveRecipe(_recipeInfo);
+                                           // }
+                                        },
+                                    ),
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(image: _recipeInfo.img, fit: BoxFit
+                                            .cover)),
                                 ),
                                 Container(
                                     child: Text(

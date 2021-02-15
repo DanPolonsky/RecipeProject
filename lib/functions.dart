@@ -1,7 +1,7 @@
 
 import 'dart:typed_data';
 import 'dart:convert';
-import 'package:convert/convert.dart';
+
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/recipe_card.dart';
@@ -24,23 +24,7 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
   List<Widget> recipeCardList = [];
 
   recipesInfoDictList.forEach((recipeMapInfo) {
-    Uint8List byteslist = hex.decode(recipeMapInfo["data"]);
-
-    RecipeInfo recipeInfo = RecipeInfo(
-        recipeMapInfo["id"],
-        recipeMapInfo["recipeName"],
-        recipeMapInfo["views"],
-        recipeMapInfo["rating"],
-        recipeMapInfo["difficulty"],
-        recipeMapInfo["author"],
-        recipeMapInfo["ingredients"],
-        recipeMapInfo["steps"],
-        recipeMapInfo["cookTime"],
-        recipeMapInfo["ratings"],
-        recipeMapInfo["totalTime"],
-        recipeMapInfo["servings"],
-        recipeMapInfo["description"],
-        MemoryImage(byteslist));
+    RecipeInfo recipeInfo = RecipeInfo.fromJson(recipeMapInfo);
     recipeCardList.add(RecipeCard(recipeInfo));
   });
 
@@ -69,6 +53,7 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
   print("added recipes");
   return recipeCardList;
 }
+
 
 /// Function sends http request with given [searchValue] [startIndex] and [endIndex] and returns list of
 /// widgets out of json response using the recipeInfoDictListToWidgetList function.

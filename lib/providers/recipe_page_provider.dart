@@ -1,6 +1,11 @@
-import 'dart:io';
+
+
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/classes/local_recipes.dart';
+import 'package:flutter_app/classes/recipeInfo.dart';
+import 'package:flutter_app/global_variables.dart';
 
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:porcupine/porcupine_error.dart';
@@ -9,8 +14,21 @@ import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
-
+//Todo: change to listening function provider
+//Todo: split to two providers
 class RecipePageProvider extends ChangeNotifier {
+
+    bool _errorSavingRecipe;
+    bool get errorSavingRecipe => _errorSavingRecipe;
+
+    void saveRecipe(RecipeInfo info) async{
+        bool _errorSavingRecipe = await LocalRecipes.saveNewRecipe(info);
+        notifyListeners();
+    }
+
+
+
+
 
     FlutterTts _flutterTts = FlutterTts();
     double _volume = 0.7;
@@ -20,26 +38,29 @@ class RecipePageProvider extends ChangeNotifier {
     List<String> _stepsList;
 
     Map<String, int> wordsToNumbers = {
-        "one":1,
-        "two":2,
-        "three":3,
-        "four":4,
-        "five":5,
-        "six":6,
-        "seven":7,
-        "eight":8,
-        "nine":9,
-        "ten":10,
-        "eleven":11,
-        "twelve":12,
-        "thirteen":13,
-        "fourteen":14,
-        "fifteen":15,
-        "sixteen":16,
-        "seventeen":17,
-        "eighteen":18,
-        "nineteen":19,
-        "twenty":20
+        "one": 1,
+        "two": 2,
+        "to": 2,
+        "three": 3,
+        "four": 4,
+        "for": 4,
+        "five": 5,
+        "six": 6,
+        "seven": 7,
+        "eight": 8,
+        "ate": 8,
+        "nine": 9,
+        "ten": 10,
+        "eleven": 11,
+        "twelve": 12,
+        "thirteen": 13,
+        "fourteen": 14,
+        "fifteen": 15,
+        "sixteen": 16,
+        "seventeen": 17,
+        "eighteen": 18,
+        "nineteen": 19,
+        "twenty": 20
     };
 
 
@@ -178,26 +199,43 @@ class RecipePageProvider extends ChangeNotifier {
 
     void readCommand(String command) async {
         print("in read command");
-        List<String> commandList = command.split(" ");
+        List<String> commandList = command.toLowerCase().split(" ");
         print(commandList);
-        if (commandList[0] == "read") {
-            if (commandList[1] == "step") {
-                print("reading");
+
+        if (commandList[0] == "step") {
+            print("reading");
+            try {
+                await _flutterTts.speak(_stepsList[wordsToNumbers[commandList[1]]-1]);
+            }
+            catch (e) {
                 try {
-                    await _flutterTts.speak(_stepsList[wordsToNumbers[commandList[2]]]);
+                    await _flutterTts.speak(_stepsList[int.parse(commandList[1]) - 1]);
                 }
                 catch (e) {
-                    try{
-                        await _flutterTts.speak(_stepsList[int.parse(commandList[2])]);
-                    }
-                    catch(e){
-                        print("command not clear");
-                    }
+                    print("command not clear");
+                }
+                print("command not clear");
+            }
+        }
+
+        else if(commandList[0] == "ingredient"){
+            try {
+                await _flutterTts.speak(_ingredientsList[wordsToNumbers[commandList[1]]-1]);
+            }
+            catch (e) {
+                try {
+                    await _flutterTts.speak(_ingredientsList[int.parse(commandList[1]) - 1]);
+                }
+                catch (e) {
+                    print("command not clear");
                 }
                 print("command not clear");
             }
         }
     }
+
+
+
 
 
 }

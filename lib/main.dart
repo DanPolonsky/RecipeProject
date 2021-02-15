@@ -6,17 +6,17 @@ import 'package:flutter_app/providers/category_provider.dart';
 import 'package:flutter_app/providers/login_page_provider.dart';
 import 'package:flutter_app/providers/recipe_page_provider.dart';
 import 'package:flutter_app/providers/signup_page_provider.dart';
+
 import 'package:flutter_app/widgets/add_recipe_page.dart';
 import 'package:flutter_app/widgets/login_page.dart';
 import 'package:provider/provider.dart';
 import 'classes/data_search.dart';
+import 'classes/local_recipes.dart';
 import 'global_variables.dart';
 import 'providers/search_provider.dart';
 import 'widgets/waiting_page.dart';
 
 void main() async {
-  //return runApp(MyApp2());
-
   return runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => CategoryRecipeListProvider()),
@@ -30,9 +30,12 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
+
+
     return MaterialApp(
         title: 'Text-To-Speech Demo', home: InitialWaitingPage());
   }
@@ -40,6 +43,8 @@ class MyApp extends StatelessWidget {
 
 class Home extends StatelessWidget {
   final List<String> _categories = ["Popular", "Meat", "BreakFast", "Desert"];
+
+
 
   @override
   Widget build(BuildContext context) {
