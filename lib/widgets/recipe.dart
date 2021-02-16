@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
+import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
 
 import 'package:flutter_app/classes/recipeInfo.dart';
 
@@ -22,34 +24,22 @@ class Recipe extends StatelessWidget {
     double _newRating;
     bool _rated = false;
 
-    //bool _saved;
 
-
-    void initializer(BuildContext context) async {
-        var recipeProvider = Provider.of<
-            RecipePageProvider>(context, listen: false);
-        if (!recipeProvider.checkListeningAvailability()) {
-            print("not available");
-            return;
+    void initializer(BuildContext context){
+        var recipePageProvider = Provider.of<RecipePageProvider>(context, listen: false);
+        if(recipePageProvider.listeningFunctionsAvailability()){
+            print("starting to listen");
+            TextToSpeech.setReadingVariables(_recipeInfo.ingredients, _recipeInfo.steps);
+            HotKeyWordDetection.startKeyWordDetection();
         }
-        recipeProvider.initializeReadingVariables(_recipeInfo.ingredients
-            .split("\n"), _recipeInfo.steps.split("\n"));
-        recipeProvider.startKeyWordDetection();
-
-        //Todo: add notifylisteners to show listening for keywords is activated
-        //Todo: call checking function to see if listening is working
-
-        print("initialized listening functions");
+        else{
+            print("not available");
+        }
     }
+
 
     Recipe(RecipeInfo recipeInfo) {
         _recipeInfo = recipeInfo;
-
-
-//        _saved = jsonDecode(RunTimeVariables.prefs
-//            .getString("SavedRecipes"))["savedRecipes"]
-//            .contains(_recipeInfo.id);
-
 
         if (_recipeInfo.difficulty == "easy") {
             _difficultyColor = Colors.green[600];
@@ -73,7 +63,7 @@ class Recipe extends StatelessWidget {
                                     rate(_recipeInfo
                                         .id, _newRating);
                                 }
-                                provider.stopKeyWordDetection();
+                                HotKeyWordDetection.stopKeyWordDetection();
                                 Navigator.of(context).pop();
                             }),
                     ),
@@ -98,7 +88,7 @@ class Recipe extends StatelessWidget {
                                         //                                            .star_border, color: Colors.yellow
                                         onPressed: () {
                                             //if(!_saved){
-                                                provider.saveRecipe(_recipeInfo);
+                                              //  provider.saveRecipe(_recipeInfo);
                                            // }
                                         },
                                     ),
@@ -281,7 +271,7 @@ class Recipe extends StatelessWidget {
                                     )
                                 ),
 
-                                provider.error ? Scaffold.of(context)
+                                provider.listeningError ? Scaffold.of(context)
                                     .showSnackBar(
                                     SnackBar(content: Text("Some Error"), duration: Duration(seconds: 4))
                                 ) : Container()

@@ -1,7 +1,11 @@
 import 'dart:io';
 
 
+import 'package:flutter_app/classes/audio_classes/SpeechRecognition.dart';
+import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
+import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
+
 import 'package:flutter_app/providers/add_recipe_page_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,21 +66,19 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
             addRecipePageProvider.initializeLists();
 
 
-//            if(RunTimeVariables.prefs.getString("SavedRecipes") == null){
-//                Map<String, dynamic> savedRecipes = {"savedRecipes": []};
-//                RunTimeVariables.prefs.setString("SavedRecipes", jsonEncode(savedRecipes));
-//            }
-
-
             File saveRecipes = await LocalRecipes.getLocalFile();
             bool fileExists = await saveRecipes.exists();
             if(!fileExists){
                 LocalRecipes.createJsonFile();
             }
 
-            var recipeProvider = Provider.of<RecipePageProvider>(context, listen: false);
-            // initializes speech detection and keyWord detection for recipePage
-            recipeProvider.initializeAllListeningFunctions();
+
+            // Initializing all audio functions
+            SpeechRecognition(context);
+            TextToSpeech(context);
+            HotKeyWordDetection(context);
+
+
 
             //downloading home page list of recipes
             initializeHomePageData();
