@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
+import 'package:flutter_app/classes/local_recipes.dart';
 
 import 'package:flutter_app/classes/recipeInfo.dart';
 
@@ -25,11 +26,15 @@ class Recipe extends StatelessWidget {
     bool _rated = false;
 
 
+
     void initializer(BuildContext context){
         var recipePageProvider = Provider.of<RecipePageProvider>(context, listen: false);
+
         if(recipePageProvider.listeningFunctionsAvailability()){
             print("starting to listen");
             TextToSpeech.setReadingVariables(_recipeInfo.ingredients, _recipeInfo.steps);
+            recipePageProvider.callSavedRecipe(_recipeInfo.id);
+
             HotKeyWordDetection.startKeyWordDetection();
         }
         else{
@@ -64,6 +69,7 @@ class Recipe extends StatelessWidget {
                                         .id, _newRating);
                                 }
                                 HotKeyWordDetection.stopKeyWordDetection();
+                                provider.savedRecipe = false;
                                 Navigator.of(context).pop();
                             }),
                     ),
@@ -83,13 +89,11 @@ class Recipe extends StatelessWidget {
                                         .size
                                         .height * 0.4,
                                     child: IconButton(
-                                        icon: Icon(Icons.star),
-                                        //_saved ? Icons.star : Icons
-                                        //                                            .star_border, color: Colors.yellow
+                                        icon: Icon(provider.savedRecipe ? Icons.star : Icons.star_border, color:Colors.yellow),
                                         onPressed: () {
-                                            //if(!_saved){
-                                              //  provider.saveRecipe(_recipeInfo);
-                                           // }
+                                            if(!provider.savedRecipe){
+                                                provider.callSaveNewRecipe(_recipeInfo);
+                                            }
                                         },
                                     ),
                                     decoration: BoxDecoration(
@@ -273,8 +277,17 @@ class Recipe extends StatelessWidget {
 
                                 provider.listeningError ? Scaffold.of(context)
                                     .showSnackBar(
-                                    SnackBar(content: Text("Some Error"), duration: Duration(seconds: 4))
-                                ) : Container()
+                                    SnackBar(content: Text("Audio Error"), duration: Duration(seconds: 3))
+                                ) : Container(),
+
+//                                provider.listeningFunctionsAvailability() ? Scaffold.of(context)
+//                                    .showSnackBar(
+//                                    SnackBar(content: Text("Start Commanding!"), duration: Duration(seconds: 3))
+//                                ) : Container()
+                                provider.storageError ? Scaffold.of(context)
+                                    .showSnackBar(
+                                    SnackBar(content: Text("Storage Error"), duration: Duration(seconds: 3))
+                                ) : Container(),
 
                             ],
                         ),
