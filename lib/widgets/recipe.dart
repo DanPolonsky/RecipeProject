@@ -28,18 +28,25 @@ class Recipe extends StatelessWidget {
 
 
     void initializer(BuildContext context){
+        Stopwatch stopwatch = new Stopwatch()..start();
         var recipePageProvider = Provider.of<RecipePageProvider>(context, listen: false);
 
         if(recipePageProvider.listeningFunctionsAvailability()){
             print("starting to listen");
             TextToSpeech.setReadingVariables(_recipeInfo.ingredients, _recipeInfo.steps);
-            recipePageProvider.callSavedRecipe(_recipeInfo.id);
+
+
+            recipePageProvider.callSavedRecipe(_recipeInfo);
+
+
+
 
             HotKeyWordDetection.startKeyWordDetection();
         }
         else{
             print("not available");
         }
+        print('init executed in ${stopwatch.elapsed}');
     }
 
 

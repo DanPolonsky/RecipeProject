@@ -7,6 +7,8 @@ import 'dart:io';
 class LocalRecipes {
     static File _jsonFile;
     static final String _fileName = "localRecipesJson.json";
+    static Map<String, dynamic> localRecipesMap;
+
 
     static Future<File> getLocalFile() async {
         final directory = await getApplicationDocumentsDirectory();
@@ -17,17 +19,14 @@ class LocalRecipes {
 
 
 
-    static SavedRecipeEnum savedRecipe(int recipeId) {
-        Map <String, dynamic> localRecipesJMap =  getJson();
-
-        if (localRecipesJMap != {}) {
-            List<dynamic> localRecipesList = localRecipesJMap["localRecipes"];
-            for(Map<String, dynamic> recipeMap in localRecipesList){
-                if(recipeId == recipeMap["id"]){
-                    return SavedRecipeEnum.saved;
-                }
+    static SavedRecipeEnum savedRecipe(RecipeInfo info) {
+        if (localRecipesMap != {}) {
+            if(localRecipesMap[info.id.toString()]==null){
+              return SavedRecipeEnum.notSaved;
             }
-            return SavedRecipeEnum.notSaved;
+            else{
+              return SavedRecipeEnum.saved;
+            }
 
         }
         else {
@@ -35,15 +34,11 @@ class LocalRecipes {
         }
     }
 
-    static bool saveNewRecipe(RecipeInfo info)  {
-        Map <String, dynamic> localRecipesJMap = getJson();
-
-        if (localRecipesJMap != {}) {
-            localRecipesJMap["localRecipes"].add(info.toJson());
-            String jsonString = jsonEncode(jsonEncode(localRecipesJMap));
+    static bool saveNewRecipe(RecipeInfo info){
+        if (localRecipesMap != {}) {
+          localRecipesMap[info.id.toString()] = info.toJson();
+            String jsonString = jsonEncode(jsonEncode(localRecipesMap));
             _jsonFile.writeAsString(jsonString);
-            print(localRecipesJMap);
-
             return true;
         }
         else {
@@ -52,26 +47,33 @@ class LocalRecipes {
         }
     }
 
-    static Map<String, dynamic> getJson() {
+    static void getJson() {
         try {
-            // Read _jsonString<String> from the _file.
-            String jsonString =  _jsonFile.readAsStringSync();
-            print(jsonString);
-            // Update initialized _json by converting _jsonString<String>->_json<Map>
-            var jsonMap = jsonDecode(jsonString);
-            print(jsonMap);
-            return jsonMap;
+
+
+            String jsonString = _jsonFile.readAsStringSync();
+
+            try{
+              jsonString = jsonDecode(jsonString);
+            }
+            catch(e){
+              null;
+            }
+            Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+
+            localRecipesMap = jsonMap;
+
         }
         catch (e) {
             print('Tried reading _file error: $e');
-            return {};
+            localRecipesMap = {};
         }
     }
 
 
     static void createJsonFile() {
         _jsonFile.createSync();
-        Map<String, dynamic> jsonToWrite = {"localRecipes": []};
+        Map<String, dynamic> jsonToWrite = {"placeHolder":"placeHolder"};
         String jsonString = jsonEncode(jsonToWrite);
         _jsonFile.writeAsString(jsonString);
     }

@@ -33,15 +33,15 @@ class RecipePageProvider extends ChangeNotifier {
         return speechRecognitionAvailable && hotKeywordDetectionAvailable;
     }
 
-    Future<void> callSavedRecipe(int recipeId) async{
-        SavedRecipeEnum savedRecipeStatus = await LocalRecipes.savedRecipe(recipeId);
+    Future<void> callSavedRecipe(RecipeInfo info) async{
+        SavedRecipeEnum savedRecipeStatus = LocalRecipes.savedRecipe(info);
+        print(savedRecipeStatus);
         if(savedRecipeStatus == SavedRecipeEnum.error){
             savedRecipe = false;
             notifyError("storage error");
         }
         else if(savedRecipeStatus == SavedRecipeEnum.saved){
             savedRecipe = true;
-
         }
         else{
             savedRecipe = false;
@@ -49,16 +49,20 @@ class RecipePageProvider extends ChangeNotifier {
     }
 
     //Todo: check if its better to let LocalRecipes access to provider instead of calling functions
+    // ignore: missing_return
     Future<void> callSaveNewRecipe(RecipeInfo recipeInfo){
         if(!_loading){
             _loading = true;
-            bool savedRecipe = LocalRecipes.saveNewRecipe(recipeInfo);
-            if(!savedRecipe){
+            bool saved = LocalRecipes.saveNewRecipe(recipeInfo);
+            if(!saved){
                 savedRecipe = false;
                 notifyError("storage error");
             }
             else{
                 savedRecipe = true;
+                print("saved recipe");
+
+
             }
             _loading = false;
             notifyListeners();
@@ -77,7 +81,6 @@ class RecipePageProvider extends ChangeNotifier {
         else if(errorType == "storage error"){
             _storageError = true;
         }
-
         notifyListeners();
     }
 

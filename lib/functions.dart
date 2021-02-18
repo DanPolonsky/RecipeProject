@@ -15,8 +15,8 @@ import 'global_variables.dart';
 
 
 // Ip and port of server
-const String IP = "192.168.11.105";
-const int PORT = 5356;
+const String IP = "10.100.102.2";
+const int PORT = 60000;
 
 
 /// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.
@@ -129,8 +129,6 @@ void sendNewRecipePost(String recipeName, String ingredients, String steps,
 
 
 
-
-
 Future<String> sendLoginPostRequest(String userName, String password) async{
 
   Encrypter encrypter = await getEncrypter();
@@ -148,9 +146,6 @@ Future<String> sendLoginPostRequest(String userName, String password) async{
         "password":encrypted
       })
   );
-
-      print(loginResponse.statusCode);
-      print(loginResponse.body);
 
       return loginResponse.body;
 }
@@ -174,15 +169,9 @@ Future<String> sendSignUpPostRequest(String userName, String password) async{
           })
   );
 
-  print(signUpResponse.statusCode);
-  print(signUpResponse.body);
 
   return signUpResponse.body;
 }
-
-
-
-
 
 
 /// Function builds a rsa encrypter with a public key received from server

@@ -8,7 +8,7 @@ import 'recipe.dart';
 class RecipeCard extends StatelessWidget {
   RecipeInfo _recipeInfo;
 
-  RecipeCard(RecipeInfo recipeInfo){
+  RecipeCard(RecipeInfo recipeInfo) {
     _recipeInfo = recipeInfo;
   }
 
@@ -17,13 +17,12 @@ class RecipeCard extends StatelessWidget {
     return InkWell(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Recipe(_recipeInfo)
-              )
+            context,
+            CupertinoPageRoute(
+              builder: (context) => Recipe(_recipeInfo),
+            ),
           );
           addView(_recipeInfo.id);
-          
         },
         child: Container(
             margin: EdgeInsets.all(10),
@@ -31,7 +30,8 @@ class RecipeCard extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.4,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                image: DecorationImage(image: _recipeInfo.img, fit: BoxFit.cover)),
+                image:
+                    DecorationImage(image: _recipeInfo.img, fit: BoxFit.cover)),
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return Row(
@@ -99,11 +99,8 @@ class RecipeCard extends StatelessWidget {
                           )
                         ],
                       )
-                    ]
-                );
+                    ]);
               },
-            )
-        )
-    );
+            )));
   }
 }

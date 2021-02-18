@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/category_provider.dart';
 import 'package:flutter_app/providers/recipe_page_provider.dart';
 
+import '../classes/local_recipes.dart';
 import '../global_variables.dart';
 
 import 'package:provider/provider.dart';
@@ -39,45 +40,50 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     }
 
 
+    void authenticationCheck() async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      RunTimeVariables.prefs = prefs;
+
+      if(prefs.getBool("LoggedIn") == null){
+        prefs.setBool("LoggedIn", false);
+        RunTimeVariables.loggedIn = false;
+      }
+
+      else if (prefs.getBool("LoggedIn") == false) {
+        RunTimeVariables.loggedIn = false;
+      }
+
+      else {
+        RunTimeVariables.loggedIn = true;
+      }
+    }
+
     @override
     void initState() {
         super.initState();
         WidgetsBinding.instance.addPostFrameCallback((_) async {
             // check whether the user is logged in or not and store the value in Constants.loggedIn
-            SharedPreferences prefs = await SharedPreferences.getInstance();
 
-            RunTimeVariables.prefs = prefs;
-
-            if(prefs.getBool("LoggedIn") == null){
-                prefs.setBool("LoggedIn", false);
-                RunTimeVariables.loggedIn = false;
-            }
-
-            else if (prefs.getBool("LoggedIn") == false) {
-                RunTimeVariables.loggedIn = false;
-            }
-
-            else {
-                RunTimeVariables.loggedIn = true;
-            }
+            await authenticationCheck();
 
             //Todo: change this shit
             var addRecipePageProvider = Provider.of<AddRecipePageProvider>(context, listen: false);
             addRecipePageProvider.initializeLists();
 
 
-            File saveRecipes = await LocalRecipes.getLocalFile();
-            bool fileExists = await saveRecipes.exists();
+            File savedRecipesFile = await LocalRecipes.getLocalFile();
+            bool fileExists = await savedRecipesFile.exists();
             if(!fileExists){
                 LocalRecipes.createJsonFile();
             }
+            LocalRecipes.getJson();
 
 
             // Initializing all audio functions
             SpeechRecognition(context);
             TextToSpeech(context);
             HotKeyWordDetection(context);
-
 
 
             //downloading home page list of recipes

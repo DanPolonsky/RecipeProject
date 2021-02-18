@@ -11,7 +11,7 @@ import 'package:flutter_app/widgets/add_recipe_page.dart';
 import 'package:flutter_app/widgets/login_page.dart';
 import 'package:provider/provider.dart';
 import 'classes/data_search.dart';
-import 'classes/local_recipes.dart';
+
 import 'global_variables.dart';
 import 'providers/search_provider.dart';
 import 'widgets/waiting_page.dart';
@@ -48,6 +48,8 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Consumer3<CategoryRecipeListProvider, LoginPageProvider,
         SignUpPageProvider>(
       builder: (context, provider, loginProvider, signUpProvider, child) =>
