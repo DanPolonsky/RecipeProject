@@ -49,10 +49,10 @@ class RecipePageProvider extends ChangeNotifier {
     }
 
     //Todo: check if its better to let LocalRecipes access to provider instead of calling functions
-    Future<void> callSaveNewRecipe(RecipeInfo recipeInfo) async{
+    Future<void> callSaveNewRecipe(RecipeInfo recipeInfo){
         if(!_loading){
             _loading = true;
-            bool savedRecipe = await LocalRecipes.saveNewRecipe(recipeInfo);
+            bool savedRecipe = LocalRecipes.saveNewRecipe(recipeInfo);
             if(!savedRecipe){
                 savedRecipe = false;
                 notifyError("storage error");
