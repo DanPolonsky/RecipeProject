@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../global_variables.dart';
+import '../../global_variables.dart';
 
 /// Function is called after successful login or signUp.
 /// Saves to local memory with prefs - login status = true, and saves to runTimeVariables the login status = true for easier access

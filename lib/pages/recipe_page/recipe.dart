@@ -11,7 +11,8 @@ import 'package:flutter_app/classes/recipeInfo.dart';
 import 'package:flutter_app/custom_icons_icons.dart';
 import 'package:flutter_app/functions.dart';
 import 'package:flutter_app/global_variables.dart';
-import 'package:flutter_app/providers/recipe_page_provider.dart';
+import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
+
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -34,13 +35,7 @@ class Recipe extends StatelessWidget {
         if(recipePageProvider.listeningFunctionsAvailability()){
             print("starting to listen");
             TextToSpeech.setReadingVariables(_recipeInfo.ingredients, _recipeInfo.steps);
-
-
             recipePageProvider.callSavedRecipe(_recipeInfo);
-
-
-
-
             HotKeyWordDetection.startKeyWordDetection();
         }
         else{

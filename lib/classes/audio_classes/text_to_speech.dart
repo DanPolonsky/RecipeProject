@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_app/providers/recipe_page_provider.dart';
+import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
+
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 

@@ -4,9 +4,11 @@ import 'dart:convert';
 
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/recipe_card.dart';
+import 'package:flutter_app/recipe_card.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
+
 import 'classes/recipeInfo.dart';
 import 'global_variables.dart';
 
@@ -25,7 +27,7 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
 
   recipesInfoDictList.forEach((recipeMapInfo) {
     RecipeInfo recipeInfo = RecipeInfo.fromJson(recipeMapInfo);
-    recipeCardList.add(RecipeCard(recipeInfo));
+    //recipeCardList.add(RecipeCard(recipeInfo));
   });
 
   return recipeCardList;

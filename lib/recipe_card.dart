@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/recipeInfo.dart';
-import '../functions.dart';
-import 'recipe.dart';
+import 'functions.dart';
+import 'pages/recipe_page/recipe.dart';
 
 // ignore: must_be_immutable
 class RecipeCard extends StatelessWidget {

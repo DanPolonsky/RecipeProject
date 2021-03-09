@@ -50,7 +50,6 @@ class LocalRecipes {
     static void getJson() {
         try {
 
-
             String jsonString = _jsonFile.readAsStringSync();
 
             try{

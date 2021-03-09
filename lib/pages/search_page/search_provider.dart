@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../global_variables.dart';
-import '../functions.dart';
+import '../../global_variables.dart';
+import '../../functions.dart';
 
 
 

@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../global_variables.dart';
-import '../functions.dart';
-import 'package:crypto/crypto.dart';
 
-import 'login_functions.dart';
+import '../../../functions.dart';
+
+
+import '../login_functions.dart';
 
 
 

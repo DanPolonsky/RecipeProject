@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/search_provider.dart';
+import 'package:flutter_app/pages/search_page/recipes_page.dart';
+import 'package:flutter_app/pages/search_page/search_provider.dart';
+import 'package:flutter_app/pages/waiting_page.dart';
 
-import 'package:flutter_app/widgets/recipes_page.dart';
-import 'package:flutter_app/widgets/waiting_page.dart';
 import 'package:provider/provider.dart';
 
 

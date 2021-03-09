@@ -1,9 +1,11 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/providers/login_page_provider.dart';
-import 'package:flutter_app/widgets/signup_page.dart';
+import 'package:flutter_app/pages/authentication/signup_page/signup_page.dart';
+
 import 'package:provider/provider.dart';
+
+import 'login_page_provider.dart';
 
 class LoginPage extends StatelessWidget{
 

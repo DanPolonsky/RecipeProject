@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
-import 'package:flutter_app/providers/recipe_page_provider.dart';
+import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
+
 import 'package:provider/provider.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';

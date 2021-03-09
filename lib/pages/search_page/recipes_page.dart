@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import '../providers/search_provider.dart';
+import 'search_provider.dart';
 
 // ignore: must_be_immutable
 class SearchRecipesPage extends StatelessWidget {
