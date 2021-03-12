@@ -17,7 +17,7 @@ import 'global_variables.dart';
 
 
 // Ip and port of server
-const String IP = "10.100.102.2";
+const String IP = "10.0.2.2";
 const int PORT = 60000;
 
 
@@ -27,7 +27,7 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList){
 
   recipesInfoDictList.forEach((recipeMapInfo) {
     RecipeInfo recipeInfo = RecipeInfo.fromJson(recipeMapInfo);
-    //recipeCardList.add(RecipeCard(recipeInfo));
+    recipeCardList.add(RecipeCard(recipeInfo));
   });
 
   return recipeCardList;
@@ -62,7 +62,6 @@ Future<List<Widget>> getRecipesCardsListByCategory(String category,
 Future<List<Widget>> getRecipesCardsListBySearch(String searchValue,
     int startIndex, int endIndex) async {
   // list of RecipeCard objects
-
 
   print("sending request");
 

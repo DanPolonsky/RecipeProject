@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../global_variables.dart';
 import '../../functions.dart';
+import '../reached_bottom_widget.dart';
 
 class CategoryRecipeListProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -32,6 +33,7 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
     _currentCategory = category;
 
+    _recipeCardList.add(new ReachedBottomWidget());
     await downloadListCategory(true);
   }
 
@@ -48,7 +50,7 @@ class CategoryRecipeListProvider with ChangeNotifier {
       List<Widget> list = await getRecipesCardsListByCategory(
           _currentCategory, _startIndex, _endIndex);
 
-      _recipeCardList.addAll(list);
+      _recipeCardList.insertAll(_recipeCardList.length-1, list);
       _isLoading = false;
 
       if(list.length != 0){

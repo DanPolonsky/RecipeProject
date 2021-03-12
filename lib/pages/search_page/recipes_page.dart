@@ -21,7 +21,6 @@ class SearchRecipesPage extends StatelessWidget {
             provider.downloadListSearch(provider.currentSearchValue);
           }
         },
-
         child: ListView(
           children: List<Widget>.from(provider.searchRecipeCardList),
         ),

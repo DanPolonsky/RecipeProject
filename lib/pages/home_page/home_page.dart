@@ -8,7 +8,6 @@ import 'package:flutter_app/pages/local_recipes_page/local_recipes_page.dart';
 
 import 'package:provider/provider.dart';
 
-
 import '../waiting_page.dart';
 import 'category_provider.dart';
 
@@ -17,6 +16,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("building");
     return Consumer3<CategoryRecipeListProvider, LoginPageProvider,
         SignUpPageProvider>(
       builder: (context, provider, loginProvider, signUpProvider, child) =>
@@ -103,8 +103,8 @@ class RecipeCardList extends StatelessWidget {
             // add loading animation, maxScrollExtent-number of animation pixels
             // ignore: missing_return
             onNotification: (ScrollNotification scrollInfo) {
-              if (scrollInfo.metrics.pixels ==
-                  scrollInfo.metrics.maxScrollExtent) {
+              if (scrollInfo.metrics.pixels + 2 > scrollInfo.metrics.maxScrollExtent - MediaQuery.of(context).size.height * 0.1 &&
+                  scrollInfo.metrics.pixels - 2 < scrollInfo.metrics.maxScrollExtent - MediaQuery.of(context).size.height * 0.1) {
                 provider.downloadListCategory(false);
               }
             },

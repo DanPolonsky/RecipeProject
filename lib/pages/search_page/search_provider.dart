@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../global_variables.dart';
 import '../../functions.dart';
+import '../reached_bottom_widget.dart';
 
 
 
@@ -25,6 +26,7 @@ class SearchRecipeListProvider with ChangeNotifier {
         _endIndex = Constants.endIndex; // change later
         _startIndex = Constants.startIndex;
         _currentSearchValue = searchValue;
+        _recipeCardList.add(new ReachedBottomWidget());
 
         await downloadListSearch(searchValue);
     }
