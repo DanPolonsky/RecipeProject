@@ -58,6 +58,17 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     }
   }
 
+
+  void checkLocalRecipes() async{
+    File savedRecipesFile = await LocalRecipes.getLocalFile();
+    bool fileExists = await savedRecipesFile.exists();
+    if (!fileExists) {
+      LocalRecipes.createJsonFile();
+    }
+    LocalRecipes.getJson();
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -71,19 +82,14 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
           Provider.of<AddRecipePageProvider>(context, listen: false);
       addRecipePageProvider.initializeLists();
 
-      File savedRecipesFile = await LocalRecipes.getLocalFile();
-      bool fileExists = await savedRecipesFile.exists();
-      if (!fileExists) {
-        LocalRecipes.createJsonFile();
-      }
-      LocalRecipes.getJson();
+      await checkLocalRecipes();
 
       // Initializing all audio functions
       SpeechRecognition(context);
       TextToSpeech(context);
       HotKeyWordDetection(context);
 
-      //downloading home page list of recipes
+      // Downloading home page list of recipes
       initializeHomePageData();
     });
   }
@@ -102,6 +108,9 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
   }
 }
 
+
+
+
 class RecipesWaitingPage extends StatefulWidget {
   @override
   _RecipesWaitingPageState createState() => _RecipesWaitingPageState();
@@ -110,6 +119,7 @@ class RecipesWaitingPage extends StatefulWidget {
 class _RecipesWaitingPageState extends State<RecipesWaitingPage> {
   @override
   Widget build(BuildContext context) {
+    print("building wait");
     return Center(
       child: CircularProgressIndicator(),
     );

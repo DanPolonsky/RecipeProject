@@ -4,8 +4,7 @@ import 'package:flutter_app/classes/data_search.dart';
 import 'package:flutter_app/pages/add_recipe_page/add_recipe_page.dart';
 import 'package:flutter_app/pages/authentication/login_page/login_page.dart';
 
-import 'package:flutter_app/pages/authentication/login_page/login_page_provider.dart';
-import 'package:flutter_app/pages/authentication/signup_page/signup_page_provider.dart';
+
 import 'package:flutter_app/pages/local_recipes_page/local_recipes_page.dart';
 
 import 'package:provider/provider.dart';
@@ -15,130 +14,144 @@ import '../waiting_page.dart';
 import 'category_provider.dart';
 
 class Home extends StatelessWidget {
-  final List<String> _categories = ["Popular", "Meat", "BreakFast", "Desert"];
+    final List<String> _categories = ["Popular", "Meat", "BreakFast", "Desert", "Vegan", "Fast"];
 
-  @override
-  Widget build(BuildContext context) {
-    print("building");
-    return Consumer3<CategoryRecipeListProvider, LoginPageProvider,
-        SignUpPageProvider>(
-      builder: (context, provider, loginProvider, signUpProvider, child) =>
-          Scaffold(
-        appBar: AppBar(
-          title: Text("Testing App"),
-          centerTitle: true,
-
-
-          actions: [
-            IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () async {
-                  String result = await showSearch(
-                      context: context, delegate: DataSearch());
-                  print(result);
-                })
-          ],
-        ),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              DrawerHeader(
-                child: Text('Drawer Header'),
+    @override
+    Widget build(BuildContext context) {
+     
+        return Consumer<CategoryRecipeListProvider>(
+            builder: (context, provider, child) =>
+                
+            Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                    image: DecorationImage(
+                        image: AssetImage("assets/background2.jpg"), fit: BoxFit.cover
+                    )
                 ),
-              ),
-              RunTimeVariables.loggedIn
-                  ? ListTile(
-                      title: Text("Add recipe"),
-                      leading: Icon(Icons.add),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => new AddRecipePage()),
-                        );
-
-                      })
-                  : ListTile(
-                      title: Text("Login"),
-                      leading: Icon(Icons.login),
-                      onTap: () {
-                        Navigator.pop(context);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-
-                      },
+                child:Scaffold(
+                    backgroundColor: Colors.transparent,
+                    appBar: AppBar(
+                        title: Text("Testing App"),
+                        centerTitle: true,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0,
+                        actions: [
+                            IconButton(
+                                icon: Icon(Icons.search),
+                                onPressed: () async {
+                                    String result = await showSearch(
+                                        context: context, delegate: DataSearch());
+                                    print(result);
+                                })
+                        ],
                     ),
-              ListTile(
-                title: Text("Saved recipes"),
-                leading: Icon(Icons.star),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LocalRecipesPage()),
-                  );
-
-                },
-              ),
-            ],
-          ),
-        ),
-        body: Stack(children: [
-          Container(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  for (String category in _categories)
-                    Container(
-                      margin: EdgeInsets.all(4),
-                      child: RaisedButton(
-                        onPressed: () =>
-                            provider.initializeNewCategory(category),
-                        child: Text(category),
-                      ),
+                    drawer: Drawer(
+                        child: ListView(
+                            children: [
+                                DrawerHeader(
+                                    child: Text('Drawer Header'),
+                                    decoration: BoxDecoration(
+                                        color: Colors.blue,
+                                    ),
+                                ),
+                                RunTimeVariables.loggedIn
+                                    ? ListTile(
+                                    title: Text("Add recipe"),
+                                    leading: Icon(Icons.add),
+                                    onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => new AddRecipePage()),
+                                        );
+                                    })
+                                    : ListTile(
+                                    title: Text("Login"),
+                                    leading: Icon(Icons.login),
+                                    onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => LoginPage()),
+                                        );
+                                    },
+                                ),
+                                ListTile(
+                                    title: Text("Saved recipes"),
+                                    leading: Icon(Icons.star),
+                                    onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) =>
+                                                LocalRecipesPage()),
+                                        );
+                                    },
+                                ),
+                            ],
+                        ),
                     ),
-                ],
-              ),
-            ),
-          ),
-          provider.isLoading ? RecipesWaitingPage() : RecipeCardList()
-        ]),
-      ),
-    );
-  }
+                    body: Stack(children: [
+                        Container(
+                            child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                    children: [
+                                        for (String category in _categories)
+                                            Container(
+                                                margin: EdgeInsets.all(6),
+                                                child: RaisedButton(
+                                                    elevation: 7.0,
+                                                    color: Colors.white,
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10),
+                                                        side: category == provider.currentCategory ? BorderSide(width: 1.5, color: Colors.grey[600]) : BorderSide(color: Colors.transparent )
+                                                    ),
+                                                    onPressed: () =>
+                                                        provider.initializeNewCategory(category),
+                                                    child: Text(category),
+                                                ),
+                                            ),
+                                    ],
+                                ),
+                            ),
+                        ),
+                        provider.waitingPage ? RecipesWaitingPage() : RecipeCardList()
+                    ]),
+                ),
+        )
+
+            );
+
+
+    }
 }
 
 class RecipeCardList extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<CategoryRecipeListProvider>(
-      builder: (context, provider, child) => Container(
-        margin: EdgeInsets.only(top: 55),
-        child: NotificationListener<ScrollNotification>(
+    @override
+    Widget build(BuildContext context) {
 
-            // add loading animation, maxScrollExtent-number of animation pixels
-            // ignore: missing_return
-            onNotification: (ScrollNotification scrollInfo) {
-              if (scrollInfo.metrics.pixels + 2 >
-                      scrollInfo.metrics.maxScrollExtent -
-                          MediaQuery.of(context).size.height * 0.1 &&
-                  scrollInfo.metrics.pixels - 2 <
-                      scrollInfo.metrics.maxScrollExtent -
-                          MediaQuery.of(context).size.height * 0.1) {
-                provider.downloadListCategory(false);
-              }
-            },
-            child: SingleChildScrollView(
-              controller: provider.scrollController,
-              child: Column(children: provider.categoryRecipeCardList),
-            )),
-      ),
-    );
-  }
+        return Consumer<CategoryRecipeListProvider>(
+            builder: (context, provider, child) =>
+                Container(
+                    margin: EdgeInsets.only(top: 55),
+                    child: NotificationListener<ScrollNotification>(
+                        // ignore: missing_return
+                        onNotification: (ScrollNotification scrollInfo) {
+                            if (scrollInfo.metrics.pixels > scrollInfo.metrics
+                                .maxScrollExtent - MediaQuery
+                                .of(context)
+                                .size
+                                .height) {
+                                provider.downloadListCategory();
+                            }
+                        },
+                        child: SingleChildScrollView(
+                            controller: provider.scrollController,
+                            child: Column(children: provider.categoryRecipeCardList),
+                        )),
+                ),
+        );
+    }
 }

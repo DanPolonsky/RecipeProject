@@ -70,13 +70,15 @@ class AddRecipePageProvider extends ChangeNotifier{
 
   void addIngredientTextFormField(bool notify){
     final ingredientController = TextEditingController();
+    FocusNode focusNode = FocusNode();
     _ingredientControllers.add(ingredientController);
 
     _ingredientTextFormFields.add(Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
+        focusNode: focusNode,
         controller: ingredientController,
-        autofocus: true,
+
         decoration: InputDecoration(
             hintText: 'Enter ingredient...'
         ),
@@ -89,6 +91,7 @@ class AddRecipePageProvider extends ChangeNotifier{
         },
       ),
     ));
+    focusNode.requestFocus();
     if(notify) {
       notifyListeners();
     }
@@ -97,12 +100,12 @@ class AddRecipePageProvider extends ChangeNotifier{
 
   void addStepTextFormField(bool notify){
     final stepController = TextEditingController();
-
+    FocusNode focusNode = FocusNode();
     _stepControllers.add(stepController);
     _stepTextFormFields.add(Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
-
+        focusNode: focusNode,
         controller: stepController,
         autofocus: true,
         decoration: InputDecoration(
@@ -117,6 +120,7 @@ class AddRecipePageProvider extends ChangeNotifier{
         },
       ),
     ));
+    focusNode.requestFocus();
     if(notify) {
       notifyListeners();
     }
@@ -130,31 +134,31 @@ class AddRecipePageProvider extends ChangeNotifier{
 
 
        String recipeName = _recipeNameController.text;
-       String ingredients = "";
-       String steps = "";
+       List<String> ingredients = [];
+       List<String> steps = [];
 
        String difficulty = _pressedDifficulty;
        String cookTime = "30 minutes";
        String totalTime="4 hours";
        String servings = "10";
        String description = "this is a recipe description";
-       String categories = "meat,";
+       String categories = "popular,";
+
+
+
+       _ingredientControllers.forEach((controller) {
+         ingredients.add(controller.text);
+       });
 
 
        int index = 1;
-       _ingredientControllers.forEach((controller) {
-         ingredients += controller.text.replaceAll("\n", "") + "\n";
-         index++;
-       });
-
-       index = 1;
        _stepControllers.forEach((controller) {
-         steps += index.toString() + ". " + controller.text.replaceAll("\n", "") + "\n";
+         steps.add(index.toString() + ". " + controller.text);
          index++;
        });
 
        sendNewRecipePost(recipeName, ingredients, steps,
-           _image.readAsBytesSync(), difficulty, cookTime, totalTime, servings, description, categories,_imageType);
+           _image.readAsBytesSync(), difficulty, cookTime, totalTime, servings, description, categories, _imageType);
 
       _closeAddRecipePage = true;
      }
@@ -162,8 +166,9 @@ class AddRecipePageProvider extends ChangeNotifier{
    }
 
    void initializeLists(){
-    addIngredientTextFormField(false);
     addStepTextFormField(false);
+    addIngredientTextFormField(false);
+
    }
 
 

@@ -6,13 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'add_recipe_page_provider.dart';
 
-class AddRecipePage extends StatefulWidget {
-    @override
-    _AddRecipePageState createState() => _AddRecipePageState();
-}
-
-class _AddRecipePageState extends State<AddRecipePage> {
-    @override
+class AddRecipePage extends StatelessWidget {
     Widget build(BuildContext context) {
         return Consumer<AddRecipePageProvider>(
             builder: (BuildContext context, provider, Widget child) =>
@@ -20,6 +14,13 @@ class _AddRecipePageState extends State<AddRecipePage> {
                     appBar: AppBar(
                         title: Text("add recipe page"),
                         centerTitle: true,
+                        leading: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: (){
+                                provider.resetParameters();
+                                Navigator.pop(context);
+                            },
+                        ),
                     ),
                     body: Form(
                         key: provider.formKey,
@@ -65,7 +66,7 @@ class _AddRecipePageState extends State<AddRecipePage> {
                                             ),
                                         ),
 
-                                        Text("steps",
+                                        Text("Steps",
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold, fontSize: 30)
                                         ),
