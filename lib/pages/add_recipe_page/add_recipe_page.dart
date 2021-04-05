@@ -87,6 +87,7 @@ class AddRecipePage extends StatelessWidget {
                                                 print("pressed submit");
                                                 provider.sendRecipePost();
                                                 if (provider.closeAddRecipePage) {
+                                                    provider.resetParameters();
                                                     Navigator.pop(context);
                                                 }
                                             },

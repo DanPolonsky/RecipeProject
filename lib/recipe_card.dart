@@ -31,7 +31,7 @@ class RecipeCard extends StatelessWidget {
 		child: Container(
 			margin: EdgeInsets.all(10),
 			width: MediaQuery.of(context).size.width * 0.97,
-			height: MediaQuery.of(context).size.height * 0.4,
+			height: _recipeInfo.ratio >= 1 ? MediaQuery.of(context).size.height * 0.4 : MediaQuery.of(context).size.height * 0.6,
 			
 			decoration: BoxDecoration(
 				borderRadius: BorderRadius.circular(10.0),
@@ -56,7 +56,7 @@ class RecipeCard extends StatelessWidget {
 						children: [
 						  Container(
 							margin: EdgeInsets.all(10),
-							width: constraints.maxWidth * 0.5,
+							width: constraints.maxWidth * 0.6,
 							child: Text(
 							  "${_recipeInfo.recipeName}",
 							  maxLines: 2,

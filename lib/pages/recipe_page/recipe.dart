@@ -106,10 +106,6 @@ class Recipe extends StatelessWidget {
                                     ),
                                 ),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(20.0),
-                                        bottomRight: Radius.circular(20.0),
-                                    ),
                                     image: DecorationImage(image: _recipeInfo
                                         .img, fit: BoxFit
                                         .cover)),
@@ -213,10 +209,7 @@ class Recipe extends StatelessWidget {
                                                             style: TextStyle(fontSize: 20),
                                                         )),
                                                     Container(
-                                                        width: MediaQuery
-                                                            .of(context)
-                                                            .size
-                                                            .width * 0.25,
+
                                                         child: Column(
                                                             children: [
                                                                 Icon(Icons
@@ -227,10 +220,7 @@ class Recipe extends StatelessWidget {
                                                         ),
                                                     ),
                                                     Container(
-                                                        width: MediaQuery
-                                                            .of(context)
-                                                            .size
-                                                            .width * 0.25,
+
                                                         child: Column(
                                                             children: [
                                                                 Icon(CustomIcons
@@ -241,10 +231,7 @@ class Recipe extends StatelessWidget {
                                                         ),
                                                     ),
                                                     Container(
-                                                        width: MediaQuery
-                                                            .of(context)
-                                                            .size
-                                                            .width * 0.25,
+
                                                         child: Column(
                                                             children: [
                                                                 Icon(CustomIcons
