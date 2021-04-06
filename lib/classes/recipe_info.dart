@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:convert/convert.dart';
 
+import 'enums.dart';
+
 class RecipeInfo {
     int id;
 
@@ -19,6 +21,7 @@ class RecipeInfo {
     String description;
     MemoryImage img;
     double ratio;
+    SavedRecipeEnum saved;
 
     RecipeInfo.fromJson(Map<String, dynamic> json)
         : id = json["id"],
@@ -60,7 +63,7 @@ class RecipeInfo {
 
     RecipeInfo(int id, String recipeName, int views, double rating,
                String difficulty, String author, String ingredients, String steps, String cookTime,
-               int ratings, String totalTime, int servings, String description, MemoryImage img, double ratio) {
+               int ratings, String totalTime, int servings, String description, MemoryImage img, double ratio, {SavedRecipeEnum saved:SavedRecipeEnum.notSaved}) {
         this.id = id;
         this.recipeName = recipeName;
         this.views = views;
@@ -77,5 +80,6 @@ class RecipeInfo {
         this.servings = servings;
         this.description = description;
         this.ratio = ratio;
+        this.saved = saved;
     }
 }

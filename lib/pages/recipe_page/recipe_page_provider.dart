@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/classes/enums.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
-import 'package:flutter_app/classes/recipeInfo.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
 
 
 //Todo: change to listening function provider
@@ -33,8 +33,8 @@ class RecipePageProvider extends ChangeNotifier {
         return speechRecognitionAvailable && hotKeywordDetectionAvailable;
     }
 
-    Future<void> callSavedRecipe(RecipeInfo info) async{
-        SavedRecipeEnum savedRecipeStatus = LocalRecipes.savedRecipe(info);
+    Future<void> checkRecipeSavedStatus(RecipeInfo info) async{
+        SavedRecipeEnum savedRecipeStatus = info.saved;
         print(savedRecipeStatus);
         if(savedRecipeStatus == SavedRecipeEnum.error){
             savedRecipe = false;

@@ -135,7 +135,7 @@ class RecipeCardList extends StatelessWidget {
         return Consumer<CategoryRecipeListProvider>(
             builder: (context, provider, child) =>
                 Container(
-                    margin: EdgeInsets.only(top: 55),
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1),
                     child: NotificationListener<ScrollNotification>(
                         // ignore: missing_return
                         onNotification: (ScrollNotification scrollInfo) {

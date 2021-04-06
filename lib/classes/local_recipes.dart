@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter_app/classes/recipeInfo.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
 import 'package:flutter_app/classes/enums.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';

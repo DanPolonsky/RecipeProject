@@ -32,20 +32,22 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
     /// Function initializes the recipeCardsList to a new category
     void initializeNewCategory(String category) async {
-        _waitingPage = true;
-        notifyListeners();
-        // resetting all parameters for new category
-        _recipeCardList = [];
-        _amount = Constants.loadingAmount;
-        _endIndex = Constants.endIndex; // change later
-        _startIndex = Constants.startIndex;
+        if(!_waitingPage){
+          _waitingPage = true;
+          notifyListeners();
+          // resetting all parameters for new category
+          _recipeCardList = [];
+          _amount = Constants.loadingAmount;
+          _endIndex = Constants.endIndex; // change later
+          _startIndex = Constants.startIndex;
 
-        _currentCategory = category;
+          _currentCategory = category;
 
-        _recipeCardList.add(new ReachedBottomWidget());
-        await downloadListCategory();
-        _waitingPage = false;
-        notifyListeners();
+          _recipeCardList.add(new ReachedBottomWidget());
+          await downloadListCategory();
+          _waitingPage = false;
+          notifyListeners();
+        }
     }
 
     /// Function downloads an amount of recipeCards from the server using the function getRecipesCardsListByCategory

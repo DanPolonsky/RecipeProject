@@ -6,7 +6,7 @@ import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
 
-import 'package:flutter_app/classes/recipeInfo.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
 
 import 'package:flutter_app/custom_icons_icons.dart';
 import 'package:flutter_app/functions.dart';
@@ -28,20 +28,18 @@ class Recipe extends StatelessWidget {
 
 
     void initializer(BuildContext context) {
-        Stopwatch stopwatch = new Stopwatch()
-            ..start();
         var recipePageProvider = Provider.of<RecipePageProvider>(context, listen: false);
 
         if (recipePageProvider.listeningFunctionsAvailability()) {
             print("starting to listen");
             TextToSpeech.setReadingVariables(_recipeInfo.ingredients, _recipeInfo.steps);
-            recipePageProvider.callSavedRecipe(_recipeInfo);
+            recipePageProvider.checkRecipeSavedStatus(_recipeInfo);
             HotKeyWordDetection.startKeyWordDetection();
         }
         else {
             print("not available");
         }
-        print('init executed in ${stopwatch.elapsed}');
+
     }
 
 

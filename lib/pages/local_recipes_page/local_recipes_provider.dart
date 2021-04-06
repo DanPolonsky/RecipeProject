@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
-import 'package:flutter_app/classes/recipeInfo.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
 import 'package:flutter_app/recipe_card.dart';
 
 class LocalRecipesProvider extends ChangeNotifier {
@@ -23,11 +23,13 @@ class LocalRecipesProvider extends ChangeNotifier {
 
   void getSavedRecipes() {
     Map<String, dynamic> savedRecipesMap = LocalRecipes.localRecipesMap;
+    RecipeInfo info;
+
 
     if (savedRecipesMap != {}) {
       savedRecipesMap.forEach((key, recipeJsonMap) {
         if(key.toLowerCase() != "placeholder"){
-          RecipeInfo info = RecipeInfo.fromJson(recipeJsonMap);
+          info = RecipeInfo.fromJson(recipeJsonMap);
           _localRecipes.add(RecipeCard(info));
         }
 
