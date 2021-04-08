@@ -41,6 +41,7 @@ class RecipeInfo {
             ratio = json["ratio"];
 
 
+
     Map<String, dynamic> toJson() =>
         {
             "id": id,

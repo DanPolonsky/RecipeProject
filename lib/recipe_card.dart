@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/classes/recipe_info.dart';
+import 'package:flutter_app/pages/home_page/category_provider.dart';
+import 'package:provider/provider.dart';
 import 'classes/enums.dart';
 import 'functions.dart';
 import 'pages/recipe_page/recipe.dart';
@@ -9,11 +11,11 @@ import 'pages/recipe_page/recipe.dart';
 // ignore: must_be_immutable
 class RecipeCard extends StatelessWidget {
   RecipeInfo _recipeInfo;
+  RecipeInfo get recipeInfo => _recipeInfo;
 
 
   RecipeCard(RecipeInfo recipeInfo) {
     _recipeInfo = recipeInfo;
-
   }
 
   @override
@@ -74,12 +76,12 @@ class RecipeCard extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.all(4),
                             child: Icon(
-                              _recipeInfo.saved == SavedRecipeEnum.saved ? Icons.star : Icons.star_border,
+                              _recipeInfo.saved == SavedRecipeEnum.saved
+                                  ? Icons.star
+                                  : Icons.star_border,
                               color: Colors.yellow,
                               size: 24.0,
-
                             ),
-
                           ),
                           Container(
                             margin: EdgeInsets.all(4),

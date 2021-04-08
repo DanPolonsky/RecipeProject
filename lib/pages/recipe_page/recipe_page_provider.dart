@@ -1,9 +1,12 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/enums.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
 import 'package:flutter_app/classes/recipe_info.dart';
+
+import '../../functions.dart';
 
 
 //Todo: change to listening function provider
@@ -25,6 +28,23 @@ class RecipePageProvider extends ChangeNotifier {
 
 
     bool _loading = false;
+
+
+    double newRating;
+    bool rated = false;
+
+
+
+
+    void reset(RecipeInfo recipeInfo){
+        if (rated) {
+            rate(recipeInfo.id, newRating);
+        }
+
+        HotKeyWordDetection.stopKeyWordDetection();
+        savedRecipe = false;
+        rated = false;
+    }
 
 
     bool listeningFunctionsAvailability(){
@@ -53,6 +73,7 @@ class RecipePageProvider extends ChangeNotifier {
     Future<void> callSaveNewRecipe(RecipeInfo recipeInfo){
         if(!_loading){
             _loading = true;
+            recipeInfo.saved = SavedRecipeEnum.saved;
             bool saved = LocalRecipes.saveNewRecipe(recipeInfo);
             if(!saved){
                 savedRecipe = false;
@@ -60,6 +81,7 @@ class RecipePageProvider extends ChangeNotifier {
             }
             else{
                 savedRecipe = true;
+
                 print("saved recipe");
 
 

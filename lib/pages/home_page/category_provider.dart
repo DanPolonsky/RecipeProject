@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
+import 'package:flutter_app/recipe_card.dart';
 import '../../global_variables.dart';
 import '../../functions.dart';
 import '../reached_bottom_widget.dart';
@@ -29,6 +31,16 @@ class CategoryRecipeListProvider with ChangeNotifier {
     ScrollController get scrollController => _scrollController;
 
 
+
+    void updateRecipeInfo(RecipeInfo recipeInfo){
+        int index = _recipeCardList.indexWhere((element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
+        _recipeCardList[index] = RecipeCard(recipeInfo);
+        notifyListeners();
+    }
+
+    void resetPage(){
+        notifyListeners();
+    }
 
     /// Function initializes the recipeCardsList to a new category
     void initializeNewCategory(String category) async {

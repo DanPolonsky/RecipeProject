@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_app/classes/enums.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
 import 'package:flutter_app/classes/recipe_info.dart';
 import 'package:flutter_app/recipe_card.dart';
@@ -16,9 +17,16 @@ class LocalRecipesProvider extends ChangeNotifier {
   bool get loadedRecipes => _loadedRecipes;
 
 
+
+  // Parameters for rating the recipe/
+
+
+
+
   void reset(){
     _localRecipes = [];
     _loadedRecipes = false;
+
   }
 
   void getSavedRecipes() {
@@ -28,8 +36,9 @@ class LocalRecipesProvider extends ChangeNotifier {
 
     if (savedRecipesMap != {}) {
       savedRecipesMap.forEach((key, recipeJsonMap) {
-        if(key.toLowerCase() != "placeholder"){
+        if(key != "placeHolder"){
           info = RecipeInfo.fromJson(recipeJsonMap);
+          info.saved = SavedRecipeEnum.saved;
           _localRecipes.add(RecipeCard(info));
         }
 

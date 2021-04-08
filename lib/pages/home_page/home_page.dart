@@ -6,6 +6,7 @@ import 'package:flutter_app/pages/authentication/login_page/login_page.dart';
 
 
 import 'package:flutter_app/pages/local_recipes_page/local_recipes_page.dart';
+import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -18,9 +19,9 @@ class Home extends StatelessWidget {
 
     @override
     Widget build(BuildContext context) {
-     
-        return Consumer<CategoryRecipeListProvider>(
-            builder: (context, provider, child) =>
+        print("rebuild");
+        return Consumer2<CategoryRecipeListProvider, RecipePageProvider>(
+            builder: (context, provider, recipeProvider, child) =>
                 
             Container(
                 decoration: BoxDecoration(
@@ -75,6 +76,8 @@ class Home extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(builder: (context) => LoginPage()),
                                         );
+                                        provider.resetPage();
+                                        print("reseting");
                                     },
                                 ),
                                 ListTile(
@@ -139,6 +142,7 @@ class RecipeCardList extends StatelessWidget {
                     child: NotificationListener<ScrollNotification>(
                         // ignore: missing_return
                         onNotification: (ScrollNotification scrollInfo) {
+                            scrollInfo.
                             if (scrollInfo.metrics.pixels > scrollInfo.metrics
                                 .maxScrollExtent - MediaQuery
                                 .of(context)
@@ -149,6 +153,7 @@ class RecipeCardList extends StatelessWidget {
                         },
                         child: SingleChildScrollView(
                             controller: provider.scrollController,
+
                             child: Column(children: provider.categoryRecipeCardList),
                         )),
                 ),
