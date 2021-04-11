@@ -5,6 +5,9 @@ import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/enums.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
 import 'package:flutter_app/classes/recipe_info.dart';
+import 'package:flutter_app/pages/home_page/category_provider.dart';
+import 'package:flutter_app/pages/search_page/search_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../functions.dart';
 
@@ -44,6 +47,20 @@ class RecipePageProvider extends ChangeNotifier {
         HotKeyWordDetection.stopKeyWordDetection();
         savedRecipe = false;
         rated = false;
+    }
+
+    void updateRecipeInfo(BuildContext context, RecipeInfo recipeInfo){
+      final categoryProvider =
+      Provider.of<CategoryRecipeListProvider>(context,
+          listen: false);
+
+      categoryProvider.updateRecipeInfo(recipeInfo);
+
+      final searchProvider =
+      Provider.of<SearchRecipeListProvider>(context,
+          listen: false);
+
+      searchProvider.updateRecipeInfo(recipeInfo);
     }
 
 

@@ -9,7 +9,7 @@ import 'package:flutter_app/recipe_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';
 
-import 'classes/enums.dart';
+
 import 'classes/local_recipes.dart';
 import 'classes/recipe_info.dart';
 import 'global_variables.dart';
@@ -17,7 +17,7 @@ import 'global_variables.dart';
 /// A collection of network functions to interact with the server and general functions.
 
 // Ip and port of server
-const String IP = "10.0.2.2";
+const String IP = "10.100.102.2";
 const int PORT = 60000;
 
 /// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.
@@ -37,7 +37,7 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList) {
 /// widgets out of json response using the recipeInfoDictListToWidgetList function.
 Future<List<Widget>> downloadRecipesByCategory(String category, int startIndex,
     int endIndex) async {
-  try {
+  // try {
     // sending request and getting and saving response in response
     print("sending request");
     http.Response response = await http.get(Uri.http(
@@ -52,11 +52,11 @@ Future<List<Widget>> downloadRecipesByCategory(String category, int startIndex,
 
     print("added recipes");
     return recipeCardList;
-  } catch (error) {
-
-    sleep(const Duration(seconds: 4));
-    return downloadRecipesByCategory(category, startIndex, endIndex);
-  }
+  // } catch (error) {
+  //
+  //   sleep(const Duration(seconds: 4));
+  //   return downloadRecipesByCategory(category, startIndex, endIndex);
+  // }
 }
 
 /// Function sends http request with given [searchValue] [startIndex] and [endIndex] and returns list of

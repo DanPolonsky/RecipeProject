@@ -1,48 +1,68 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../global_variables.dart';
+import 'package:flutter_app/classes/recipe_info.dart';
 import '../../functions.dart';
+import '../../global_variables.dart';
+
+import '../../recipe_card.dart';
 import '../reached_bottom_widget.dart';
 
-
-
-
 class SearchRecipeListProvider with ChangeNotifier {
-    bool _isLoading = false;
+  bool _isLoading = false;
 
-    List<Widget> _recipeCardList = [];
-    int _amount = Constants.loadingAmount;
-    int _endIndex = Constants.endIndex; // change later
-    int _startIndex = Constants.startIndex;
+  List<Widget> _recipeCardList = [];
+  int _amount = Constants.loadingAmount;
+  int _endIndex = Constants.endIndex; // change later
+  int _startIndex = Constants.startIndex;
 
-    String _currentSearchValue;
-    String get currentSearchValue => _currentSearchValue;
+  String _currentSearchValue;
 
-    List<Widget> get searchRecipeCardList => _recipeCardList;
+  String get currentSearchValue => _currentSearchValue;
 
-    void initializeNewSearch(String searchValue) async {
-        _recipeCardList = [];
-        _amount = Constants.loadingAmount;
-        _endIndex = Constants.endIndex; // change later
-        _startIndex = Constants.startIndex;
-        _currentSearchValue = searchValue;
-        _recipeCardList.add(new ReachedBottomWidget());
+  List<Widget> get searchRecipeCardList => _recipeCardList;
 
-        await downloadListSearch(searchValue);
+  bool _waitingPage = false;
+
+  bool get waitingPage => _waitingPage;
+
+
+
+  void updateRecipeInfo(RecipeInfo recipeInfo) {
+    try{
+      int index = _recipeCardList.indexWhere((element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
+
+      _recipeCardList[index] = RecipeCard(recipeInfo);
+      notifyListeners();
     }
+    catch(error){}
+  }
 
-    void downloadListSearch(String searchValue) async {
-        if (!_isLoading) {
-            _isLoading = true;
-            List<Widget> list = await getRecipesCardsListBySearch(
-                searchValue , _startIndex, _endIndex);
-            _recipeCardList.addAll(list);
-            notifyListeners();
-            _isLoading = false;
-            _startIndex = _endIndex;
-            _endIndex += _amount;
-        }
+  void initializeNewSearch(String searchValue) async {
+
+      // resetting all parameters for new category
+      _recipeCardList = [];
+      _amount = Constants.loadingAmount;
+      _endIndex = Constants.endIndex; // change later
+      _startIndex = Constants.startIndex;
+
+      _currentSearchValue = searchValue;
+
+      _recipeCardList.add(new ReachedBottomWidget());
+      await downloadListSearch(searchValue);
+
+
+  }
+
+  void downloadListSearch(String searchValue) async {
+    if (!_isLoading) {
+      _isLoading = true;
+      List<Widget> list = await getRecipesCardsListBySearch(
+          searchValue, _startIndex, _endIndex);
+      _recipeCardList.insertAll(_recipeCardList.length - 1, list);
+      notifyListeners();
+      _isLoading = false;
+      _startIndex = _endIndex;
+      _endIndex += _amount;
     }
+  }
 }
-
-

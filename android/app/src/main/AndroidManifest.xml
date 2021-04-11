@@ -9,10 +9,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:name="io.flutter.app.FlutterApplication"
         android:label="flutter_app"
         android:icon="@mipmap/ic_launcher">
-        android:usesCleartextTraffic="true"
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

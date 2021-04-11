@@ -7,7 +7,7 @@ import 'package:flutter_app/classes/recipe_info.dart';
 
 import 'package:flutter_app/custom_icons_icons.dart';
 
-import 'package:flutter_app/pages/home_page/category_provider.dart';
+
 
 import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 
@@ -253,7 +253,7 @@ class ImageContainer extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [Colors.black, Colors.transparent],
-            ).createShader(Rect.fromLTRB(0, _height*0.18, rect.width, rect.height));
+            ).createShader(Rect.fromLTRB(0, _height*0.21, rect.width, rect.height));
           },
           blendMode: BlendMode.dstIn,
           child: Container(
@@ -269,13 +269,7 @@ class ImageContainer extends StatelessWidget {
                       icon: Icon(Icons.arrow_back),
                       onPressed: () {
                         provider.reset(_recipeInfo);
-
-                        final homeProvider =
-                            Provider.of<CategoryRecipeListProvider>(context,
-                                listen: false);
-
-                        homeProvider.updateRecipeInfo(_recipeInfo);
-
+                        provider.updateRecipeInfo(context, _recipeInfo);
                         Navigator.of(context).pop();
                       }),
                   IconButton(
@@ -293,14 +287,7 @@ class ImageContainer extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               image: DecorationImage(image: _recipeInfo.img, fit: BoxFit.cover),
-              gradient: new LinearGradient(
-                end: const Alignment(0.0, -1),
-                begin: const Alignment(0.0, 0.6),
-                colors: <Color>[
-                  const Color(0x8A000000),
-                  Colors.black12.withOpacity(0.0)
-                ],
-              ),
+
             ),
           )),
     );

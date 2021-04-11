@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 
 // class that handles search
 class DataSearch extends SearchDelegate<String>{
+
+
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -31,13 +34,14 @@ class DataSearch extends SearchDelegate<String>{
     );
   }
 
+
   // return results based on searching
   @override
   Widget buildResults(BuildContext context){
-
         var recipeListProvider = Provider.of<SearchRecipeListProvider>(context, listen: false);
 
         Future<List<Widget>> getList() async {
+          print("getting list");
           await recipeListProvider.initializeNewSearch(query);
           return recipeListProvider.searchRecipeCardList;
         }

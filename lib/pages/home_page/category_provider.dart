@@ -33,9 +33,13 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
 
     void updateRecipeInfo(RecipeInfo recipeInfo){
+      try{
         int index = _recipeCardList.indexWhere((element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
+
         _recipeCardList[index] = RecipeCard(recipeInfo);
         notifyListeners();
+      }
+      catch(error){}
     }
 
     void resetPage(){

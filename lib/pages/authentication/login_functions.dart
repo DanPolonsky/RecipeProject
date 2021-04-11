@@ -23,3 +23,13 @@ void saveLoginParameters(String userName, String password){
     RunTimeVariables.loggedIn = true;
 
 }
+
+
+
+/// Function loges use out of the system, deleting the code id.
+void logout(){
+  SharedPreferences prefs = RunTimeVariables.prefs;
+  prefs.setBool('LoggedIn', false);
+  prefs.remove("codeId");
+  RunTimeVariables.loggedIn = false;
+}
