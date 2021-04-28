@@ -7,8 +7,6 @@ import 'package:flutter_app/classes/recipe_info.dart';
 
 import 'package:flutter_app/custom_icons_icons.dart';
 
-
-
 import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -179,7 +177,7 @@ class Recipe extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(12,6,6,6),
+                      margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
                         _recipeInfo.ingredients,
                         style: TextStyle(fontSize: 20),
@@ -193,7 +191,7 @@ class Recipe extends StatelessWidget {
                     ),
                   ),
                   Container(
-                      margin: EdgeInsets.fromLTRB(12,6,6,6),
+                      margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
                         _recipeInfo.steps,
                         style: TextStyle(fontSize: 20),
@@ -243,17 +241,18 @@ class ImageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      _width = MediaQuery.of(context).size.width;
-      _height = MediaQuery.of(context).size.height;
+    _width = MediaQuery.of(context).size.width;
+    _height = MediaQuery.of(context).size.height;
 
-      return Consumer<RecipePageProvider>(
+    return Consumer<RecipePageProvider>(
       builder: (context, provider, child) => ShaderMask(
           shaderCallback: (rect) {
             return LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [Colors.black, Colors.transparent],
-            ).createShader(Rect.fromLTRB(0, _height*0.21, rect.width, rect.height));
+            ).createShader(
+                Rect.fromLTRB(0, _height * 0.21, rect.width, rect.height));
           },
           blendMode: BlendMode.dstIn,
           child: Container(
@@ -287,7 +286,6 @@ class ImageContainer extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               image: DecorationImage(image: _recipeInfo.img, fit: BoxFit.cover),
-
             ),
           )),
     );

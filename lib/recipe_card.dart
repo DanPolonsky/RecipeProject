@@ -6,7 +6,6 @@ import 'classes/enums.dart';
 import 'functions.dart';
 import 'pages/recipe_page/recipe.dart';
 
-//TODO: make different sizes for different images
 // ignore: must_be_immutable
 class RecipeCard extends StatelessWidget {
   RecipeInfo _recipeInfo;
@@ -68,7 +67,7 @@ class RecipeCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          margin:EdgeInsets.only(top:6),
+                          margin: EdgeInsets.only(top: 6),
                           child: Column(
                             children: [
                               Container(
@@ -82,9 +81,10 @@ class RecipeCard extends StatelessWidget {
                               ),
                               Container(
                                   padding: EdgeInsets.fromLTRB(10, 3, 10, 3),
-                                  margin: EdgeInsets.only(top:4),
+                                  margin: EdgeInsets.only(top: 4),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
                                     color: _difficultyColor,
                                   ),
                                   child: Text(
@@ -95,7 +95,6 @@ class RecipeCard extends StatelessWidget {
                           ),
                         ),
                         Container(
-
                           child: Icon(
                             _recipeInfo.saved == SavedRecipeEnum.saved
                                 ? Icons.star
@@ -108,18 +107,17 @@ class RecipeCard extends StatelessWidget {
                     ),
                   ),
 
-
                   Container(
                     height: MediaQuery.of(context).size.height * 0.1,
                     width: MediaQuery.of(context).size.width,
-
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
                       color: Colors.black.withOpacity(0.47),
                     ),
                     child: Center(
                       child: Container(
-
                         margin: EdgeInsets.all(5),
                         child: Text(
                           "${_recipeInfo.recipeName}",

@@ -15,15 +15,6 @@ import '../waiting_page.dart';
 import 'category_provider.dart';
 
 class Home extends StatelessWidget {
-  final List<String> _categories = [
-    "Popular",
-    "Meat",
-    "BreakFast",
-    "Desert",
-    "Vegan",
-    "Fast"
-  ];
-
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -88,7 +79,6 @@ class Home extends StatelessWidget {
                                     builder: (context) => LoginPage()),
                               );
                               provider.resetPage();
-
                             },
                           ),
                     RunTimeVariables.loggedIn
@@ -118,7 +108,7 @@ class Home extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        for (String category in _categories)
+                        for (String category in Constants.categories)
                           Container(
                             margin: EdgeInsets.all(6),
                             child: RaisedButton(

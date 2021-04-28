@@ -32,22 +32,30 @@ class AddRecipePageProvider extends ChangeNotifier {
   List<Widget> get stepTextFormFields => _stepTextFormFields;
 
   File _image;
-
   File get image => _image;
 
   String _imageType;
   final _picker = ImagePicker();
 
   bool _closeAddRecipePage = false;
-
   bool get closeAddRecipePage => _closeAddRecipePage;
 
   String _pressedDifficulty;
-
   String get pressedDifficulty => _pressedDifficulty;
 
   set pressedDifficulty(String difficulty) {
     _pressedDifficulty = difficulty;
+    notifyListeners();
+  }
+
+  String _defaultDropDownMenuValue = "No category";
+  String get defaultDropDownMenuValue => _defaultDropDownMenuValue;
+
+  List<String> _pressedCategories = ["", ""];
+  List<String> get pressedCategories => _pressedCategories;
+
+  void onPressedCategory(String newValue, int index) {
+    _pressedCategories[index] = newValue;
     notifyListeners();
   }
 
@@ -58,7 +66,10 @@ class AddRecipePageProvider extends ChangeNotifier {
     _ingredientTextFormFields = [];
     _stepControllers = [];
     _stepTextFormFields = [];
+    _pressedDifficulty = "";
     _image = null;
+    _pressedCategories = ["", ""];
+    _closeAddRecipePage = false;
     initializeLists();
   }
 
@@ -73,9 +84,11 @@ class AddRecipePageProvider extends ChangeNotifier {
     }
   }
 
+  // TODO: add diposing
   void addIngredientTextFormField(bool notify) {
     final ingredientController = TextEditingController();
     FocusNode focusNode = FocusNode();
+
     _ingredientControllers.add(ingredientController);
 
     _ingredientTextFormFields.add(Container(
@@ -98,8 +111,9 @@ class AddRecipePageProvider extends ChangeNotifier {
         },
       ),
     ));
-    focusNode.requestFocus();
+
     if (notify) {
+      focusNode.requestFocus();
       notifyListeners();
     }
   }
@@ -107,16 +121,15 @@ class AddRecipePageProvider extends ChangeNotifier {
   void addStepTextFormField(bool notify) {
     final stepController = TextEditingController();
     FocusNode focusNode = FocusNode();
+
     _stepControllers.add(stepController);
     _stepTextFormFields.add(Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
         focusNode: focusNode,
         controller: stepController,
-        autofocus: true,
         decoration: InputDecoration(
           hintText: 'Enter step of making...',
-
         ),
         validator: (value) {
           if (value.isEmpty) {
@@ -126,8 +139,9 @@ class AddRecipePageProvider extends ChangeNotifier {
         },
       ),
     ));
-    focusNode.requestFocus();
+
     if (notify) {
+      focusNode.requestFocus();
       notifyListeners();
     }
   }
@@ -139,13 +153,13 @@ class AddRecipePageProvider extends ChangeNotifier {
       String recipeName = _recipeNameController.text;
       List<String> ingredients = [];
       List<String> steps = [];
+      String categories = "popular,";
 
       String difficulty = _pressedDifficulty;
-      String cookTime = "30 minutes";
-      String totalTime = "4 hours";
+      String cookTime = "2 hr 30 mins";
+      String totalTime = "4 hr 30 mins";
       String servings = "10";
       String description = "this is a recipe description";
-      String categories = "popular,";
 
       _ingredientControllers.forEach((controller) {
         ingredients.add(controller.text);
@@ -156,6 +170,16 @@ class AddRecipePageProvider extends ChangeNotifier {
         steps.add(index.toString() + ". " + controller.text);
         index++;
       });
+
+      if (pressedCategories[0] != "" &&
+          pressedCategories[0] != _defaultDropDownMenuValue) {
+        categories += pressedCategories[0] + ",";
+      }
+
+      if (pressedCategories[1] != "" &&
+          pressedCategories[1] != _defaultDropDownMenuValue) {
+        categories += pressedCategories[1] + ",";
+      }
 
       sendNewRecipePost(
           recipeName,
