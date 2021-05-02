@@ -54,6 +54,13 @@ class AddRecipePageProvider extends ChangeNotifier {
   List<String> _pressedCategories = ["", ""];
   List<String> get pressedCategories => _pressedCategories;
 
+  int totalCookTimeHours = 0;
+  int totalCookTimeMinutes = 0;
+
+  void notify() {
+    notifyListeners();
+  }
+
   void onPressedCategory(String newValue, int index) {
     _pressedCategories[index] = newValue;
     notifyListeners();
@@ -70,6 +77,8 @@ class AddRecipePageProvider extends ChangeNotifier {
     _image = null;
     _pressedCategories = ["", ""];
     _closeAddRecipePage = false;
+    totalCookTimeHours = 0;
+    totalCookTimeMinutes = 0;
     initializeLists();
   }
 
@@ -91,26 +100,8 @@ class AddRecipePageProvider extends ChangeNotifier {
 
     _ingredientControllers.add(ingredientController);
 
-    _ingredientTextFormFields.add(Container(
-      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: TextFormField(
-        focusNode: focusNode,
-        controller: ingredientController,
-        decoration: InputDecoration(
-          hintText: 'Enter ingredient...',
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          isDense: true,
-          contentPadding: EdgeInsets.all(12),
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter ingredient.';
-          }
-          return null;
-        },
-      ),
-    ));
+    _ingredientTextFormFields.add(
+        createTextFormField("Enter ingredient...", 'Please enter ingredient.'));
 
     if (notify) {
       focusNode.requestFocus();
@@ -123,27 +114,38 @@ class AddRecipePageProvider extends ChangeNotifier {
     FocusNode focusNode = FocusNode();
 
     _stepControllers.add(stepController);
-    _stepTextFormFields.add(Container(
-      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-      child: TextFormField(
-        focusNode: focusNode,
-        controller: stepController,
-        decoration: InputDecoration(
-          hintText: 'Enter step of making...',
-        ),
-        validator: (value) {
-          if (value.isEmpty) {
-            return 'Please enter step of making.';
-          }
-          return null;
-        },
-      ),
-    ));
+    _stepTextFormFields.add(createTextFormField(
+        'Enter step of making...', 'Please enter step of making.'));
 
     if (notify) {
       focusNode.requestFocus();
       notifyListeners();
     }
+  }
+
+  Widget createTextFormField(String hintText, String emptyStringErrorMsg) {
+    final ingredientController = TextEditingController();
+    FocusNode focusNode = FocusNode();
+    return Container(
+      margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
+      child: TextFormField(
+        focusNode: focusNode,
+        controller: ingredientController,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          isDense: true,
+          contentPadding: EdgeInsets.all(12),
+        ),
+        validator: (value) {
+          if (value.isEmpty) {
+            return emptyStringErrorMsg;
+          }
+          return null;
+        },
+      ),
+    );
   }
 
   void sendRecipePost() {

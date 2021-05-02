@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/add_recipe_page/time_picker.dart';
 
 import 'package:provider/provider.dart';
 
-import '../../global_variables.dart';
 import 'add_recipe_page_provider.dart';
 import 'drop_down_menu.dart';
 
@@ -85,6 +85,7 @@ class AddRecipePage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    TotalTimePicker(),
                     FloatingActionButton(
                       onPressed: provider.getImage,
                       tooltip: 'Pick Image',
