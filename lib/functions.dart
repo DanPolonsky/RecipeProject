@@ -16,7 +16,7 @@ import 'global_variables.dart';
 /// A collection of network functions to interact with the server and general functions.
 
 // Ip and port of server
-const String IP = "10.0.2.2";
+const String IP = "192.168.11.135";
 const int PORT = 5356;
 
 /// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.

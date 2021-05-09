@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../waiting_page.dart';
@@ -47,8 +48,8 @@ class RecipeCardList extends StatelessWidget {
     return Consumer<LocalRecipesProvider>(
       builder: (context, provider, child) => Container(
           child: SingleChildScrollView(
-            child: Column(children: provider.localRecipes),
-          )),
+        child: Column(children: provider.localRecipes),
+      )),
     );
   }
 }

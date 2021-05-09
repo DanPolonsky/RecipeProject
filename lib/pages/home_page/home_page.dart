@@ -19,8 +19,8 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Consumer2<CategoryRecipeListProvider, RecipePageProvider>(
-        builder: (context, provider, recipeProvider, child) => Scaffold(
+    return Consumer<CategoryRecipeListProvider>(
+        builder: (context, provider, child) => Scaffold(
               appBar: AppBar(
                 title: Text("Testing App"),
                 centerTitle: true,

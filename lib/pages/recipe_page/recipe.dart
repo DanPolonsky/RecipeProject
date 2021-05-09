@@ -278,6 +278,8 @@ class ImageContainer extends StatelessWidget {
                     onPressed: () {
                       if (!provider.savedRecipe) {
                         provider.callSaveNewRecipe(_recipeInfo);
+                      } else {
+                        provider.callDeleteSavedRecipe(_recipeInfo);
                       }
                     },
                   ),

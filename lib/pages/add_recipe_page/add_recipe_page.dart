@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/add_recipe_page/time_picker.dart';
+import 'package:flutter_app/pages/add_recipe_page/cook_time_picker.dart';
+import 'package:flutter_app/pages/add_recipe_page/total_time_picker.dart';
 
 import 'package:provider/provider.dart';
 
@@ -52,7 +53,7 @@ class AddRecipePage extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 30)),
                     Column(children: provider.ingredientTextFormFields),
                     Container(
-                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                      margin: EdgeInsets.only(bottom: 30),
                       child: ElevatedButton(
                         onPressed: () {
                           FocusScope.of(context)
@@ -66,15 +67,24 @@ class AddRecipePage extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
                     Column(children: provider.stepTextFormFields),
-                    ElevatedButton(
-                      onPressed: () {
-                        FocusScope.of(context)
-                            .unfocus(disposition: UnfocusDisposition.scope);
-                        provider.addStepTextFormField(true);
-                      },
-                      child: Text("Add step"),
+                    Container(
+                      margin: EdgeInsets.only(bottom: 30),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          FocusScope.of(context)
+                              .unfocus(disposition: UnfocusDisposition.scope);
+                          provider.addStepTextFormField(true);
+                        },
+                        child: Text("Add step"),
+                      ),
                     ),
+                    Text("Difficulty",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
                     RowOfDifficulties(),
+                    Text("Categories",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 7, 0, 20),
                       child: Row(
@@ -85,7 +95,14 @@ class AddRecipePage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    Text("Total Time",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
                     TotalTimePicker(),
+                    Text("Cook Time",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
+                    CookTimePicker(),
                     FloatingActionButton(
                       onPressed: provider.getImage,
                       tooltip: 'Pick Image',
@@ -115,7 +132,7 @@ class RowOfDifficulties extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AddRecipePageProvider>(
       builder: (BuildContext context, provider, Widget child) => Container(
-        margin: EdgeInsets.fromLTRB(0, 7, 0, 7),
+        margin: EdgeInsets.fromLTRB(0, 7, 0, 30),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [

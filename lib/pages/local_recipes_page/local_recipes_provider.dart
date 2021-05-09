@@ -16,36 +16,34 @@ class LocalRecipesProvider extends ChangeNotifier {
   bool _loadedRecipes = false;
   bool get loadedRecipes => _loadedRecipes;
 
-
-
   // Parameters for rating the recipe/
 
+  void updateList(RecipeInfo recipeInfo) {
+    try {
+      _localRecipes.removeWhere(
+          (element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
+      notifyListeners();
+    } catch (error) {}
+  }
 
-
-
-  void reset(){
+  void reset() {
     _localRecipes = [];
     _loadedRecipes = false;
-
   }
 
   void getSavedRecipes() {
     Map<String, dynamic> savedRecipesMap = LocalRecipes.localRecipesMap;
     RecipeInfo info;
 
-
     if (savedRecipesMap != {}) {
       savedRecipesMap.forEach((key, recipeJsonMap) {
-        if(key != "placeHolder"){
+        if (key != "placeHolder") {
           info = RecipeInfo.fromJson(recipeJsonMap);
           info.saved = SavedRecipeEnum.saved;
           _localRecipes.add(RecipeCard(info));
         }
-
-
       });
-    }
-    else {
+    } else {
       _storageError = true;
     }
     print(localRecipes);

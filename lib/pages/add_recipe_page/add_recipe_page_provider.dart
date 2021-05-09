@@ -57,6 +57,9 @@ class AddRecipePageProvider extends ChangeNotifier {
   int totalCookTimeHours = 0;
   int totalCookTimeMinutes = 0;
 
+  int cookTimeHours = 0;
+  int cookTimeMinutes = 0;
+
   void notify() {
     notifyListeners();
   }
@@ -79,6 +82,8 @@ class AddRecipePageProvider extends ChangeNotifier {
     _closeAddRecipePage = false;
     totalCookTimeHours = 0;
     totalCookTimeMinutes = 0;
+    cookTimeHours = 0;
+    cookTimeMinutes = 0;
     initializeLists();
   }
 
@@ -100,8 +105,8 @@ class AddRecipePageProvider extends ChangeNotifier {
 
     _ingredientControllers.add(ingredientController);
 
-    _ingredientTextFormFields.add(
-        createTextFormField("Enter ingredient...", 'Please enter ingredient.'));
+    _ingredientTextFormFields.add(createTextFormField(
+        "Enter ingredient...", 'Please enter ingredient.', focusNode));
 
     if (notify) {
       focusNode.requestFocus();
@@ -115,7 +120,7 @@ class AddRecipePageProvider extends ChangeNotifier {
 
     _stepControllers.add(stepController);
     _stepTextFormFields.add(createTextFormField(
-        'Enter step of making...', 'Please enter step of making.'));
+        'Enter step of making...', 'Please enter step of making.', focusNode));
 
     if (notify) {
       focusNode.requestFocus();
@@ -123,9 +128,10 @@ class AddRecipePageProvider extends ChangeNotifier {
     }
   }
 
-  Widget createTextFormField(String hintText, String emptyStringErrorMsg) {
+  Widget createTextFormField(
+      String hintText, String emptyStringErrorMsg, FocusNode focusNode) {
     final ingredientController = TextEditingController();
-    FocusNode focusNode = FocusNode();
+
     return Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
@@ -158,8 +164,16 @@ class AddRecipePageProvider extends ChangeNotifier {
       String categories = "popular,";
 
       String difficulty = _pressedDifficulty;
-      String cookTime = "2 hr 30 mins";
-      String totalTime = "4 hr 30 mins";
+      String cookTimeHoursString = "$cookTimeHours hr";
+      String cookTimeMinutesString = "$cookTimeMinutes mins";
+      String cookTime =
+          "${cookTimeHours == 0 ? "" : cookTimeHoursString} ${cookTimeMinutes == 0 ? "" : cookTimeMinutesString}";
+
+      String totalTimeHoursString = "$totalCookTimeHours hr";
+      String totalTimeMinutesString = "$totalCookTimeMinutes mins";
+      String totalTime =
+          "${totalCookTimeHours == 0 ? "" : totalTimeHoursString} ${totalCookTimeMinutes == 0 ? "" : totalTimeMinutesString}";
+
       String servings = "10";
       String description = "this is a recipe description";
 
