@@ -172,8 +172,10 @@ class Recipe extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(4, 10, 0, 4),
                     child: Text(
                       "Ingredients",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 35,
+                          color: Colors.black),
                     ),
                   ),
                   Container(
@@ -260,12 +262,15 @@ class ImageContainer extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.45,
             child: Container(
-              margin: EdgeInsets.fromLTRB(5, 7, 5, 0),
+              margin: EdgeInsets.fromLTRB(9, 12, 9, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      icon: Icon(Icons.arrow_back),
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         provider.reset(_recipeInfo);
                         provider.updateRecipeInfo(context, _recipeInfo);

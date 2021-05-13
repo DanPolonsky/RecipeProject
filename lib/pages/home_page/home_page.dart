@@ -6,7 +6,6 @@ import 'package:flutter_app/pages/authentication/login_functions.dart';
 import 'package:flutter_app/pages/authentication/login_page/login_page.dart';
 
 import 'package:flutter_app/pages/local_recipes_page/local_recipes_page.dart';
-import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class Home extends StatelessWidget {
     return Consumer<CategoryRecipeListProvider>(
         builder: (context, provider, child) => Scaffold(
               appBar: AppBar(
-                title: Text("Testing App"),
+                title: Text("Reacipe"),
                 centerTitle: true,
                 elevation: 0,
                 actions: [
@@ -38,10 +37,21 @@ class Home extends StatelessWidget {
               drawer: Drawer(
                 child: ListView(
                   children: [
-                    DrawerHeader(
-                      child: Text('Drawer Header'),
+                    Container(
+                      height: screenHeight * 0.07,
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        border: Border(
+                          bottom: BorderSide(width: 1, color: Colors.blue),
+                        ),
+                      ),
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(left: 10),
+                        child: Text(
+                          "Reacipe",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                     ListTile(

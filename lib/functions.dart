@@ -122,6 +122,7 @@ void sendNewRecipePost(
     Encrypter encrypter = await getEncrypter();
     String encryptedCodeId = encrypter.encrypt(codeId).base64;
 
+    print(ingredients);
     http.post(
       Uri.http("$IP:$PORT", "recipePost"),
       headers: <String, String>{

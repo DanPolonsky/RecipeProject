@@ -105,8 +105,8 @@ class AddRecipePageProvider extends ChangeNotifier {
 
     _ingredientControllers.add(ingredientController);
 
-    _ingredientTextFormFields.add(createTextFormField(
-        "Enter ingredient...", 'Please enter ingredient.', focusNode));
+    _ingredientTextFormFields.add(createTextFormField("Enter ingredient...",
+        'Please enter ingredient.', focusNode, ingredientController));
 
     if (notify) {
       focusNode.requestFocus();
@@ -119,8 +119,8 @@ class AddRecipePageProvider extends ChangeNotifier {
     FocusNode focusNode = FocusNode();
 
     _stepControllers.add(stepController);
-    _stepTextFormFields.add(createTextFormField(
-        'Enter step of making...', 'Please enter step of making.', focusNode));
+    _stepTextFormFields.add(createTextFormField('Enter step of making...',
+        'Please enter step of making.', focusNode, stepController));
 
     if (notify) {
       focusNode.requestFocus();
@@ -128,15 +128,13 @@ class AddRecipePageProvider extends ChangeNotifier {
     }
   }
 
-  Widget createTextFormField(
-      String hintText, String emptyStringErrorMsg, FocusNode focusNode) {
-    final ingredientController = TextEditingController();
-
+  Widget createTextFormField(String hintText, String emptyStringErrorMsg,
+      FocusNode focusNode, TextEditingController controller) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
       child: TextFormField(
         focusNode: focusNode,
-        controller: ingredientController,
+        controller: controller,
         decoration: InputDecoration(
           hintText: hintText,
           border: OutlineInputBorder(
@@ -197,6 +195,7 @@ class AddRecipePageProvider extends ChangeNotifier {
         categories += pressedCategories[1] + ",";
       }
 
+      print(ingredients);
       sendNewRecipePost(
           recipeName,
           ingredients,
