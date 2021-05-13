@@ -36,26 +36,25 @@ List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList) {
 /// widgets out of json response using the recipeInfoDictListToWidgetList function.
 Future<List<Widget>> downloadRecipesByCategory(
     String category, int startIndex, int endIndex) async {
-  // try {
-  // sending request and getting and saving response in response
-  print("sending request");
-  http.Response response = await http.get(Uri.http(
-      "$IP:$PORT", "/category/$category/from:$startIndex-to:$endIndex"));
-  print("got response");
+  try {
+    // sending request and getting and saving response in response
+    print("sending request");
+    http.Response response = await http.get(Uri.http(
+        "$IP:$PORT", "/category/$category/from:$startIndex-to:$endIndex"));
+    print("got response");
 
-  // turning the json string response into list of PictureInfo classes
-  var recipesInfoDictList = jsonDecode(response.body)['response'] as List;
+    // turning the json string response into list of PictureInfo classes
+    var recipesInfoDictList = jsonDecode(response.body)['response'] as List;
 
-  List<Widget> recipeCardList =
-      recipeInfoDictListToWidgetList(recipesInfoDictList);
+    List<Widget> recipeCardList =
+        recipeInfoDictListToWidgetList(recipesInfoDictList);
 
-  print("added recipes");
-  return recipeCardList;
-  // } catch (error) {
-  //
-  //   sleep(const Duration(seconds: 4));
-  //   return downloadRecipesByCategory(category, startIndex, endIndex);
-  // }
+    print("added recipes");
+    return recipeCardList;
+  } catch (error) {
+    sleep(const Duration(seconds: 4));
+    return downloadRecipesByCategory(category, startIndex, endIndex);
+  }
 }
 
 /// Function sends http request with given [searchValue] [startIndex] and [endIndex] and returns list of

@@ -30,17 +30,14 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
 
-      await recipeListProvider.initializeNewCategory("popular");
+    recipeListProvider.initializeNewCategory("popular");
 
-      Navigator.pushReplacement(
-        context,
-        CupertinoPageRoute(
-          builder: (context) => Home(),
-        ),
-      );
-
-
-
+    Navigator.pushReplacement(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Home(),
+      ),
+    );
   }
 
   void authenticationCheck() async {
@@ -58,8 +55,7 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     }
   }
 
-
-  void checkLocalRecipes() async{
+  void checkLocalRecipes() async {
     File savedRecipesFile = await LocalRecipes.getLocalFile();
     bool fileExists = await savedRecipesFile.exists();
     if (!fileExists) {
@@ -67,7 +63,6 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     }
     LocalRecipes.getJson();
   }
-
 
   @override
   void initState() {
@@ -98,18 +93,15 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircularProgressIndicator(),
-            _networkError ? Text("network error try again later...") : Container()
-          ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        CircularProgressIndicator(),
+        _networkError ? Text("network error try again later...") : Container()
+      ],
     ));
   }
 }
-
-
-
 
 class RecipesWaitingPage extends StatefulWidget {
   @override

@@ -269,6 +269,7 @@ class ImageContainer extends StatelessWidget {
                   IconButton(
                       icon: Icon(
                         Icons.arrow_back,
+                        size: 28,
                         color: Colors.white,
                       ),
                       onPressed: () {

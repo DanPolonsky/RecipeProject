@@ -25,7 +25,7 @@ class _LocalRecipesPageState extends State<LocalRecipesPage> {
     return Consumer<LocalRecipesProvider>(
       builder: (context, provider, child) => Scaffold(
         appBar: AppBar(
-          title: Text("Testing App"),
+          title: Text("Saved Recipes"),
           centerTitle: true,
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
