@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:encrypt/encrypt.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/recipe_card.dart';
+import 'package:flutter_app/pages/general_widgets/recipe_card.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:pointycastle/asymmetric/api.dart';

@@ -4,8 +4,8 @@ import 'package:flutter_app/classes/recipe_info.dart';
 import '../../functions.dart';
 import '../../global_variables.dart';
 
-import '../../recipe_card.dart';
-import '../reached_bottom_widget.dart';
+import '../general_widgets/recipe_card.dart';
+import '../general_widgets/reached_bottom_widget.dart';
 
 class SearchRecipeListProvider with ChangeNotifier {
   bool _isLoading = false;
@@ -25,39 +25,34 @@ class SearchRecipeListProvider with ChangeNotifier {
 
   bool get waitingPage => _waitingPage;
 
-
-
   void updateRecipeInfo(RecipeInfo recipeInfo) {
-    try{
-      int index = _recipeCardList.indexWhere((element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
+    try {
+      int index = _recipeCardList.indexWhere(
+          (element) => (element as RecipeCard).recipeInfo.id == recipeInfo.id);
 
       _recipeCardList[index] = RecipeCard(recipeInfo);
       notifyListeners();
-    }
-    catch(error){}
+    } catch (error) {}
   }
 
   void initializeNewSearch(String searchValue) async {
+    // resetting all parameters for new category
+    _recipeCardList = [];
+    _amount = Constants.loadingAmount;
+    _endIndex = Constants.endIndex; // change later
+    _startIndex = Constants.startIndex;
 
-      // resetting all parameters for new category
-      _recipeCardList = [];
-      _amount = Constants.loadingAmount;
-      _endIndex = Constants.endIndex; // change later
-      _startIndex = Constants.startIndex;
+    _currentSearchValue = searchValue;
 
-      _currentSearchValue = searchValue;
-
-      _recipeCardList.add(new ReachedBottomWidget());
-      await downloadListSearch(searchValue);
-
-
+    _recipeCardList.add(new ReachedBottomWidget());
+    await downloadListSearch();
   }
 
-  void downloadListSearch(String searchValue) async {
+  void downloadListSearch() async {
     if (!_isLoading) {
       _isLoading = true;
       List<Widget> list = await getRecipesCardsListBySearch(
-          searchValue, _startIndex, _endIndex);
+          _currentSearchValue, _startIndex, _endIndex);
       _recipeCardList.insertAll(_recipeCardList.length - 1, list);
       notifyListeners();
       _isLoading = false;

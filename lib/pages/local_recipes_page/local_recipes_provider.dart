@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_app/classes/enums.dart';
 import 'package:flutter_app/classes/local_recipes.dart';
 import 'package:flutter_app/classes/recipe_info.dart';
-import 'package:flutter_app/recipe_card.dart';
+import 'package:flutter_app/pages/general_widgets/recipe_card.dart';
 
 class LocalRecipesProvider extends ChangeNotifier {
   List<Widget> _localRecipes = [];

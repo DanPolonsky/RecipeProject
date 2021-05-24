@@ -24,8 +24,6 @@ class InitialWaitingPage extends StatefulWidget {
 }
 
 class _InitialWaitingPageState extends State<InitialWaitingPage> {
-  bool _networkError = false;
-
   void initializeHomePageData() async {
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
@@ -97,7 +95,6 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         CircularProgressIndicator(),
-        _networkError ? Text("network error try again later...") : Container()
       ],
     ));
   }

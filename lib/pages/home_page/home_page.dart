@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/classes/data_search.dart';
+import 'package:flutter_app/pages/search_page/data_search.dart';
 import 'package:flutter_app/pages/add_recipe_page/add_recipe_page.dart';
 import 'package:flutter_app/pages/authentication/login_functions.dart';
 import 'package:flutter_app/pages/authentication/login_page/login_page.dart';

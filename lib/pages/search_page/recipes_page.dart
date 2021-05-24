@@ -18,7 +18,7 @@ class SearchRecipesPage extends StatelessWidget {
         // ignore: missing_return
         onNotification: (ScrollNotification scrollInfo) {
           if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-            provider.downloadListSearch(provider.currentSearchValue);
+            provider.downloadListSearch();
           }
         },
         child: ListView(
