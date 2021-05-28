@@ -4,17 +4,25 @@ import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 
+
+/// Class containing text to speech capabilities
 class TextToSpeech {
     static BuildContext _context;
     static RecipePageProvider _recipePageProvider;
     static FlutterTts _flutterTts;
 
+    // Speech variables
     static double _volume = 0.7;
     static double _pitch = 1.0;
     static double _rate = 0.8;
-    static List<String> _ingredientsList;
-    static List<String> _stepsList;
 
+    static List<String> _ingredientsList; // List containing all ingredients in a specific recipe
+    static List<String> _stepsList; // List containing all steps in a specific recipe
+
+    static int _nextIngredient = 0; // Counter to keep track of next ingredient to read
+    static int _nextStep = 0; // Counter to keep track of next step to read
+
+    // A map mapping analyzed string-numbers to integers
     static Map<String, int> wordsToNumbers = {
         "one": 1,
         "two": 2,
@@ -50,12 +58,16 @@ class TextToSpeech {
     }
 
 
-
+    /// Function sets the reading lists from the specific recipe - [ingredients] and [steps]
     static void setReadingVariables(String ingredients, String steps){
         _ingredientsList = ingredients.split("\n");
         _stepsList = steps.split("\n");
+        _nextStep = 0;
+        _nextIngredient = 0;
+
     }
 
+    /// Function initializes the main object responsible for text to speech
     static void initializeTextToSpeech() async {
 
         await _flutterTts.setVolume(_volume);
@@ -68,6 +80,7 @@ class TextToSpeech {
         });
     }
 
+    /// Function reads in sound the info needed from the lists, described by the [command]
     static void readCommand(String command) async {
         print("in read command");
         List<String> commandList = command.toLowerCase().split(" ");
@@ -102,6 +115,19 @@ class TextToSpeech {
                 }
                 print("command not clear");
             }
+        }
+
+        else if(commandList[0] == "next"){
+          if(commandList[1] == "ingredient"){
+            await _flutterTts.speak(_ingredientsList[_nextIngredient]);
+            _nextIngredient += 1;
+            _nextIngredient = _nextIngredient % _ingredientsList.length;
+          }
+          else if(commandList[1] == "step"){
+            await _flutterTts.speak(_stepsList[_nextStep]);
+            _nextStep += 1;
+            _nextStep = _nextStep % _stepsList.length;
+          }
         }
     }
 

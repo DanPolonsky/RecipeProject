@@ -66,7 +66,7 @@ class Home extends StatelessWidget {
                         );
                       },
                     ),
-                    RunTimeVariables.loggedIn
+                    RunTimeVariables.prefs.getBool("LoggedIn")
                         ? ListTile(
                             title: Text("Add recipe"),
                             leading: Icon(Icons.add),
@@ -91,7 +91,7 @@ class Home extends StatelessWidget {
                               provider.resetPage();
                             },
                           ),
-                    RunTimeVariables.loggedIn
+                    RunTimeVariables.prefs.getBool("LoggedIn")
                         ? ListTile(
                             title: Text("Sign out"),
                             leading: Icon(Icons.logout),

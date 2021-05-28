@@ -12,8 +12,8 @@ class SearchRecipeListProvider with ChangeNotifier {
 
   List<Widget> _recipeCardList = [];
   int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.endIndex; // change later
-  int _startIndex = Constants.startIndex;
+  int _endIndex = Constants.firstLoad; // change later
+  int _startIndex = 0;
 
   String _currentSearchValue;
 
@@ -39,8 +39,8 @@ class SearchRecipeListProvider with ChangeNotifier {
     // resetting all parameters for new category
     _recipeCardList = [];
     _amount = Constants.loadingAmount;
-    _endIndex = Constants.endIndex; // change later
-    _startIndex = Constants.startIndex;
+    _endIndex = Constants.firstLoad; // change later
+    _startIndex = 0;
 
     _currentSearchValue = searchValue;
 

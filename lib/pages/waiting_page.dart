@@ -45,11 +45,6 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
 
     if (prefs.getBool("LoggedIn") == null) {
       prefs.setBool("LoggedIn", false);
-      RunTimeVariables.loggedIn = false;
-    } else if (prefs.getBool("LoggedIn") == false) {
-      RunTimeVariables.loggedIn = false;
-    } else {
-      RunTimeVariables.loggedIn = true;
     }
   }
 

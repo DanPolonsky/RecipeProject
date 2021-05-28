@@ -20,7 +20,7 @@ void saveLoginParameters(String userName, String password){
 
     prefs.setString("codeId", codeId);
 
-    RunTimeVariables.loggedIn = true;
+
 
 }
 
@@ -31,5 +31,5 @@ void logout(){
   SharedPreferences prefs = RunTimeVariables.prefs;
   prefs.setBool('LoggedIn', false);
   prefs.remove("codeId");
-  RunTimeVariables.loggedIn = false;
+
 }

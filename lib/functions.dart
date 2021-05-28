@@ -101,8 +101,6 @@ void rate(int recipeId, double rating) {
 }
 
 /// Function sends a post request for uploading a new recipe.
-/// The function authenticates if the user is logged in,
-/// and sends the request to the server if he does.
 void sendNewRecipePost(
     String recipeName,
     List<String> ingredients,
@@ -118,6 +116,7 @@ void sendNewRecipePost(
   try {
     String codeId = RunTimeVariables.prefs.getString("codeId");
 
+    // Getting rsa encryption key
     Encrypter encrypter = await getEncrypter();
     String encryptedCodeId = encrypter.encrypt(codeId).base64;
 
@@ -151,6 +150,9 @@ void sendNewRecipePost(
   }
 }
 
+
+/// Function sends login post request, sending [userName] and encrypted [password] using the encrypt method.
+/// Returns if request is successful
 Future<String> sendLoginPostRequest(String userName, String password) async {
   try {
     Encrypter encrypter = await getEncrypter();
@@ -172,7 +174,8 @@ Future<String> sendLoginPostRequest(String userName, String password) async {
     return sendLoginPostRequest(userName, password);
   }
 }
-
+/// Function sends signup post request, sending [userName] and encrypted [password] using the encrypt method.
+/// Returns if request is successful.
 Future<String> sendSignUpPostRequest(String userName, String password) async {
   try {
     Encrypter encrypter = await getEncrypter();
@@ -195,7 +198,7 @@ Future<String> sendSignUpPostRequest(String userName, String password) async {
   }
 }
 
-/// Function builds a rsa encrypter with a public key received from server
+/// Function builds a rsa encrypter with a public key received from server answer
 Future<Encrypter> getEncrypter() async {
   try {
     http.Response publicKeyResponse =

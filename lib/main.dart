@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 import 'pages/search_page/search_provider.dart';
 
-
+/// Main function called at start up
 void main() async {
   return runApp(
     MultiProvider(providers: [
@@ -30,6 +30,7 @@ void main() async {
   );
 }
 
+/// The main visual component
 class MyApp extends StatelessWidget {
 
   // This widget is the root of the application.

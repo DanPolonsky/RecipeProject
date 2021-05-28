@@ -17,8 +17,8 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
   List<Widget> _recipeCardList = [];
   int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.endIndex; // change later
-  int _startIndex = Constants.startIndex;
+  int _endIndex = Constants.firstLoad;
+  int _startIndex = 0;
 
   String _currentCategory;
   String get currentCategory => _currentCategory;
@@ -51,8 +51,8 @@ class CategoryRecipeListProvider with ChangeNotifier {
       // resetting all parameters for new category
       _recipeCardList = [];
       _amount = Constants.loadingAmount;
-      _endIndex = Constants.endIndex; // change later
-      _startIndex = Constants.startIndex;
+      _endIndex = Constants.firstLoad; // change later
+      _startIndex = 0;
 
       _currentCategory = category;
 
