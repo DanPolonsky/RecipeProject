@@ -20,6 +20,7 @@ class TotalTimePicker extends StatelessWidget {
         builder: (BuildContext context, provider, Widget child) => Container(
               margin: EdgeInsets.all(10),
               child: FlatButton(
+                padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
                         color: Colors.blue,

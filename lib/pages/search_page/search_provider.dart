@@ -10,6 +10,10 @@ import '../general_widgets/reached_bottom_widget.dart';
 class SearchRecipeListProvider with ChangeNotifier {
   bool _isLoading = false;
 
+  TextEditingController _searchValueController = TextEditingController();
+  TextEditingController get searchValueController => _searchValueController;
+
+
   List<Widget> _recipeCardList = [];
   int _amount = Constants.loadingAmount;
   int _endIndex = Constants.firstLoad; // change later
@@ -21,9 +25,22 @@ class SearchRecipeListProvider with ChangeNotifier {
 
   List<Widget> get searchRecipeCardList => _recipeCardList;
 
-  bool _waitingPage = false;
+  bool waitingPage = false;
 
-  bool get waitingPage => _waitingPage;
+
+
+  ScrollController _scrollController = ScrollController();
+
+  ScrollController get scrollController => _scrollController;
+
+
+  void reset(){
+    _searchValueController.text = "";
+    waitingPage = false;
+    _recipeCardList = [];
+
+  }
+
 
   void updateRecipeInfo(RecipeInfo recipeInfo) {
     try {
@@ -36,16 +53,22 @@ class SearchRecipeListProvider with ChangeNotifier {
   }
 
   void initializeNewSearch(String searchValue) async {
-    // resetting all parameters for new category
-    _recipeCardList = [];
-    _amount = Constants.loadingAmount;
-    _endIndex = Constants.firstLoad;
-    _startIndex = 0;
+    if(!waitingPage){
+      waitingPage = true;
+      // resetting all parameters for new category
+      _recipeCardList = [];
+      _amount = Constants.loadingAmount;
+      _endIndex = Constants.firstLoad;
+      _startIndex = 0;
 
-    _currentSearchValue = searchValue;
+      _currentSearchValue = searchValue;
 
-    _recipeCardList.add(new ReachedBottomWidget());
-    await downloadListSearch();
+      _recipeCardList.add(new ReachedBottomWidget());
+      await downloadListSearch();
+      waitingPage = false;
+      notifyListeners();
+
+    }
   }
 
   void downloadListSearch() async {

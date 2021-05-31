@@ -7,6 +7,7 @@ import 'package:flutter_app/pages/add_recipe_page/total_time_picker.dart';
 import 'package:provider/provider.dart';
 
 import 'add_recipe_page_provider.dart';
+import 'cook_time_picker.dart';
 import 'drop_down_menu.dart';
 
 class AddRecipePage extends StatelessWidget {
@@ -21,7 +22,7 @@ class AddRecipePage extends StatelessWidget {
     return Consumer<AddRecipePageProvider>(
       builder: (BuildContext context, provider, Widget child) => Scaffold(
           appBar: AppBar(
-            title: Text("add recipe page"),
+            title: Text("Add Recipe Page"),
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.arrow_back),
@@ -135,20 +136,55 @@ class AddRecipePage extends StatelessWidget {
                     Text("Total Time",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
-                    TotalTimePicker(),
+                    Container(
+                        alignment: Alignment.center, child: TotalTimePicker()),
                     Text("Cook Time",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
-                    CookTimePicker(),
+                    Container(
+                        alignment: Alignment.center, child: CookTimePicker()),
                     Text("Meals Amount",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
-                    MealAmountPick(),
-                    FloatingActionButton(
-                      onPressed: provider.getImage,
-                      tooltip: 'Pick Image',
-                      child: Icon(Icons.add_a_photo),
+                    Container(
+                        alignment: Alignment.center, child: MealAmountPick()),
+                    Container(
+                      margin: EdgeInsets.only(top: 10, bottom: 2),
+                      alignment: Alignment.center,
+                      child: FlatButton(
+                        onPressed: provider.getImage,
+                        padding: EdgeInsets.fromLTRB(42, 0, 42, 0),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.blue,
+                                width: 1,
+                                style: BorderStyle.solid)),
+                        child: RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                style: TextStyle(color: Colors.black),
+                                text: "Click ",
+                              ),
+                              WidgetSpan(
+                                child: Icon(Icons.add_a_photo, size: 20),
+                              ),
+                              TextSpan(
+                                style: TextStyle(color: Colors.black),
+                                text: " to add a picture",
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
+                    provider.image == null
+                        ? Container(
+                            alignment: Alignment.center,
+                            child: Text("No image is selected"),
+                            margin: EdgeInsets.only(bottom: 10),
+                          )
+                        : Container(),
                     ElevatedButton(
                         onPressed: () {
                           print("pressed submit");

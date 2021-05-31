@@ -17,15 +17,15 @@ import 'global_variables.dart';
 /// A collection of network functions to interact with the server and general functions.
 
 // Ip and port of server
-const String IP = "192.168.11.135";
-const int PORT = 5356;
+const String IP = "10.100.102.16";
+const int PORT = 60000;
 
 const int REQUEST_COOL_DOWN_TIME =
-    3; // Amount of time to wait before sending repeated request if the previous one didnt receive answer
+    20; // Amount of time to wait before sending repeated request if the previous one didnt receive answer
 
 /// Function takes json dictionary list [recipesInfoDictList] and turns it to RecipeCard widget list.
 List<Widget> recipeInfoDictListToWidgetList(
-    List<Map<String, dynamic>> recipesInfoDictList) {
+    var recipesInfoDictList) {
   List<Widget> recipeCardList = []; // A list holding RecipeCard widgets
 
   recipesInfoDictList.forEach((recipeMapInfo) {
@@ -57,6 +57,7 @@ Future<List<Widget>> downloadRecipesByCategory(
     print("added recipes");
     return recipeCardList;
   } catch (error) {
+    print(error);
     await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
     return downloadRecipesByCategory(category, startIndex, endIndex);
   }

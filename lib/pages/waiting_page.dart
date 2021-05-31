@@ -15,7 +15,7 @@ import '../global_variables.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'add_recipe_page/add_recipe_page_provider.dart';
+
 import 'home_page/category_provider.dart';
 
 /// Class is the main loading page, initializing various components in the app
@@ -40,14 +40,19 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     );
   }
 
+  ///Function
+  void checkShowRecipeGuide(){
+    if(RunTimeVariables.prefs.getBool("ShowRecipeGuide") == null){
+      RunTimeVariables.prefs.setBool("ShowRecipeGuide", true);
+    }
+  }
+
+
   /// Function checks if the user is logged in or not
   void authenticationCheck() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    RunTimeVariables.prefs = prefs;
-
-    if (prefs.getBool("LoggedIn") == null) {
-      prefs.setBool("LoggedIn", false);
+    if (RunTimeVariables.prefs.getBool("LoggedIn") == null) {
+      RunTimeVariables.prefs.setBool("LoggedIn", false);
     }
   }
 
@@ -66,11 +71,17 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      // check whether the user is logged in or not and store the value in Constants.loggedIn
 
+      // Getting access to SharedPreferences and storing the reference in RunTimeVariables
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      RunTimeVariables.prefs = prefs;
+
+      // check whether the user is logged in or not and store the value in Constants.loggedIn
       await authenticationCheck();
 
       await checkLocalRecipes();
+
+      await checkShowRecipeGuide();
 
       // Initializing all audio functions
       SpeechRecognition(context);

@@ -12,29 +12,14 @@ import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
+
+import '../../global_variables.dart';
+
 // ignore: must_be_immutable
-class Recipe extends StatelessWidget {
+class Recipe extends StatefulWidget {
   RecipeInfo _recipeInfo; // Object holding the recipe info
 
   Color _difficultyColor;
-
-  /// Function initalizes all listening fucntionality of the page
-  void initializer(BuildContext context) {
-    // Getting access to the RecipePageProvider
-    var recipePageProvider =
-        Provider.of<RecipePageProvider>(context, listen: false);
-
-    // Initializing all sound functionality if objects are available
-    if (recipePageProvider.listeningFunctionsAvailability()) {
-      print("starting to listen");
-      TextToSpeech.setReadingVariables(
-          _recipeInfo.ingredients, _recipeInfo.steps);
-      recipePageProvider.checkRecipeSavedStatus(_recipeInfo);
-      HotKeyWordDetection.startKeyWordDetection();
-    } else {
-      print("not available");
-    }
-  }
 
   Recipe(RecipeInfo recipeInfo) {
     _recipeInfo = recipeInfo;
@@ -48,13 +33,82 @@ class Recipe extends StatelessWidget {
     }
   }
 
-  Widget build(BuildContext context) {
+  @override
+  _RecipeState createState() => _RecipeState();
+}
+
+class _RecipeState extends State<Recipe> {
+  int msBeforeGuideDialog = 400;
+
+  /// Function initalizes all listening fucntionality of the page
+  void initializer(BuildContext context) {
+    // Getting access to the RecipePageProvider
+    var recipePageProvider =
+        Provider.of<RecipePageProvider>(context, listen: false);
+
+    // Initializing all sound functionality if objects are available
+    if (recipePageProvider.listeningFunctionsAvailability()) {
+      print("starting to listen");
+      TextToSpeech.setReadingVariables(
+          widget._recipeInfo.ingredients, widget._recipeInfo.steps);
+      recipePageProvider.checkRecipeSavedStatus(widget._recipeInfo);
+      HotKeyWordDetection.startKeyWordDetection();
+    } else {
+      print("not available");
+    }
+  }
+
+  void showGuideDialog(BuildContext context){
+    bool showRecipeGuide = RunTimeVariables.prefs.getBool("ShowRecipeGuide");
+    if(showRecipeGuide){
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text("Command guide"),
+              content: Text("Try saying:\n"
+                  "Step... number\n"
+                  "Ingredient... number\n"
+                  "next... step/ingredient"),
+              actions: [
+                MaterialButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                MaterialButton(
+                  child: Text("Don't show again"),
+                  onPressed: () {
+                    RunTimeVariables.prefs.setBool("ShowRecipeGuide", false);
+                    Navigator.of(context).pop();
+                  },
+                )
+
+              ],
+            );
+          });
+    }
+  }
+
+  void initState(){
+    super.initState();
     initializer(context);
 
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(Duration(milliseconds: msBeforeGuideDialog));
+      showGuideDialog(context);
+    });
+
+
+  }
+
+
+  Widget build(BuildContext context) {
     return Consumer<RecipePageProvider>(
       builder: (context, provider, child) => Scaffold(
           body: Stack(children: <Widget>[
-        ImageContainer(_recipeInfo),
+        ImageContainer(widget._recipeInfo),
         Container(
           margin: EdgeInsets.fromLTRB(
               12, MediaQuery.of(context).size.height * 0.35, 12, 10),
@@ -78,7 +132,7 @@ class Recipe extends StatelessWidget {
                 children: [
                   Container(
                       child: Text(
-                    "${_recipeInfo.recipeName}",
+                    "${widget._recipeInfo.recipeName}",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
@@ -88,7 +142,7 @@ class Recipe extends StatelessWidget {
                     children: [
                       Container(
                         margin: EdgeInsets.all(3),
-                        child: Text("ratings: ${_recipeInfo.ratings}",
+                        child: Text("ratings: ${widget._recipeInfo.ratings}",
                             style: TextStyle(fontSize: 21)),
                       ),
                       Row(
@@ -96,13 +150,13 @@ class Recipe extends StatelessWidget {
                         children: [
                           Container(
                               child: Text(
-                            "${_recipeInfo.rating}",
+                            "${widget._recipeInfo.rating}",
                             style: TextStyle(fontSize: 21),
                           )),
                           Container(
                             margin: EdgeInsets.fromLTRB(3, 0, 3, 5),
                             child: RatingBar.builder(
-                              initialRating: _recipeInfo.rating,
+                              initialRating: widget._recipeInfo.rating,
                               minRating: 1,
                               direction: Axis.horizontal,
                               allowHalfRating: true,
@@ -133,17 +187,17 @@ class Recipe extends StatelessWidget {
                           margin: EdgeInsets.only(bottom: 7),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: _difficultyColor,
+                            color: widget._difficultyColor,
                           ),
                           child: Text(
-                            "${_recipeInfo.difficulty}",
+                            "${widget._recipeInfo.difficulty}",
                             style: TextStyle(fontSize: 20),
                           )),
                       Container(
                         child: Column(
                           children: [
                             Icon(Icons.access_alarm_outlined),
-                            Text("${_recipeInfo.totalTime}")
+                            Text("${widget._recipeInfo.totalTime}")
                           ],
                         ),
                       ),
@@ -151,7 +205,7 @@ class Recipe extends StatelessWidget {
                         child: Column(
                           children: [
                             Icon(CustomIcons.food_1, size: 27),
-                            Text("${_recipeInfo.cookTime}")
+                            Text("${widget._recipeInfo.cookTime}")
                           ],
                         ),
                       ),
@@ -159,7 +213,7 @@ class Recipe extends StatelessWidget {
                         child: Column(
                           children: [
                             Icon(CustomIcons.food),
-                            Text("${_recipeInfo.servings}")
+                            Text("${widget._recipeInfo.servings}")
                           ],
                         ),
                       )
@@ -168,7 +222,7 @@ class Recipe extends StatelessWidget {
                   Container(
                       margin: EdgeInsets.all(3),
                       child: Text(
-                        _recipeInfo.description,
+                        widget._recipeInfo.description,
                         style: TextStyle(fontSize: 24),
                       )),
                   Container(
@@ -184,7 +238,7 @@ class Recipe extends StatelessWidget {
                   Container(
                       margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
-                        _recipeInfo.ingredients,
+                        widget._recipeInfo.ingredients,
                         style: TextStyle(fontSize: 20),
                       )),
                   Container(
@@ -198,33 +252,15 @@ class Recipe extends StatelessWidget {
                   Container(
                       margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
-                        _recipeInfo.steps,
+                        widget._recipeInfo.steps,
                         style: TextStyle(fontSize: 20),
                       )),
                   Container(
                       margin: EdgeInsets.fromLTRB(6, 12, 6, 0),
                       child: Text(
-                        "Author: ${_recipeInfo.author}",
+                        "Author: ${widget._recipeInfo.author}",
                         style: TextStyle(fontSize: 24),
                       )),
-//                  true
-//                      ? showDialog(
-//                          context: context,
-//                          builder: (context) {
-//                            return AlertDialog(
-//                              title: Text("Command guide"),
-//                              content: Text("This is an alert message."),
-//                              actions: [
-//                                MaterialButton(
-//                                  child: Text("Ok"),
-//                                  onPressed: () {
-//                                    Navigator.of(context).pop();
-//                                  },
-//                                )
-//                              ],
-//                            );
-//                          })
-//                      : Container(),
                   provider.listeningError
                       ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Audio Error"),

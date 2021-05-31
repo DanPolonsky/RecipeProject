@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/search_page/data_search.dart';
+
 import 'package:flutter_app/pages/add_recipe_page/add_recipe_page.dart';
 import 'package:flutter_app/pages/authentication/login_functions.dart';
 import 'package:flutter_app/pages/authentication/login_page/login_page.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_app/pages/local_recipes_page/local_recipes_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../global_variables.dart';
+import '../search_page/recipes_page.dart';
 import '../waiting_page.dart';
 import 'category_provider.dart';
 
@@ -28,9 +29,11 @@ class Home extends StatelessWidget {
                   IconButton(
                       icon: Icon(Icons.search),
                       onPressed: () async {
-                        String result = await showSearch(
-                            context: context, delegate: DataSearch());
-                        print(result);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SearchRecipesPage()),
+                        );
                       })
                 ],
               ),

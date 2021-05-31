@@ -15,7 +15,9 @@ class MealAmountPick extends StatelessWidget {
     return Consumer<AddRecipePageProvider>(
         builder: (BuildContext context, provider, Widget child) => Container(
               margin: EdgeInsets.all(10),
+
               child: FlatButton(
+                padding: EdgeInsets.fromLTRB(42, 0, 42, 0),
                 shape: RoundedRectangleBorder(
                     side: BorderSide(
                         color: Colors.blue,
