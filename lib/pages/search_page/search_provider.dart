@@ -7,6 +7,8 @@ import '../../global_variables.dart';
 import '../general_widgets/recipe_card.dart';
 import '../general_widgets/reached_bottom_widget.dart';
 
+
+/// Logic class handling all the functionality of the search page
 class SearchRecipeListProvider with ChangeNotifier {
   bool _isLoading = false;
 
@@ -14,10 +16,10 @@ class SearchRecipeListProvider with ChangeNotifier {
   TextEditingController get searchValueController => _searchValueController;
 
 
-  List<Widget> _recipeCardList = [];
-  int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.firstLoad; // change later
-  int _startIndex = 0;
+  List<Widget> _recipeCardList = []; // A list of RecipeCards presented in search page
+  int _amount = Constants.loadingAmount; //Amount to load each subsequent download
+  int _endIndex = Constants.firstLoad; // End index of recipes to load from the database
+  int _startIndex = 0; // Start index of recipes to load from the database
 
   String _currentSearchValue;
 
@@ -25,7 +27,7 @@ class SearchRecipeListProvider with ChangeNotifier {
 
   List<Widget> get searchRecipeCardList => _recipeCardList;
 
-  bool waitingPage = false;
+  bool waitingPage = false; // True if something is loaded, waiting page should be presented
 
 
 
@@ -34,6 +36,7 @@ class SearchRecipeListProvider with ChangeNotifier {
   ScrollController get scrollController => _scrollController;
 
 
+  /// Function resets all parameters after user exits page
   void reset(){
     _searchValueController.text = "";
     waitingPage = false;
@@ -41,7 +44,7 @@ class SearchRecipeListProvider with ChangeNotifier {
 
   }
 
-
+  /// Function updates the saved status of a recipe [recipeInfo]
   void updateRecipeInfo(RecipeInfo recipeInfo) {
     try {
       int index = _recipeCardList.indexWhere(
@@ -52,6 +55,8 @@ class SearchRecipeListProvider with ChangeNotifier {
     } catch (error) {}
   }
 
+
+  /// Function initializes the parameters for new search and loads new search value from the server
   void initializeNewSearch(String searchValue) async {
     if(!waitingPage){
       waitingPage = true;
@@ -71,6 +76,7 @@ class SearchRecipeListProvider with ChangeNotifier {
     }
   }
 
+  /// Function downloads recipes from the server based on the [startIndex] and [endIndex]
   void downloadListSearch() async {
     if (!_isLoading) {
       _isLoading = true;

@@ -49,6 +49,13 @@ class SignUpPageProvider extends ChangeNotifier {
 
   Widget get waitingCircle => _waitingCircle;
 
+  void reset(){
+    _userNameTextController.text = "";
+    _passwordTextController.text = "";
+    _repeatPasswordTextController.text = "";
+    _errorMsg = "";
+  }
+
   /// Function sends a SignUp request to server using a network function from the functions file
   void sendSingUpRequest() async {
     if (_formKey.currentState.validate()) {

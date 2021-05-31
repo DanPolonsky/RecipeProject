@@ -10,7 +10,13 @@ class SignUpPage extends StatelessWidget {
     Widget build(BuildContext context) {
         return Consumer<SignUpPageProvider>(
             builder: (BuildContext context, provider, Widget child) => Scaffold(
-                    appBar: AppBar(),
+                    appBar: AppBar(leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: (){
+                        provider.reset();
+                        Navigator.pop(context);
+                      },
+                    ),),
                     body: SingleChildScrollView(
                         child: Column(
 
@@ -92,7 +98,8 @@ class SignUpPage extends StatelessWidget {
                                                         onPressed: () async {
                                                             await provider.sendSingUpRequest();
                                                             if(provider.closeSignUpPage){
-                                                                Navigator.pop(context);
+                                                              provider.reset();
+                                                              Navigator.pop(context);
                                                             }
                                                         },
                                                         child: Text("Sign Up")

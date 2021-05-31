@@ -43,6 +43,14 @@ class LoginPageProvider extends ChangeNotifier {
 
   Widget get waitingCircle => _waitingCircle;
 
+  void reset(){
+    _userNameTextController.text = "";
+    _passwordTextController.text = "";
+    _errorMsg = "";
+
+  }
+
+
   /// Function sends login request to server based on user input
   void sendLoginRequest() async {
     if (_formKey.currentState.validate()) {

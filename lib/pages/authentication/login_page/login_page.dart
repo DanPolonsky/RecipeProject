@@ -13,7 +13,13 @@ class LoginPage extends StatelessWidget{
   Widget build(BuildContext context) {
     return Consumer<LoginPageProvider>(
       builder: (BuildContext context, provider, Widget child) => Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){
+            provider.reset();
+            Navigator.pop(context);
+          },
+        ),),
         body: SingleChildScrollView(
           child: Column(
 
@@ -78,6 +84,7 @@ class LoginPage extends StatelessWidget{
 
                       ElevatedButton(
                               onPressed: () async {
+                                provider.reset();
                                 Navigator.pushReplacement(
                                   context, CupertinoPageRoute(
                                     builder: (context) => SignUpPage(),
@@ -92,6 +99,7 @@ class LoginPage extends StatelessWidget{
                           onPressed: () async {
                             await provider.sendLoginRequest();
                             if(provider.closeLoginPage){
+                              provider.reset();
                               Navigator.pop(context);
                             }
                           },

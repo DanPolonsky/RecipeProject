@@ -152,7 +152,9 @@ class AddRecipePage extends StatelessWidget {
                       margin: EdgeInsets.only(top: 10, bottom: 2),
                       alignment: Alignment.center,
                       child: FlatButton(
-                        onPressed: provider.getImage,
+                        onPressed: (){
+                          provider.getImage;
+                        },
                         padding: EdgeInsets.fromLTRB(42, 0, 42, 0),
                         shape: RoundedRectangleBorder(
                             side: BorderSide(
