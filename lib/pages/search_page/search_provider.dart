@@ -39,7 +39,7 @@ class SearchRecipeListProvider with ChangeNotifier {
     // resetting all parameters for new category
     _recipeCardList = [];
     _amount = Constants.loadingAmount;
-    _endIndex = Constants.firstLoad; // change later
+    _endIndex = Constants.firstLoad;
     _startIndex = 0;
 
     _currentSearchValue = searchValue;
@@ -51,7 +51,7 @@ class SearchRecipeListProvider with ChangeNotifier {
   void downloadListSearch() async {
     if (!_isLoading) {
       _isLoading = true;
-      List<Widget> list = await getRecipesCardsListBySearch(
+      List<Widget> list = await donwloadRecipesBySearch(
           _currentSearchValue, _startIndex, _endIndex);
       _recipeCardList.insertAll(_recipeCardList.length - 1, list);
       notifyListeners();

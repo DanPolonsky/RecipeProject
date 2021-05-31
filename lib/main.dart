@@ -9,7 +9,6 @@ import 'package:flutter_app/pages/local_recipes_page/local_recipes_provider.dart
 import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 import 'package:flutter_app/pages/waiting_page.dart';
 
-
 import 'package:provider/provider.dart';
 
 import 'pages/search_page/search_provider.dart';
@@ -25,14 +24,12 @@ void main() async {
       ChangeNotifierProvider(create: (context) => SignUpPageProvider()),
       ChangeNotifierProvider(create: (context) => RecipePageProvider()),
       ChangeNotifierProvider(create: (context) => LocalRecipesProvider()),
-
     ], child: MyApp()),
   );
 }
 
-/// The main visual component
+/// The main widget encompassing the whole ui
 class MyApp extends StatelessWidget {
-
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
@@ -40,5 +37,3 @@ class MyApp extends StatelessWidget {
         title: 'Text-To-Speech Demo', home: InitialWaitingPage());
   }
 }
-
-

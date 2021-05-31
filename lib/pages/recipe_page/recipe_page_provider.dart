@@ -10,25 +10,25 @@ import 'package:provider/provider.dart';
 
 import '../../functions.dart';
 
-//Todo: change to listening function provider
-//Todo: split to two providers
+/// Logic class handling all recipe page functionality
 class RecipePageProvider extends ChangeNotifier {
-  bool _listeningError = false;
+  bool _listeningError = false; // True if there is error in SpeechRecognition
   bool get listeningError => _listeningError;
 
   bool speechRecognitionAvailable;
   bool hotKeywordDetectionAvailable;
 
-  bool _storageError = false;
+  bool _storageError = false; // True if there is error in storage of recipes
   bool get storageError => _storageError;
 
-  bool savedRecipe = false;
+  bool savedRecipe = false; // True if recipe is saved on the phone
 
-  bool _loading = false;
+  bool _loading = false; // True if download function is working
 
-  double newRating;
-  bool rated = false;
+  double newRating; // A rating the user chose
+  bool rated = false; // True if the user chose a rating
 
+  /// Function resets all variables when user exists
   void reset(RecipeInfo recipeInfo) {
     if (rated) {
       rate(recipeInfo.id, newRating);
@@ -39,6 +39,7 @@ class RecipePageProvider extends ChangeNotifier {
     rated = false;
   }
 
+  /// Function calles update functions from different providers by using [context] and changing the saved status in [recipeInfo]
   void updateRecipeInfo(BuildContext context, RecipeInfo recipeInfo) {
     final categoryProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
@@ -55,12 +56,15 @@ class RecipePageProvider extends ChangeNotifier {
     localRecipesProvider.updateList(recipeInfo);
   }
 
+  /// Function checks the avaliablity of the various listening objects
+  /// Returns true if all objects are avaliable
   bool listeningFunctionsAvailability() {
     print(speechRecognitionAvailable);
     print(hotKeywordDetectionAvailable);
     return speechRecognitionAvailable && hotKeywordDetectionAvailable;
   }
 
+  /// Function checks the saves status by using [info]
   Future<void> checkRecipeSavedStatus(RecipeInfo info) async {
     SavedRecipeEnum savedRecipeStatus = info.saved;
     print(savedRecipeStatus);
@@ -74,8 +78,7 @@ class RecipePageProvider extends ChangeNotifier {
     }
   }
 
-  //Todo: check if its better to let LocalRecipes access to provider instead of calling functions
-  // ignore: missing_return
+  /// Function saves recipe [recipeInfo] with the LocalRecipes function
   Future<void> callSaveNewRecipe(RecipeInfo recipeInfo) {
     if (!_loading) {
       _loading = true;
@@ -94,13 +97,14 @@ class RecipePageProvider extends ChangeNotifier {
     }
   }
 
+  /// Function deletes recipe [recipeInfo] with the LocalRecipes function
   Future<void> callDeleteSavedRecipe(RecipeInfo recipeInfo) {
     if (!_loading) {
       _loading = true;
       recipeInfo.saved = SavedRecipeEnum.notSaved;
-      bool noError = LocalRecipes.deleteSavedRecipe(recipeInfo);
+      bool success = LocalRecipes.deleteSavedRecipe(recipeInfo);
 
-      if (noError) {
+      if (success) {
         savedRecipe = false;
         print("saved recipe");
       } else {
@@ -113,6 +117,7 @@ class RecipePageProvider extends ChangeNotifier {
     }
   }
 
+  /// Function shows error msg [errorType]
   void notifyError(String errorType) {
     //Todo: check error types
     print(errorType);

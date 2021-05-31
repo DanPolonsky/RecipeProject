@@ -4,12 +4,7 @@ import 'package:flutter_app/pages/add_recipe_page/add_recipe_page_provider.dart'
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
-class CookTimePicker extends StatefulWidget {
-  @override
-  _CookTimePickerState createState() => _CookTimePickerState();
-}
-
-class _CookTimePickerState extends State<CookTimePicker> {
+class CookTimePicker extends StatelessWidget {
   int currentHoursValue = 0;
   int currentMinutesValue = 0;
   final int _minHours = 0;

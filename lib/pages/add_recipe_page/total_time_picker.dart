@@ -4,12 +4,8 @@ import 'package:flutter_app/pages/add_recipe_page/add_recipe_page_provider.dart'
 import 'package:numberpicker/numberpicker.dart';
 import 'package:provider/provider.dart';
 
-class TotalTimePicker extends StatefulWidget {
-  @override
-  _TotalTimePickerState createState() => _TotalTimePickerState();
-}
-
-class _TotalTimePickerState extends State<TotalTimePicker> {
+// ignore: must_be_immutable
+class TotalTimePicker extends StatelessWidget {
   int currentHoursValue = 0;
   int currentMinutesValue = 0;
   final int _minHours = 0;

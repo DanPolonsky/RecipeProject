@@ -1,4 +1,2 @@
-
-enum SavedRecipeEnum{
-    saved, notSaved, error
-}
+/// Enum used for saved recipe status
+enum SavedRecipeEnum { saved, notSaved, error }

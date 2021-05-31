@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:convert';
@@ -19,9 +20,13 @@ import 'global_variables.dart';
 const String IP = "192.168.11.135";
 const int PORT = 5356;
 
-/// Function takes json dictionary [recipesInfoDictList] and turns it to RecipeCard widget list.
-List<Widget> recipeInfoDictListToWidgetList(var recipesInfoDictList) {
-  List<Widget> recipeCardList = [];
+const int REQUEST_COOL_DOWN_TIME =
+    3; // Amount of time to wait before sending repeated request if the previous one didnt receive answer
+
+/// Function takes json dictionary list [recipesInfoDictList] and turns it to RecipeCard widget list.
+List<Widget> recipeInfoDictListToWidgetList(
+    List<Map<String, dynamic>> recipesInfoDictList) {
+  List<Widget> recipeCardList = []; // A list holding RecipeCard widgets
 
   recipesInfoDictList.forEach((recipeMapInfo) {
     RecipeInfo recipeInfo = RecipeInfo.fromJson(recipeMapInfo);
@@ -43,7 +48,7 @@ Future<List<Widget>> downloadRecipesByCategory(
         "$IP:$PORT", "/category/$category/from:$startIndex-to:$endIndex"));
     print("got response");
 
-    // turning the json string response into list of PictureInfo classes
+    // turning the json string response into list of recipe info maps
     var recipesInfoDictList = jsonDecode(response.body)['response'] as List;
 
     List<Widget> recipeCardList =
@@ -52,14 +57,14 @@ Future<List<Widget>> downloadRecipesByCategory(
     print("added recipes");
     return recipeCardList;
   } catch (error) {
-    sleep(const Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
     return downloadRecipesByCategory(category, startIndex, endIndex);
   }
 }
 
 /// Function sends http request with given [searchValue] [startIndex] and [endIndex] and returns list of
 /// widgets out of json response using the recipeInfoDictListToWidgetList function.
-Future<List<Widget>> getRecipesCardsListBySearch(
+Future<List<Widget>> donwloadRecipesBySearch(
     String searchValue, int startIndex, int endIndex) async {
   try {
     // list of RecipeCard objects
@@ -72,7 +77,7 @@ Future<List<Widget>> getRecipesCardsListBySearch(
 
     print("got response");
 
-    // turning the json string response into list of PictureInfo classes
+    // turning the json string response into list of recipe info maps
     var recipesInfoDictList = jsonDecode(response.body)['response'] as List;
 
     List<Widget> recipeCardList =
@@ -81,8 +86,8 @@ Future<List<Widget>> getRecipesCardsListBySearch(
     print("added recipes");
     return recipeCardList;
   } catch (error) {
-    sleep(const Duration(seconds: 4));
-    return getRecipesCardsListBySearch(searchValue, startIndex, endIndex);
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
+    return donwloadRecipesBySearch(searchValue, startIndex, endIndex);
   }
 }
 
@@ -103,6 +108,7 @@ void rate(int recipeId, double rating) {
 /// Function sends a post request for uploading a new recipe.
 void sendNewRecipePost(
     String recipeName,
+    String recipeDescription,
     List<String> ingredients,
     List<String> steps,
     Uint8List image,
@@ -110,10 +116,11 @@ void sendNewRecipePost(
     String cookTime,
     String totalTime,
     String servings,
-    String description,
     String categories,
     String imageType) async {
   try {
+    // codeId is a code created when user is created to verify user in different requests, such as uploading recipe
+    // The creation of codeId is explained in Authentication/login_functions.dart
     String codeId = RunTimeVariables.prefs.getString("codeId");
 
     // Getting rsa encryption key
@@ -130,6 +137,7 @@ void sendNewRecipePost(
       //Todo: add id per user, to verify user.
       body: jsonEncode(<String, dynamic>{
         "codeId": encryptedCodeId,
+        "description": recipeDescription,
         "recipeName": recipeName,
         "ingredients": ingredients,
         "steps": steps,
@@ -138,23 +146,32 @@ void sendNewRecipePost(
         "cookTime": cookTime,
         "totalTime": totalTime,
         "servings": servings,
-        "description": description,
         "categories": categories,
         "imageType": imageType
       }),
     );
   } catch (error) {
-    sleep(const Duration(seconds: 4));
-    return sendNewRecipePost(recipeName, ingredients, steps, image, difficulty,
-        cookTime, totalTime, servings, description, categories, imageType);
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
+    return sendNewRecipePost(
+        recipeName,
+        recipeDescription,
+        ingredients,
+        steps,
+        image,
+        difficulty,
+        cookTime,
+        totalTime,
+        servings,
+        categories,
+        imageType);
   }
 }
-
 
 /// Function sends login post request, sending [userName] and encrypted [password] using the encrypt method.
 /// Returns if request is successful
 Future<String> sendLoginPostRequest(String userName, String password) async {
   try {
+    // Getting rsa encryption key
     Encrypter encrypter = await getEncrypter();
     String encrypted = encrypter.encrypt(password).base64;
 
@@ -170,14 +187,16 @@ Future<String> sendLoginPostRequest(String userName, String password) async {
 
     return loginResponse.body;
   } catch (error) {
-    sleep(const Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
     return sendLoginPostRequest(userName, password);
   }
 }
+
 /// Function sends signup post request, sending [userName] and encrypted [password] using the encrypt method.
 /// Returns if request is successful.
 Future<String> sendSignUpPostRequest(String userName, String password) async {
   try {
+    // Getting rsa encryption key
     Encrypter encrypter = await getEncrypter();
     String encrypted = encrypter.encrypt(password).base64;
 
@@ -193,7 +212,7 @@ Future<String> sendSignUpPostRequest(String userName, String password) async {
 
     return signUpResponse.body;
   } catch (error) {
-    sleep(const Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
     return sendSignUpPostRequest(userName, password);
   }
 }
@@ -204,6 +223,7 @@ Future<Encrypter> getEncrypter() async {
     http.Response publicKeyResponse =
         await http.get(Uri.http("$IP:$PORT", "/encrypt"));
 
+    // Rsa key variables to create RSAPublicKey
     String modulus = publicKeyResponse.body.split(",")[0];
     String exponent = publicKeyResponse.body.split(",")[1];
 
@@ -214,7 +234,7 @@ Future<Encrypter> getEncrypter() async {
 
     return encrypter;
   } catch (error) {
-    sleep(const Duration(seconds: 4));
+    await Future.delayed(Duration(seconds: REQUEST_COOL_DOWN_TIME));
     return getEncrypter();
   }
 }

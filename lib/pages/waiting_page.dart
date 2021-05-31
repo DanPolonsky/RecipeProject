@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_app/classes/audio_classes/SpeechRecognition.dart';
+import 'package:flutter_app/classes/audio_classes/speech_recognition.dart';
 import 'package:flutter_app/classes/audio_classes/hotkeyword_detection.dart';
 import 'package:flutter_app/classes/audio_classes/text_to_speech.dart';
 
@@ -18,12 +18,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'add_recipe_page/add_recipe_page_provider.dart';
 import 'home_page/category_provider.dart';
 
+/// Class is the main loading page, initializing various components in the app
 class InitialWaitingPage extends StatefulWidget {
   @override
   _InitialWaitingPageState createState() => _InitialWaitingPageState();
 }
 
 class _InitialWaitingPageState extends State<InitialWaitingPage> {
+  /// Function loads the initial recipe list, viewed in the home page
   void initializeHomePageData() async {
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
@@ -38,6 +40,7 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     );
   }
 
+  /// Function checks if the user is logged in or not
   void authenticationCheck() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -48,6 +51,8 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     }
   }
 
+  /// Function checks if there is a stored recipes file, if there is, the function loads the contents
+  /// Creates one if there isnt
   void checkLocalRecipes() async {
     File savedRecipesFile = await LocalRecipes.getLocalFile();
     bool fileExists = await savedRecipesFile.exists();
@@ -64,11 +69,6 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
       // check whether the user is logged in or not and store the value in Constants.loggedIn
 
       await authenticationCheck();
-
-      //Todo: change this shit
-      var addRecipePageProvider =
-          Provider.of<AddRecipePageProvider>(context, listen: false);
-      addRecipePageProvider.initializeLists();
 
       await checkLocalRecipes();
 
@@ -103,7 +103,6 @@ class RecipesWaitingPage extends StatefulWidget {
 class _RecipesWaitingPageState extends State<RecipesWaitingPage> {
   @override
   Widget build(BuildContext context) {
-    print("building wait");
     return Center(
       child: CircularProgressIndicator(),
     );

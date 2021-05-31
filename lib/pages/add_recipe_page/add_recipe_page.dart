@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/add_recipe_page/cook_time_picker.dart';
+import 'package:flutter_app/pages/add_recipe_page/meal_amount_picker.dart';
 import 'package:flutter_app/pages/add_recipe_page/total_time_picker.dart';
 
 import 'package:provider/provider.dart';
@@ -9,7 +10,14 @@ import 'add_recipe_page_provider.dart';
 import 'drop_down_menu.dart';
 
 class AddRecipePage extends StatelessWidget {
+  void initialize(BuildContext context) {
+    var addRecipePageProvider =
+        Provider.of<AddRecipePageProvider>(context, listen: false);
+    addRecipePageProvider.initializeLists();
+  }
+
   Widget build(BuildContext context) {
+    initialize(context);
     return Consumer<AddRecipePageProvider>(
       builder: (BuildContext context, provider, Widget child) => Scaffold(
           appBar: AppBar(
@@ -38,11 +46,40 @@ class AddRecipePage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
                       child: TextFormField(
                         controller: provider.recipeNameController,
-                        decoration:
-                            InputDecoration(hintText: 'Enter Recipe Name...'),
+                        decoration: InputDecoration(
+                          hintText: "Enter Recipe Name ...",
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          isDense: true,
+                          contentPadding: EdgeInsets.all(12),
+                        ),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter recipe name.';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Text("Recipe Description",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
+                    Container(
+                      margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+                      child: TextFormField(
+                        controller: provider.recipeDescriptionController,
+                        decoration: InputDecoration(
+                          hintText: "Enter Recipe Description ...",
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15))),
+                          isDense: true,
+                          contentPadding: EdgeInsets.all(12),
+                        ),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter recipe description.';
                           }
                           return null;
                         },
@@ -103,13 +140,17 @@ class AddRecipePage extends StatelessWidget {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 30)),
                     CookTimePicker(),
+                    Text("Meals Amount",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 30)),
+                    MealAmountPick(),
                     FloatingActionButton(
                       onPressed: provider.getImage,
                       tooltip: 'Pick Image',
                       child: Icon(Icons.add_a_photo),
                     ),
                     ElevatedButton(
-                        onPressed: () async {
+                        onPressed: () {
                           print("pressed submit");
                           provider.sendRecipePost();
                           if (provider.closeAddRecipePage) {

@@ -10,6 +10,7 @@ class Constants {
   // List of home recipe categories.
   static final List<String> categories = [
     "Popular",
+    "New",
     "Meat",
     "BreakFast",
     "Desert",
@@ -20,5 +21,6 @@ class Constants {
 
 /// Class containing variables which are initialized during start up for later use in various places in the application
 class RunTimeVariables {
-  static SharedPreferences prefs; // Variable gives access to stored long term variables
+  static SharedPreferences
+      prefs; // Variable gives access to stored long term variables
 }

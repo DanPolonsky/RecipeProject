@@ -160,9 +160,12 @@ class RecipeCardList extends StatelessWidget {
                 provider.downloadListCategory();
               }
             },
-            child: SingleChildScrollView(
+            child: ListView.builder(
               controller: provider.scrollController,
-              child: Column(children: provider.categoryRecipeCardList),
+              itemCount: provider.categoryRecipeCardList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return provider.categoryRecipeCardList[index];
+              },
             )),
       ),
     );

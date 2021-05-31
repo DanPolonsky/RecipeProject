@@ -6,19 +6,23 @@ import '../../global_variables.dart';
 import '../../functions.dart';
 import '../general_widgets/reached_bottom_widget.dart';
 
+/// Logic class that handles all functionality of home page
 class CategoryRecipeListProvider with ChangeNotifier {
-  bool _isLoading = false;
+  bool _isLoading =
+      false; // Variable represention if class is downloading recipes
 
   bool get isLoading => _isLoading;
 
-  bool _waitingPage = false;
+  bool _waitingPage =
+      false; // A bool describing if there should be a waiting page while something loads
 
   bool get waitingPage => _waitingPage;
 
-  List<Widget> _recipeCardList = [];
-  int _amount = Constants.loadingAmount;
-  int _endIndex = Constants.firstLoad;
-  int _startIndex = 0;
+  List<Widget> _recipeCardList =
+      []; // A list containing all recipe cards shown on screen
+  int _amount = Constants.loadingAmount; // Amount to load each time
+  int _endIndex = Constants.firstLoad; // The recipe end index to download
+  int _startIndex = 0; // The recipe start index to download
 
   String _currentCategory;
   String get currentCategory => _currentCategory;
@@ -29,6 +33,7 @@ class CategoryRecipeListProvider with ChangeNotifier {
 
   ScrollController get scrollController => _scrollController;
 
+  /// Function updates the RecipeInfo [recipeInfo]of recipe on changed saved status
   void updateRecipeInfo(RecipeInfo recipeInfo) {
     try {
       int index = _recipeCardList.indexWhere(
@@ -43,7 +48,7 @@ class CategoryRecipeListProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  /// Function initializes the recipeCardsList to a new category
+  /// Function initializes the recipeCardsList to a new [category]
   void initializeNewCategory(String category) async {
     if (!_waitingPage) {
       _waitingPage = true;

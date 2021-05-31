@@ -14,14 +14,17 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class Recipe extends StatelessWidget {
-  RecipeInfo _recipeInfo;
+  RecipeInfo _recipeInfo; // Object holding the recipe info
 
   Color _difficultyColor;
 
+  /// Function initalizes all listening fucntionality of the page
   void initializer(BuildContext context) {
+    // Getting access to the RecipePageProvider
     var recipePageProvider =
         Provider.of<RecipePageProvider>(context, listen: false);
 
+    // Initializing all sound functionality if objects are available
     if (recipePageProvider.listeningFunctionsAvailability()) {
       print("starting to listen");
       TextToSpeech.setReadingVariables(
@@ -204,19 +207,31 @@ class Recipe extends StatelessWidget {
                         "Author: ${_recipeInfo.author}",
                         style: TextStyle(fontSize: 24),
                       )),
-
+//                  true
+//                      ? showDialog(
+//                          context: context,
+//                          builder: (context) {
+//                            return AlertDialog(
+//                              title: Text("Command guide"),
+//                              content: Text("This is an alert message."),
+//                              actions: [
+//                                MaterialButton(
+//                                  child: Text("Ok"),
+//                                  onPressed: () {
+//                                    Navigator.of(context).pop();
+//                                  },
+//                                )
+//                              ],
+//                            );
+//                          })
+//                      : Container(),
                   provider.listeningError
-                      ? Scaffold.of(context).showSnackBar(SnackBar(
+                      ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Audio Error"),
                           duration: Duration(seconds: 3)))
                       : Container(),
-
-//                                provider.listeningFunctionsAvailability() ? Scaffold.of(context)
-//                                    .showSnackBar(
-//                                    SnackBar(content: Text("Start Commanding!"), duration: Duration(seconds: 3))
-//                                ) : Container()
                   provider.storageError
-                      ? Scaffold.of(context).showSnackBar(SnackBar(
+                      ? ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text("Storage Error"),
                           duration: Duration(seconds: 3)))
                       : Container(),
