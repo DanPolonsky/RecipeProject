@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
     return Consumer<CategoryRecipeListProvider>(
         builder: (context, provider, child) => Scaffold(
               appBar: AppBar(
-                title: Text("Reacipe"),
+                title: Text("Recipear"),
                 centerTitle: true,
                 elevation: 0,
                 actions: [
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.only(left: 10),
                         child: Text(
-                          "Reacipe",
+                          "Recipear",
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),

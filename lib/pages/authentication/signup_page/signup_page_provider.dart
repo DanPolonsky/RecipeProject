@@ -54,6 +54,7 @@ class SignUpPageProvider extends ChangeNotifier {
     _passwordTextController.text = "";
     _repeatPasswordTextController.text = "";
     _errorMsg = "";
+    _closeSignUpPage = false;
   }
 
   /// Function sends a SignUp request to server using a network function from the functions file

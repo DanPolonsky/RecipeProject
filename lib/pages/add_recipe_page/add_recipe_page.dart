@@ -153,7 +153,7 @@ class AddRecipePage extends StatelessWidget {
                       alignment: Alignment.center,
                       child: FlatButton(
                         onPressed: (){
-                          provider.getImage;
+                          provider.getImage();
                         },
                         padding: EdgeInsets.fromLTRB(42, 0, 42, 0),
                         shape: RoundedRectangleBorder(

@@ -47,6 +47,7 @@ class LoginPageProvider extends ChangeNotifier {
     _userNameTextController.text = "";
     _passwordTextController.text = "";
     _errorMsg = "";
+    _closeLoginPage = false;
 
   }
 
