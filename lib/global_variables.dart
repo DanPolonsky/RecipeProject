@@ -9,13 +9,26 @@ class Constants {
 
   // List of home recipe categories.
   static final List<String> categories = [
-    "Popular",
     "New",
     "Meat",
     "BreakFast",
     "Desert",
     "Vegan",
-    "Fast"
+    "Fast",
+    "Fish",
+    "Easy",
+    "Medium",
+    "Hard",
+    "High Rated"
+  ];
+
+  static final List<String> addingRecipeCategories = [
+    "Meat",
+    "BreakFast",
+    "Desert",
+    "Vegan",
+    "Fish",
+
   ];
 }
 

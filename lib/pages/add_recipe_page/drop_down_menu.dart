@@ -24,7 +24,7 @@ class _DropDownCategoryMenuState extends State<DropDownCategoryMenu> {
   List<String> viewCategories;
 
   void initializeCategoryList(BuildContext context) {
-    viewCategories = List.from(Constants.categories);
+    viewCategories = List.from(Constants.addingRecipeCategories);
     viewCategories.remove("Popular");
 
     var addRecipeProvider =

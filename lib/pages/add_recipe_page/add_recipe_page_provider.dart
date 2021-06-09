@@ -177,7 +177,7 @@ class AddRecipePageProvider extends ChangeNotifier {
       String recipeDescription = _recipeDescriptionController.text;
       List<String> ingredients = [];
       List<String> steps = [];
-      String categories = "popular,";
+      String categories = "";
 
       String difficulty = _pressedDifficulty;
       String cookTimeHoursString = "$cookTimeHours hr";
