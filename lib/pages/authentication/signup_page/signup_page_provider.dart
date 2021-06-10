@@ -15,16 +15,20 @@ class SignUpPageProvider extends ChangeNotifier {
 
   // A collection a text controllers for username and passwords
   TextEditingController _userNameTextController = TextEditingController();
+
   TextEditingController get userNameTextController => _userNameTextController;
 
   TextEditingController _passwordTextController = TextEditingController();
+
   TextEditingController get passwordTextController => _passwordTextController;
 
   TextEditingController _repeatPasswordTextController = TextEditingController();
+
   TextEditingController get repeatPasswordTextController =>
       _repeatPasswordTextController;
 
   String _errorMsg = "";
+
   String get errorMsg => _errorMsg;
 
   bool _closeSignUpPage =
@@ -49,7 +53,7 @@ class SignUpPageProvider extends ChangeNotifier {
 
   Widget get waitingCircle => _waitingCircle;
 
-  void reset(){
+  void reset() {
     _userNameTextController.text = "";
     _passwordTextController.text = "";
     _repeatPasswordTextController.text = "";
@@ -60,6 +64,7 @@ class SignUpPageProvider extends ChangeNotifier {
   /// Function sends a SignUp request to server using a network function from the functions file
   void sendSingUpRequest() async {
     if (_formKey.currentState.validate()) {
+      _errorMsg = "";
       String userName = _userNameTextController.text;
       String password = _passwordTextController.text;
       String repeatPassword = _repeatPasswordTextController.text;

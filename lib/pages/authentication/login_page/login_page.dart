@@ -58,6 +58,7 @@ class LoginPage extends StatelessWidget{
                             if (value.isEmpty) {
                               return 'Please enter username.';
                             }
+
                             return null;
                           },
                         ),

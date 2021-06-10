@@ -55,6 +55,9 @@ class SignUpPage extends StatelessWidget {
                                                             if (value.isEmpty) {
                                                                 return 'Please enter username.';
                                                             }
+                                                            else if(value.length < 6) {
+                                                                return "Username must be longer than 5 characters";
+                                                            }
                                                             return null;
                                                         },
                                                     ),
@@ -72,6 +75,9 @@ class SignUpPage extends StatelessWidget {
                                                             if (value.isEmpty) {
                                                                 return 'Please enter password.';
                                                             }
+                                                            else if(value.length < 6) {
+                                                                return "Password must be longer than 5 characters";
+                                                            }
                                                             return null;
                                                         },
                                                     ),
@@ -88,6 +94,9 @@ class SignUpPage extends StatelessWidget {
                                                         validator: (value) {
                                                             if (value.isEmpty) {
                                                                 return 'Please enter password.';
+                                                            }
+                                                            else if(value.length < 6) {
+                                                                return "Password must be longer than 5 characters";
                                                             }
                                                             return null;
                                                         },

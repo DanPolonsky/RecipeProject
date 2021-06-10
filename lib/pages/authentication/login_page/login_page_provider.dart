@@ -13,9 +13,11 @@ class LoginPageProvider extends ChangeNotifier {
   GlobalKey<FormState> get formKey => _formKey;
 
   TextEditingController _userNameTextController = TextEditingController();
+
   TextEditingController get userNameTextController => _userNameTextController;
 
   TextEditingController _passwordTextController = TextEditingController();
+
   TextEditingController get passwordTextController => _passwordTextController;
 
   String _errorMsg = ""; // String holding error messages
@@ -43,18 +45,17 @@ class LoginPageProvider extends ChangeNotifier {
 
   Widget get waitingCircle => _waitingCircle;
 
-  void reset(){
+  void reset() {
     _userNameTextController.text = "";
     _passwordTextController.text = "";
     _errorMsg = "";
     _closeLoginPage = false;
-
   }
-
 
   /// Function sends login request to server based on user input
   void sendLoginRequest() async {
     if (_formKey.currentState.validate()) {
+      _errorMsg = "";
       _waitingCircle = _activeWaitingCircle;
       notifyListeners();
 

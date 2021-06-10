@@ -12,7 +12,6 @@ import 'package:flutter_app/pages/recipe_page/recipe_page_provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
-
 import '../../global_variables.dart';
 
 // ignore: must_be_immutable
@@ -38,7 +37,7 @@ class Recipe extends StatefulWidget {
 }
 
 class _RecipeState extends State<Recipe> {
-  int msBeforeGuideDialog = 400;
+  int _msBeforeGuideDialog = 400;
 
   /// Function initalizes all listening fucntionality of the page
   void initializer(BuildContext context) {
@@ -46,21 +45,23 @@ class _RecipeState extends State<Recipe> {
     var recipePageProvider =
         Provider.of<RecipePageProvider>(context, listen: false);
 
+    recipePageProvider.checkRecipeSavedStatus(widget._recipeInfo);
+
     // Initializing all sound functionality if objects are available
     if (recipePageProvider.listeningFunctionsAvailability()) {
       print("starting to listen");
       TextToSpeech.setReadingVariables(
           widget._recipeInfo.ingredients, widget._recipeInfo.steps);
-      recipePageProvider.checkRecipeSavedStatus(widget._recipeInfo);
+
       HotKeyWordDetection.startKeyWordDetection();
     } else {
       print("not available");
     }
   }
 
-  void showGuideDialog(BuildContext context){
+  void showGuideDialog(BuildContext context) {
     bool showRecipeGuide = RunTimeVariables.prefs.getBool("ShowRecipeGuide");
-    if(showRecipeGuide){
+    if (showRecipeGuide) {
       showDialog(
           context: context,
           builder: (context) {
@@ -84,25 +85,21 @@ class _RecipeState extends State<Recipe> {
                     Navigator.of(context).pop();
                   },
                 )
-
               ],
             );
           });
     }
   }
 
-  void initState(){
+  void initState() {
     super.initState();
     initializer(context);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(Duration(milliseconds: msBeforeGuideDialog));
+      await Future.delayed(Duration(milliseconds: _msBeforeGuideDialog));
       showGuideDialog(context);
     });
-
-
   }
-
 
   Widget build(BuildContext context) {
     return Consumer<RecipePageProvider>(
