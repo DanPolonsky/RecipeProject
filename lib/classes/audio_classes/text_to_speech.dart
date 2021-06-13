@@ -62,8 +62,8 @@ class TextToSpeech {
 
   /// Function sets the reading lists from the specific recipe - [ingredients] and [steps]
   static void setReadingVariables(String ingredients, String steps) {
-    _ingredientsList = ingredients.split("\n");
-    _stepsList = steps.split("\n");
+    _ingredientsList = ingredients.split("\n\n");
+    _stepsList = steps.split("\n\n");
     _nextStep = 0;
     _nextIngredient = 0;
   }

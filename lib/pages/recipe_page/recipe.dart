@@ -38,11 +38,12 @@ class Recipe extends StatefulWidget {
 
 class _RecipeState extends State<Recipe> {
   int _msBeforeGuideDialog = 400;
+  RecipePageProvider recipePageProvider;
 
   /// Function initalizes all listening fucntionality of the page
   void initializer(BuildContext context) {
     // Getting access to the RecipePageProvider
-    var recipePageProvider =
+    recipePageProvider =
         Provider.of<RecipePageProvider>(context, listen: false);
 
     recipePageProvider.checkRecipeSavedStatus(widget._recipeInfo);
@@ -62,15 +63,21 @@ class _RecipeState extends State<Recipe> {
   void showGuideDialog(BuildContext context) {
     bool showRecipeGuide = RunTimeVariables.prefs.getBool("ShowRecipeGuide");
     if (showRecipeGuide) {
+      bool available = recipePageProvider.hotKeywordDetectionAvailable &&
+          recipePageProvider.speechRecognitionAvailable;
+
       showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
               title: Text("Command guide"),
-              content: Text("Try saying:\n"
-                  "Step... number\n"
-                  "Ingredient... number\n"
-                  "next... step/ingredient"),
+              content: available
+                  ? Text("Try saying:\n"
+                      "Step... number\n"
+                      "Ingredient... number\n"
+                      "next... step/ingredient")
+                  : Text(
+                      "Some audio plugins are unavailable, try enabling microphone permission"),
               actions: [
                 MaterialButton(
                   child: Text("Ok"),
@@ -217,7 +224,7 @@ class _RecipeState extends State<Recipe> {
                     ],
                   ),
                   Container(
-                      margin: EdgeInsets.all(3),
+                      margin: EdgeInsets.fromLTRB(3,13,3,5),
                       child: Text(
                         widget._recipeInfo.description,
                         style: TextStyle(fontSize: 24),
@@ -236,7 +243,7 @@ class _RecipeState extends State<Recipe> {
                       margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
                         widget._recipeInfo.ingredients,
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(height:0.9, fontSize: 20),
                       )),
                   Container(
                     margin: EdgeInsets.fromLTRB(4, 10, 0, 4),
@@ -250,7 +257,7 @@ class _RecipeState extends State<Recipe> {
                       margin: EdgeInsets.fromLTRB(12, 6, 6, 6),
                       child: Text(
                         widget._recipeInfo.steps,
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(height: 1.2, fontSize: 20),
                       )),
                   Container(
                       margin: EdgeInsets.fromLTRB(6, 12, 6, 0),

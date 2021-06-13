@@ -30,7 +30,7 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     var recipeListProvider =
         Provider.of<CategoryRecipeListProvider>(context, listen: false);
 
-    recipeListProvider.initializeNewCategory("popular");
+    recipeListProvider.initializeNewCategory("Popular");
 
     Navigator.pushReplacement(
       context,

@@ -9,6 +9,8 @@ class Constants {
 
   // List of home recipe categories.
   static final List<String> categories = [
+
+    "Popular",
     "New",
     "Meat",
     "BreakFast",

@@ -15,8 +15,8 @@ class RecipePageProvider extends ChangeNotifier {
   bool _listeningError = false; // True if there is error in SpeechRecognition
   bool get listeningError => _listeningError;
 
-  bool speechRecognitionAvailable;
-  bool hotKeywordDetectionAvailable;
+  bool speechRecognitionAvailable = true;
+  bool hotKeywordDetectionAvailable = true;
 
   bool _storageError = false; // True if there is error in storage of recipes
   bool get storageError => _storageError;
@@ -33,7 +33,8 @@ class RecipePageProvider extends ChangeNotifier {
     if (rated) {
       rate(recipeInfo.id, newRating);
     }
-
+    speechRecognitionAvailable = true;
+    hotKeywordDetectionAvailable = true;
     HotKeyWordDetection.stopKeyWordDetection();
     savedRecipe = false;
     rated = false;
