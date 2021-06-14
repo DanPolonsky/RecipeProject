@@ -11,7 +11,7 @@
     <application
         android:usesCleartextTraffic="true"
         android:name="io.flutter.app.FlutterApplication"
-        android:label="flutter_app"
+        android:label="Recipear"
         android:icon="@mipmap/ic_launcher">
 
         <activity

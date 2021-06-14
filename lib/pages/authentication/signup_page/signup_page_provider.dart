@@ -63,8 +63,10 @@ class SignUpPageProvider extends ChangeNotifier {
 
   /// Function sends a SignUp request to server using a network function from the functions file
   void sendSingUpRequest() async {
+    _errorMsg = "";
+    notifyListeners();
     if (_formKey.currentState.validate()) {
-      _errorMsg = "";
+
       String userName = _userNameTextController.text;
       String password = _passwordTextController.text;
       String repeatPassword = _repeatPasswordTextController.text;

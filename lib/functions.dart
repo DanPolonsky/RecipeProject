@@ -17,7 +17,7 @@ import 'global_variables.dart';
 /// A collection of network functions to interact with the server and general functions.
 
 // Ip and port of server
-const String IP = "10.0.2.2";
+const String IP = "10.100.102.28";
 const int PORT = 60000;
 
 const int REQUEST_COOL_DOWN_TIME =

@@ -118,8 +118,6 @@ class RecipeCard extends StatelessWidget {
                     ),
                     child: Center(
                       child: Container(
-
-                        margin: EdgeInsets.all(5),
                         child: Text(
                           "${_recipeInfo.recipeName}",
                           textAlign: TextAlign.center,
@@ -127,7 +125,7 @@ class RecipeCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 24,
                               color: Colors.white70,
                               fontWeight: FontWeight.bold),
                         ),

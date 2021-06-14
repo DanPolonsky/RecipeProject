@@ -106,6 +106,7 @@ class AddRecipePageProvider extends ChangeNotifier {
     if (pickedFile != null) {
       _image = File(pickedFile.path);
       _imageType = pickedFile.path.split(".").last;
+      notifyListeners();
     } else {
       print('No image selected.');
     }

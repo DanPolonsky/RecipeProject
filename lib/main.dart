@@ -34,6 +34,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Text-To-Speech Demo', home: InitialWaitingPage());
+        title: 'Recipear', home: InitialWaitingPage());
   }
 }

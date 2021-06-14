@@ -34,10 +34,7 @@ class LoginPage extends StatelessWidget{
                   ),
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height * 0.03,
-                child: Text(provider.errorMsg,style: TextStyle(color: Colors.red[600]),),
-              ),
+
               Form(
                 key: provider.formKey,
                 child:Container(
@@ -82,6 +79,11 @@ class LoginPage extends StatelessWidget{
                         ),
                       ),
                       provider.waitingCircle,
+
+                      Container(
+                        margin: EdgeInsets.only(top:5, bottom:5),
+                        child: Text(provider.errorMsg,style: TextStyle(color: Colors.red[600]),),
+                      ),
 
                       ElevatedButton(
                               onPressed: () async {

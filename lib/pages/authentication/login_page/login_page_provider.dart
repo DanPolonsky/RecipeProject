@@ -54,8 +54,10 @@ class LoginPageProvider extends ChangeNotifier {
 
   /// Function sends login request to server based on user input
   void sendLoginRequest() async {
+    _errorMsg = "";
+    notifyListeners();
     if (_formKey.currentState.validate()) {
-      _errorMsg = "";
+
       _waitingCircle = _activeWaitingCircle;
       notifyListeners();
 
