@@ -58,6 +58,7 @@ class TextToSpeech {
     _recipePageProvider =
         Provider.of<RecipePageProvider>(_context, listen: false);
     _flutterTts = FlutterTts();
+    initializeTextToSpeech();
   }
 
   /// Function sets the reading lists from the specific recipe - [ingredients] and [steps]
