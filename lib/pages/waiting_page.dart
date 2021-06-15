@@ -45,6 +45,8 @@ class _InitialWaitingPageState extends State<InitialWaitingPage> {
     if(RunTimeVariables.prefs.getBool("ShowRecipeGuide") == null){
       RunTimeVariables.prefs.setBool("ShowRecipeGuide", true);
     }
+
+
   }
 
 

@@ -63,6 +63,7 @@ class _RecipeState extends State<Recipe> {
   void showGuideDialog(BuildContext context) {
     bool showRecipeGuide = RunTimeVariables.prefs.getBool("ShowRecipeGuide");
     if (showRecipeGuide) {
+      print("showing");
       bool available = recipePageProvider.hotKeywordDetectionAvailable &&
           recipePageProvider.speechRecognitionAvailable;
 
